@@ -4,8 +4,6 @@
  */
 package user;
 
-import java.util.Map;
-
 /**
  *
  * @author renato
@@ -16,11 +14,11 @@ public class User {
             username, 
             password, 
             email;
-    private Map address;
+    private Address address;
     private boolean isAdmin;
 
 
-    public User(String name, String username, String password, String email, Map address, boolean isAdmin) {
+    public User(String name, String username, String password, String email, Address address, boolean isAdmin) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -62,11 +60,11 @@ public class User {
         this.email = email;
     }
 
-    public Map getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(Map address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

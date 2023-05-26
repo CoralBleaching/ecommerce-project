@@ -1,0 +1,26 @@
+{
+    "Bomberman": {
+        "description": "An item that will give a power up effect in Bomberman.",
+        "subcategories": {
+            "Bombs": "Will change the bomber's ability to put down bombs.",
+            "Fires": "Will change the nature of the bomber's bomb explosion.",
+            "Bomb manipulation": "Will allow the bomber to kick/throw bombs, etc."
+        }
+    },
+    "Mario Bros": {
+        "description": "An item that will give a power up effect or tools that can be useful in Mario Bros.",
+        "subcategories": {
+            "Mushrooms": "Will change the physicality of Mario.",
+            "Flowers": "Will allow Mario to shoot magical projectiles.",
+            "Tools": "Helps Mario to do various tasks in Mushroom Kingdom." 
+        }
+    },
+    "Pokémon": {
+        "description": "An item that will affect a pokémon or be useful for a trainer.",
+        "subcategories": {
+            "Vitamins": "Increase a specific stat of a pokémon.",
+            "Electronics": "Gives the trainer access to information and/or communication.",
+            "Poke balls": "Allows the player to capture wild pokémon."
+        }
+    }
+}

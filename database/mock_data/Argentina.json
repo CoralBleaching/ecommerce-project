@@ -1,0 +1,26 @@
+{
+  "Buenos Aires": ["La Plata", "Mar del Plata", "Bahía Blanca"],
+  "Catamarca": ["San Fernando del Valle de Catamarca", "Andalgalá", "Tinogasta"],
+  "Chaco": ["Resistencia", "Barranqueras", "Presidencia Roque Sáenz Peña"],
+  "Chubut": ["Rawson", "Comodoro Rivadavia", "Puerto Madryn"],
+  "Córdoba": ["Córdoba", "Villa Carlos Paz", "Río Cuarto"],
+  "Corrientes": ["Corrientes", "Goya", "Mercedes"],
+  "Entre Ríos": ["Paraná", "Concordia", "Gualeguaychú"],
+  "Formosa": ["Formosa", "Clorinda", "Pirané"],
+  "Jujuy": ["San Salvador de Jujuy", "Palpalá", "San Pedro"],
+  "La Pampa": ["Santa Rosa", "General Pico", "Toay"],
+  "La Rioja": ["La Rioja", "Chilecito", "Aimogasta"],
+  "Mendoza": ["Mendoza", "San Rafael", "Godoy Cruz"],
+  "Misiones": ["Posadas", "Eldorado", "Puerto Iguazú"],
+  "Neuquén": ["Neuquén", "Cutral Có", "Plottier"],
+  "Río Negro": ["Viedma", "Bariloche", "General Roca"],
+  "Salta": ["Salta", "San Ramón de la Nueva Orán", "Tartagal"],
+  "San Juan": ["San Juan", "Rawson", "Chimbas"],
+  "San Luis": ["San Luis", "Villa Mercedes", "Justo Daract"],
+  "Santa Cruz": ["Río Gallegos", "El Calafate", "Caleta Olivia"],
+  "Santa Fe": ["Santa Fe", "Rosario", "Venado Tuerto"],
+  "Santiago del Estero": ["Santiago del Estero", "La Banda", "Termas de Río Hondo"],
+  "Tierra del Fuego": ["Ushuaia", "Río Grande", "Tolhuin"],
+  "Tucumán": ["San Miguel de Tucumán", "Yerba Buena", "Tafí Viejo"]
+}
+  

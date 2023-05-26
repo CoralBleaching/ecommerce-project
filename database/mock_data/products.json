@@ -1,0 +1,268 @@
+{
+    "Bomberman": {
+        "Bombs": [
+        {
+            "name": "Bomb",
+            "description": "Increase the number of deployable bombs."
+        },
+        {
+            "name": "Mine Bomb",
+            "description": "A bomb that activates when a monster or player steps on it. When deployed, it will fade into the ground. Typically, only the first bomb placed by a player will be a Mine Bomb."
+        },
+        {
+            "name": "Rubber Bomb",
+            "description": "These bombs have the looks and properties of a rubbery substance and will bounce when kicked or thrown/punched."
+        },
+        {
+            "name": "Ice Bomb",
+            "description": "A bomb that freezes enemies on explosion."
+        },
+        {
+            "name": "Dangerous Bomb",
+            "description": "A bomb that explodes in a specific radius."
+        },
+        {
+            "name": "Power Bomb",
+            "description": "A bomb with an extremely large explosion radius."
+        },
+        {
+            "name": "Pierce Bomb",
+            "description": "A bomb with a fire explosion that pierces through obstacles."
+        },
+        {
+            "name": "RC Bomb",
+            "description": "A remote-controlled bomb that can be detonated at will."
+        }
+        ],
+        "Fires": [
+        {
+            "name": "Fire",
+            "description": "Makes the explosion travel one step further."
+        },
+        {
+            "name": "Ice Fire",
+            "description": "A fire explosion that freezes enemies."
+        },
+        {
+            "name": "Bouncing Fire",
+            "description": "A fireball that bounces off walls."
+        },
+        {
+            "name": "Mega Fire",
+            "description": "An extremely powerful and destructive fire explosion."
+        }
+        ],
+        "Bomb manipulation": [
+        {
+            "name": "Bomb Kick",
+            "description": "Allows the bomber to kick bombs in a specific direction."
+        },
+        {
+            "name": "Power Glove",
+            "description": "Enables the bomber to throw bombs at a distance."
+        },
+        {
+            "name": "Punching Glove",
+            "description": "Allows the bomber to punch bombs away."
+        },
+        {
+            "name": "Bomb Pass",
+            "description": "Walk through bombs freely."
+        },
+        {
+            "name": "Vest",
+            "description": "Make the player invincible for a short time."
+        }
+        ]
+  },
+  "Pokémon": {
+        "Vitamins": [
+        {
+            "name": "Protein",
+            "description": "Increases the Attack stat of a Pokémon."
+        },
+        {
+            "name": "Calcium",
+            "description": "Increases the Special Attack stat of a Pokémon."
+        },
+        {
+            "name": "Iron",
+            "description": "Increases the Defense stat of a Pokémon."
+        },
+        {
+            "name": "Zinc",
+            "description": "Increases the Special Defense stat of a Pokémon."
+        },
+        {
+            "name": "Carbos",
+            "description": "Increases the Speed stat of a Pokémon."
+        },
+        {
+            "name": "HP Up",
+            "description": "Increases the HP stat of a Pokémon."
+        },
+        {
+            "name": "PP Up",
+            "description": "Increases the PP (Power Points) of a Pokémon's moves."
+        },
+        {
+            "name": "PP Max",
+            "description": "Increases the maximum PP of any move to 160% of the original PP. Can be used once per move. Raises the Pokémon's Happiness."
+        }
+        ],
+        "Electronics": [
+        {
+            "name": "Pokédex",
+            "description": "A device that records information about Pokémon."
+        },
+        {
+            "name": "PokéNav",
+            "description": "A multifunctional device that provides navigation and communication features."
+        },
+        {
+            "name": "VS Seeker",
+            "description": "A device that allows the player to rematch trainers for additional battles."
+        },
+        {
+            "name": "Radio Card",
+            "description": "A card that grants access to various radio channels for news and music."
+        },
+        {
+            "name": "Xtransceiver",
+            "description": "A communication device that enables video calls with other trainers."
+        },
+        {
+            "name": "Battle Recorder",
+            "description": "A device that records and replays Pokémon battles for analysis."
+        }
+        ],
+        "Poke balls": [
+        {
+            "name": "Poké Ball",
+            "description": "A standard Poké Ball used to capture wild Pokémon."
+        },
+        {
+            "name": "Great Ball",
+            "description": "A Poké Ball with a higher capture rate than a standard Poké Ball."
+        },
+        {
+            "name": "Ultra Ball",
+            "description": "A Poké Ball with a higher capture rate than a Great Ball."
+        },
+        {
+            "name": "Master Ball",
+            "description": "A Poké Ball with a 100% capture rate. It can catch any wild Pokémon."
+        },
+        {
+            "name": "Premier Ball",
+            "description": "A rare Poké Ball given as a bonus for purchasing multiples of standard Poké Balls."
+        },
+        {
+            "name": "Dusk Ball",
+            "description": "A Poké Ball with a higher capture rate when used in dark areas or at night."
+        },
+        {
+            "name": "Quick Ball",
+            "description": "A Poké Ball with a higher capture rate when used at the start of a battle."
+        },
+        {
+            "name": "Repeat Ball",
+            "description": "A Poké Ball with a higher capture rate when used on a Pokémon that has been previously caught."
+        },
+        {
+            "name": "Nest Ball",
+            "description": "A Poké Ball with a higher capture rate on Pokémon with lower levels."
+        }
+        ]
+    },
+    "Mario Bros": {
+        "Mushrooms": [
+            {
+            "name": "Super Mushroom",
+            "description": "Makes Mario grow larger in size and gain an extra hit point."
+            },
+            {
+            "name": "1-Up Mushroom",
+            "description": "Grants Mario an additional life when collected."
+            },
+            {
+            "name": "Mega Mushroom",
+            "description": "Temporarily transforms Mario into a giant, allowing him to crush enemies and obstacles."
+            },
+            {
+            "name": "Poison Mushroom",
+            "description": "Has a detrimental effect on Mario, causing him to shrink or lose a life."
+            },
+            {
+            "name": "Mini Mushroom",
+            "description": "Shrinks Mario in size, allowing him to access hidden areas and platforms."
+            },
+            {
+            "name": "Propeller Mushroom",
+            "description": "Gives Mario the ability to perform a high vertical jump and hover in the air."
+            }
+        ],
+        "Flowers": [
+            {
+            "name": "Super Leaf",
+            "description": "Transforms Mario into Raccoon Mario, granting him the ability to fly and swipe enemies with his tail."
+            },
+            {
+            "name": "Fire Flower",
+            "description": "Enables Mario to shoot fireballs and defeat enemies from a distance."
+            },
+            {
+            "name": "Ice Flower",
+            "description": "Allows Mario to throw iceballs that freeze enemies and create platforms."
+            },
+            {
+            "name": "Boomerang Flower",
+            "description": "Grants Mario the ability to throw boomerangs that can defeat enemies and collect items."
+            },
+            {
+            "name": "Gold Flower",
+            "description": "Turns Mario into Gold Mario, allowing him to turn blocks and enemies into coins."
+            },
+            {
+            "name": "Cape Feather",
+            "description": "Transforms Mario into Cape Mario, granting him the ability to fly and perform spin attacks."
+            },
+            {
+            "name": "Star",
+            "description": "Temporarily makes Mario invincible and increases his running speed."
+            }
+        ],
+        "Tools": [
+            {
+            "name": "Hammer",
+            "description": "Allows Mario to break certain blocks and defeat enemies by throwing hammers."
+            },
+            {
+            "name": "P-Wing",
+            "description": "Grants Mario unlimited flight and invincibility for the duration of a level."
+            },
+            {
+            "name": "Tanuki Suit",
+            "description": "Transforms Mario into Tanooki Mario, granting him the ability to glide and turn into a statue to avoid enemies."
+            },
+            {
+            "name": "Blue Shell",
+            "description": "Provides Mario with a protective shell that allows him to slide and defeat enemies."
+            },
+            {
+            "name": "Cannon Box",
+            "description": "Turns Mario into Cannon Mario, allowing him to shoot cannonballs to reach distant areas."
+            },
+            {
+            "name": "Penguin Suit",
+            "description": "Transforms Mario into Penguin Mario, giving him the ability to slide on ice and swim more effectively."
+            },
+            {
+            "name": "Propeller Box",
+            "description": "Gives Mario a propeller on his head, enabling him to perform high jumps and reach higher platforms."
+            }
+        ]
+    }      
+}
+  
+  
