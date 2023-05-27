@@ -9,6 +9,8 @@ package user;
  * @author renato
  */
 public class User {
+
+    private int userId;
     private String 
             name, 
             username, 
@@ -18,7 +20,8 @@ public class User {
     private boolean isAdmin;
 
 
-    public User(String name, String username, String password, String email, Address address, boolean isAdmin) {
+    public User(int userId, String name, String username, String password, String email, Address address, boolean isAdmin) {
+        this.userId = userId;
         this.name = name;
         this.username = username;
         this.password = password;
@@ -26,7 +29,14 @@ public class User {
         this.address = address;
         this.isAdmin = isAdmin;
     }
-    
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;

@@ -1,9 +1,17 @@
 create table if not exists User (
     id_user integer primary key,
     name varchar(255) not null,
-    username varchar(50) not null,
-    password varchar(50) not null,
-    email varchar(50) not null,
+    username varchar(50) not null constraint username check (
+        username not glob '*[^a-zA-Z0-9 ]*'
+    ), -- Alphanumeric or space, localized
+    password varchar(50) not null constraint password check (
+        length(password) >= 8 
+        and password glob '*[a-zA-Z]*' -- At least 1 letter
+        and password glob '*[0-9]*' -- At least 1 number
+    ),
+    email varchar(50) not null constraint email check (
+        email like '%@%.%'
+    ),
     is_admin boolean not null default false
 );
 
@@ -99,10 +107,3 @@ create table if not exists Picture (
     name varchar(255) not null unique,
     data blob not null
 );
-
--- create table if not exists HasPicture (
---     id_product integer not null unique,
---     id_picture integer not null,
---     foreign key (id_product) references Product (id_product),
---     foreign key (id_picture) references Picture (id_picture)
--- );

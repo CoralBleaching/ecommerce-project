@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/src/java/exceptions/ConstraintName.java</file>
             <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/src/java/user/User.java</file>
-            <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/.gitignore</file>
             <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/src/java/user/Address.java</file>
-            <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/lib/README.md</file>
             <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/database/scripts/create-database.sql</file>
+            <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/src/java/user/LoginServlet.java</file>
+            <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/src/java/exceptions/DataAccessException.java</file>
+            <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/src/java/exceptions/ExceptionType.java</file>
             <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/src/java/user/UserDAO.java</file>
-            <file>file:/G:/OneDrive/Documents/Estudo/MI/7º%20semestre/Programação%20para%20Web%20I/ecommerce-project/database/scripts/CreateDatabase.java</file>
         </group>
     </open-files>
 </project-private>

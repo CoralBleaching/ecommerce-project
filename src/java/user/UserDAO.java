@@ -4,21 +4,25 @@
  */
 package user;
 
+import exceptions.ConstraintName;
+import exceptions.DataAccessException;
+import exceptions.ExceptionType;
 import java.io.File;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author renato
  */
 public class UserDAO {
+    private static final String CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART =
+        "CHECK constraint failed";
     
-    public static boolean registerUser(User user, Address address) {
+    public static boolean registerUser(User user, Address address) 
+        throws DataAccessException {
         try {
             Class.forName("org.sqlite3.Driver");
             String url = "jbdc:sqlite:" + new File(
@@ -35,7 +39,7 @@ public class UserDAO {
                 user_stmt.setString(1, user.getName());
                 user_stmt.setString(2, user.getUsername());
                 user_stmt.setString(3, user.getPassword());
-                user_stmt.setString(4, user.getEmail());  
+                user_stmt.setString(4, user.getEmail());   
 
                 int affectedRows = user_stmt.executeUpdate();
                 if (affectedRows > 0) {
@@ -69,18 +73,30 @@ public class UserDAO {
                         address_stmt.setString(6, address.getNumber());
                         address_stmt.setString(7, address.getZipcode());
                         address_stmt.setString(8, address.getDistrict());
+                        
 
                         return address_stmt.executeUpdate() > 0;
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) { 
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex); 
+        } catch (ClassNotFoundException ex) {
+            throw new DataAccessException(ExceptionType.DatabaseConnectionError);
+        } catch (SQLException ex) {
+            String[] message = ex.getMessage().split(": ");
+            
+            if (message[0].equals(CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART)) {
+                throw new DataAccessException(ConstraintName.valueOf(message[1]));
+            } else {
+                var DA_exc = new DataAccessException(ExceptionType.Miscellaneous);
+                DA_exc.appendToMessage(ex.getMessage());
+                throw DA_exc;
+            }
         }
         return false;
     }
     
-    public static boolean validateLogin(String username, String password) {
+    public static boolean validateLogin(String username, String password) 
+        throws DataAccessException {
         try {
             Class.forName("org.sqlite3.Driver");
             String url = "jbdc:sqlite:" + new File(
@@ -99,13 +115,15 @@ public class UserDAO {
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            throw new DataAccessException(ExceptionType.DatabaseConnectionError);
+        } catch (SQLException ex) {
+            throw new DataAccessException(ExceptionType.UserNotFound);
         }
         return false;
     }
     
-    public static Address getAddressByUserId(int user_id) {
+    public static Address getAddressByUserId(int user_id) throws DataAccessException {
         Address address = null;
         try {
             Class.forName("org.sqlite3.Driver");
@@ -133,19 +151,22 @@ public class UserDAO {
                                 stmt_res.getString("street"),
                                 stmt_res.getString("number"),
                                 stmt_res.getString("zipcode"),
-                                stmt_res.getString("distritc")
+                                stmt_res.getString("district")
                             );
                         }
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            throw new DataAccessException(ExceptionType.DatabaseConnectionError);
+        } catch (SQLException ex) {
+            throw new DataAccessException(ExceptionType.AddressNotFound);
         }
         return address;
     }
     
-    public static User getUserByLoginNoAddress(String username, String password) {
+    public static User getUserByLoginNoAddress(String username, String password) 
+        throws DataAccessException {
         User user = null;
         try {
             Class.forName("org.sqlite3.Driver");
@@ -154,13 +175,14 @@ public class UserDAO {
             ).getPath();
             try (Connection conn = DriverManager.getConnection(url)) {
                 try (var stmt = conn.prepareStatement(
-                    "select name, username, email, is_admin from User"
+                    "select id_user, name, username, email, is_admin from User"
                         + "where username = ? and password = ?")) {
                     stmt.setString(1, username);
                     stmt.setString(2,password);
                     try (var stmt_res = stmt.executeQuery()){
                         if (stmt_res.next()) {
                             user = new User(
+                                stmt_res.getInt("id_user"),
                                 stmt_res.getString("name"),
                                 stmt_res.getString("username"),
                                 null,
@@ -172,9 +194,18 @@ public class UserDAO {
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            throw new DataAccessException(ExceptionType.DatabaseConnectionError);
+        } catch (SQLException ex) {
+            throw new DataAccessException(ExceptionType.UserNotFound);
         }
+        return user;
+    }
+    
+    public static User getUserByLoginFull(String username, String password) 
+        throws DataAccessException {
+        User user = getUserByLoginNoAddress(username, password);
+        user.setAddress(getAddressByUserId(user.getUserId()));
         return user;
     }
     
