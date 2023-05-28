@@ -4,9 +4,8 @@
  */
 package user;
 
-import exceptions.ConstraintName;
-import exceptions.DataAccessException;
-import exceptions.ExceptionType;
+import transactions.ConstraintName;
+import transactions.TransactionResult;
 import java.io.File;
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -18,11 +17,11 @@ import java.sql.Statement;
  * @author renato
  */
 public class UserDAO {
-    private static final String CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART =
-        "CHECK constraint failed";
+    private static final String 
+        CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART = "CHECK constraint failed",
+        CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR = ": ";
     
-    public static boolean registerUser(User user, Address address) 
-        throws DataAccessException {
+    public static TransactionResult registerUser(User user, Address address) {
         try {
             Class.forName("org.sqlite3.Driver");
             String url = "jbdc:sqlite:" + new File(
@@ -73,30 +72,26 @@ public class UserDAO {
                         address_stmt.setString(6, address.getNumber());
                         address_stmt.setString(7, address.getZipcode());
                         address_stmt.setString(8, address.getDistrict());
-                        
-
-                        return address_stmt.executeUpdate() > 0;
                     }
                 }
             }
         } catch (ClassNotFoundException ex) {
-            throw new DataAccessException(ExceptionType.DatabaseConnectionError);
+            return TransactionResult.DatabaseConnectionError;
         } catch (SQLException ex) {
-            String[] message = ex.getMessage().split(": ");
+            String[] message = ex.getMessage().split(CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR);
             
             if (message[0].equals(CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART)) {
-                throw new DataAccessException(ConstraintName.valueOf(message[1]));
+                return ConstraintName.valueOf(message[1]).getTransactionResult();
             } else {
-                var DA_exc = new DataAccessException(ExceptionType.Miscellaneous);
-                DA_exc.appendToMessage(ex.getMessage());
-                throw DA_exc;
+                var resultValue = TransactionResult.Miscellaneous;
+                resultValue.appendToMessage(ex.getMessage());
+                return resultValue;
             }
         }
-        return false;
+        return TransactionResult.Successful;
     }
     
-    public static boolean validateLogin(String username, String password) 
-        throws DataAccessException {
+    public static TransactionResult validateLogin(String username, String password) {
         try {
             Class.forName("org.sqlite3.Driver");
             String url = "jbdc:sqlite:" + new File(
@@ -110,20 +105,25 @@ public class UserDAO {
                         if (stmt_res.next()) {
                             stmt.close();
                             stmt_res.close();
-                            return true;
                         }
                     }
                 }
             }
         } catch (ClassNotFoundException ex) {
-            throw new DataAccessException(ExceptionType.DatabaseConnectionError);
+            return TransactionResult.DatabaseConnectionError;
         } catch (SQLException ex) {
-            throw new DataAccessException(ExceptionType.UserNotFound);
+            return TransactionResult.UserNotFound;
         }
-        return false;
+        return TransactionResult.Successful;
     }
     
-    public static Address getAddressByUserId(int user_id) throws DataAccessException {
+    public record AddressFetch (TransactionResult resultValue, Address address) {
+        public boolean wasSuccessful() {
+            return resultValue == TransactionResult.Successful;
+        }
+    }
+    
+    public static AddressFetch getAddressByUserId(int user_id) {
         Address address = null;
         try {
             Class.forName("org.sqlite3.Driver");
@@ -158,15 +158,20 @@ public class UserDAO {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            throw new DataAccessException(ExceptionType.DatabaseConnectionError);
+            return new AddressFetch(TransactionResult.DatabaseConnectionError, new Address());
         } catch (SQLException ex) {
-            throw new DataAccessException(ExceptionType.AddressNotFound);
+            return new AddressFetch(TransactionResult.AddressNotFound, new Address());
         }
-        return address;
+        return new AddressFetch(TransactionResult.Successful, address);
     }
     
-    public static User getUserByLoginNoAddress(String username, String password) 
-        throws DataAccessException {
+    public record UserFetch(TransactionResult resultValue, User user) {
+        public boolean wasSuccessful() {
+            return resultValue == TransactionResult.Successful;
+        }
+    }
+    
+    public static UserFetch getUserByLoginNoAddress(String username, String password) {
         User user = null;
         try {
             Class.forName("org.sqlite3.Driver");
@@ -195,19 +200,25 @@ public class UserDAO {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            throw new DataAccessException(ExceptionType.DatabaseConnectionError);
+            return new UserFetch(TransactionResult.DatabaseConnectionError, new User());
         } catch (SQLException ex) {
-            throw new DataAccessException(ExceptionType.UserNotFound);
+            return new UserFetch(TransactionResult.UserNotFound, new User());
         }
-        return user;
+        return new UserFetch(TransactionResult.Successful, user);
     }
     
-    public static User getUserByLoginFull(String username, String password) 
-        throws DataAccessException {
-        User user = getUserByLoginNoAddress(username, password);
-        user.setAddress(getAddressByUserId(user.getUserId()));
-        return user;
+    public static UserFetch getUserByLoginFull(String username, String password) {
+        UserFetch userFetch = getUserByLoginNoAddress(username, password);
+        if (userFetch.wasSuccessful()) {
+            User user = new User(userFetch.user());
+            AddressFetch addressFetch = getAddressByUserId(user.getUserId());
+            if (addressFetch.wasSuccessful()) {
+                user.setAddress(new Address(addressFetch.address()));
+                return new UserFetch(userFetch.resultValue(), user);
+            }
+            return new UserFetch(addressFetch.resultValue(), user);
+        }
+        return userFetch;
     }
-    
     
 }

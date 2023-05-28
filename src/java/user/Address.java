@@ -12,7 +12,9 @@ public class Address {
     private String city, state, country,
                    street, number, zipcode,
                    district;
-
+    
+    public Address() {}
+    
     public Address(String City, String State, String Country, String street, String number, String zipcode, String district) {
         this.city = City;
         this.state = State;
@@ -21,6 +23,16 @@ public class Address {
         this.number = number;
         this.zipcode = zipcode;
         this.district = district;
+    }
+    
+    public Address(Address other) {
+        this.city = other.city;
+        this.state = other.state;
+        this.country = other.country;
+        this.street = other.street;
+        this.number = other.number;
+        this.zipcode = other.zipcode;
+        this.district = other.district;
     }
     
     public String getCity() {

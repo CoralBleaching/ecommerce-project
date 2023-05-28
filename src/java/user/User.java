@@ -19,7 +19,8 @@ public class User {
     private Address address;
     private boolean isAdmin;
 
-
+    public User() {}
+    
     public User(int userId, String name, String username, String password, String email, Address address, boolean isAdmin) {
         this.userId = userId;
         this.name = name;
@@ -28,6 +29,16 @@ public class User {
         this.email = email;
         this.address = address;
         this.isAdmin = isAdmin;
+    }
+    
+    public User(User other) {
+        this.userId = other.userId;
+        this.name = other.name;
+        this.username = other.username;
+        this.password = other.password;
+        this.email = other.email;
+        this.address = new Address(other.address);
+        this.isAdmin = other.isAdmin;
     }
 
     public int getUserId() {
