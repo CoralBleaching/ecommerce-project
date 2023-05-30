@@ -40,6 +40,20 @@ public class User {
         this.address = new Address(other.address);
         this.isAdmin = other.isAdmin;
     }
+    
+    
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", name=" + name + 
+                ", username=" + username +
+                ", password=" + password + 
+                ", email=" + email +
+                ", address=" + address + 
+                ", isAdmin=" + isAdmin +
+                '}';
+    }
 
     public int getUserId() {
         return userId;

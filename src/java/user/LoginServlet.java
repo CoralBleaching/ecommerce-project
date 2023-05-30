@@ -5,14 +5,18 @@
 package user;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import transactions.TransactionResult;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import transactions.JsonLabel;
+import user.UserDAO.UserFetch;
 
 /**
  *
@@ -22,7 +26,8 @@ public class LoginServlet extends HttpServlet {
     private static final String USER_COOKIE_NAME = "ecommerce.user";
     private static final Gson gson = new Gson();
     
-    private void setCookie(String value, String cookieName, HttpServletRequest request, HttpServletResponse response) {
+    private void setCookie(String value, String cookieName, 
+        HttpServletRequest request, HttpServletResponse response) {
         Cookie outCookie = null;
         Cookie[] cookies = request.getCookies();
         
@@ -44,31 +49,52 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void service(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         String username = request.getParameter(Parameter.Username.get());
         String password = request.getParameter(Parameter.Password.get());
         
-        TransactionResult validationResult = UserDAO.validateLogin(username, password);
+        response.addHeader("Access-Control-Allow-Origin", 
+            "http://localhost:3000");
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         
+        // String dbpath = getServletContext().getRealPath("database/ieeecommerce-db.db");
+        
+        TransactionResult validationResult = UserDAO.validateLogin(
+            username, password);        
         if (validationResult.wasSuccessful()) {
             HttpSession session = request.getSession(true);
             var fetchUser = UserDAO.getUserByLoginFull(username, password);
             
-            if (fetchUser.wasSuccessful()) {
-                User user = new User(fetchUser.user());
-                session.setAttribute(Parameter.Username.get(), 
-                user);
-                String userJson = gson.toJson(user);
-                setCookie(userJson, USER_COOKIE_NAME, request, response);
-            } else {
-                validationResult = fetchUser.resultValue();
-            }
+            session.setAttribute(Parameter.Username.get(),fetchUser.user());
+            /*/String userJson = gson.toJson(fetchUser);
+            System.out.println("[service] " + fetchUser);
+            System.out.println("[service] " + userJson);
+            setCookie(fetchUser.user().toString(),
+                USER_COOKIE_NAME, 
+                request, 
+                response);/**/
+
+            String responseJson = buildJsonString(
+                fetchUser.resultValue(), JsonLabel.user, fetchUser.user()
+            );
+            out.println(responseJson);
+            out.flush();
+            return;
         }
         
-        if (!validationResult.wasSuccessful()) {
-            
-        }
+        out.println(buildJsonString(
+            validationResult, JsonLabel.user, null
+        ));
+        out.flush();
     }
 
+    private <T> String buildJsonString(TransactionResult result, JsonLabel label, T obj) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(result.name(), result.getMessage());
+        jsonObject.addProperty(label.name(), gson.toJson(obj));
+        return jsonObject.toString();
+    }
 }

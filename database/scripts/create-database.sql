@@ -25,7 +25,6 @@ create table if not exists CreditCard (
 );
 
 create table if not exists Address (
-    --id_address integer primary key, (weak entity)
     id_user integer not null,
     id_city integer not null,
     street varchar(50) not null,
@@ -97,7 +96,7 @@ create table if not exists Category (
 create table if not exists Price (
     id_price integer primary key,
     id_product integer not null,
-    timestamp datetime not null default datetime('now', 'localtime'),
+    timestamp datetime not null default current_timestamp,
     value float not null,
     foreign key (id_product) references Product (id_product)
 );

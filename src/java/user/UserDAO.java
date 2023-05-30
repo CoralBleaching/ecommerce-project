@@ -6,9 +6,10 @@ package user;
 
 import transactions.ConstraintName;
 import transactions.TransactionResult;
-import java.io.File;
 import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -23,10 +24,8 @@ public class UserDAO {
     
     public static TransactionResult registerUser(User user, Address address) {
         try {
-            Class.forName("org.sqlite3.Driver");
-            String url = "jbdc:sqlite:" + new File(
-                "database", "ieeecommerce-db.db"
-            ).getPath();
+            Class.forName("org.sqlite.JDBC");
+            String url = "jdbc:sqlite:C:\\ieeecommerce-db.db";
             try (Connection conn = DriverManager.getConnection(url)) {
             
                 var user_stmt = conn.prepareStatement(
@@ -90,18 +89,18 @@ public class UserDAO {
         }
         return TransactionResult.Successful;
     }
-    
+        
     public static TransactionResult validateLogin(String username, String password) {
+        String url = "jdbc:sqlite:C:\\ieeecommerce-db.db";
         try {
-            Class.forName("org.sqlite3.Driver");
-            String url = "jbdc:sqlite:" + new File(
-                "database", "ieeecommerce-db.db"
-            ).getPath();
+            Class.forName("org.sqlite.JDBC");
             try (Connection conn = DriverManager.getConnection(url)) {
-                try (var stmt = conn.prepareStatement(
+                try (PreparedStatement stmt = conn.prepareStatement(
                     "select username, password from User"
-                        + "where username = ? and password = ?")) {
-                    try (var stmt_res = stmt.executeQuery()) {
+                        + " where username = ? and password = ?;")) {
+                    stmt.setString(1, username);
+                    stmt.setString(2, password);
+                    try (ResultSet stmt_res = stmt.executeQuery()) {
                         if (stmt_res.next()) {
                             stmt.close();
                             stmt_res.close();
@@ -110,8 +109,10 @@ public class UserDAO {
                 }
             }
         } catch (ClassNotFoundException ex) {
+            System.out.println(ex.toString());
             return TransactionResult.DatabaseConnectionError;
         } catch (SQLException ex) {
+            System.out.println(ex.toString());
             return TransactionResult.UserNotFound;
         }
         return TransactionResult.Successful;
@@ -126,17 +127,15 @@ public class UserDAO {
     public static AddressFetch getAddressByUserId(int user_id) {
         Address address = null;
         try {
-            Class.forName("org.sqlite3.Driver");
-            String url = "jbdc:sqlite:" + new File(
-                "database", "ieeecommerce-db.db"
-            ).getPath();
+            Class.forName("org.sqlite.JDBC");
+            String url = "jdbc:sqlite:C:\\ieeecommerce-db.db";
             try (Connection conn = DriverManager.getConnection(url)) {
                 try (var stmt = conn.prepareStatement(
                     "select City.name as city, Address.street as street, "
                         + "Address.number as number, Address.zipcode as zipcode, "
                         + "Address.district as district, State.name as state, "
                         + "Country.name as country"
-                    + "from Address, City, State, Country where"
+                    + "from Address, City, State, Country where "
                         + "Address.id_user = ? and "
                         + "Adress.id_city = City.id_city and "
                         + "City.id_state = State.id_state and "
@@ -174,16 +173,15 @@ public class UserDAO {
     public static UserFetch getUserByLoginNoAddress(String username, String password) {
         User user = null;
         try {
-            Class.forName("org.sqlite3.Driver");
-            String url = "jbdc:sqlite:" + new File(
-                "database", "ieeecommerce-db.db"
-            ).getPath();
+            Class.forName("org.sqlite.JDBC");
+            String url = "jdbc:sqlite:C:\\ieeecommerce-db.db";
             try (Connection conn = DriverManager.getConnection(url)) {
                 try (var stmt = conn.prepareStatement(
                     "select id_user, name, username, email, is_admin from User"
-                        + "where username = ? and password = ?")) {
+                        + " where username = ? and password = ?")) {
                     stmt.setString(1, username);
                     stmt.setString(2,password);
+                    System.out.println("[getUserByLoginNoAddress] " + stmt.toString());
                     try (var stmt_res = stmt.executeQuery()){
                         if (stmt_res.next()) {
                             user = new User(
@@ -200,8 +198,10 @@ public class UserDAO {
                 }
             }
         } catch (ClassNotFoundException ex) {
+            System.out.println("[getUserByLoginNoAddress] " + ex);
             return new UserFetch(TransactionResult.DatabaseConnectionError, new User());
         } catch (SQLException ex) {
+            System.out.println("[getUserByLoginNoAddress] " + ex);
             return new UserFetch(TransactionResult.UserNotFound, new User());
         }
         return new UserFetch(TransactionResult.Successful, user);
@@ -209,14 +209,19 @@ public class UserDAO {
     
     public static UserFetch getUserByLoginFull(String username, String password) {
         UserFetch userFetch = getUserByLoginNoAddress(username, password);
+        System.out.println("[getUserByLoginFull] " + userFetch);
         if (userFetch.wasSuccessful()) {
-            User user = new User(userFetch.user());
-            AddressFetch addressFetch = getAddressByUserId(user.getUserId());
+            AddressFetch addressFetch = getAddressByUserId(
+                userFetch.user().getUserId()
+            );
             if (addressFetch.wasSuccessful()) {
+                User user = new User(userFetch.user());
                 user.setAddress(new Address(addressFetch.address()));
                 return new UserFetch(userFetch.resultValue(), user);
             }
-            return new UserFetch(addressFetch.resultValue(), user);
+            return new UserFetch(
+                addressFetch.resultValue(), userFetch.user()
+            );
         }
         return userFetch;
     }

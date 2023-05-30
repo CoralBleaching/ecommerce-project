@@ -49,7 +49,7 @@ def fill_user_table(cur: sqlite3.Cursor,
                 data.pop()
                 break
             data[-1].update({
-                'password': ''.join(rng.choice(chars, rng.integers(9, 15))),
+                'password': 'a1' + ''.join(rng.choice(chars, rng.integers(9, 15))),
                 'is_admin': str(proportion_of_admins > rng.random())
             })
     

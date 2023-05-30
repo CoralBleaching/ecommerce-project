@@ -35,6 +35,19 @@ public class Address {
         this.district = other.district;
     }
     
+    @Override
+    public String toString() {
+        return "Address{" +
+                "city=" + city +
+                ", state=" + state +
+                ", country=" + country +
+                ", street=" + street +
+                ", number=" + number +
+                ", zipcode=" + zipcode +
+                ", district=" + district +
+                '}';
+    }
+    
     public String getCity() {
         return city;
     }
