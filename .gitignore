@@ -1,7 +1,6 @@
+target/*
+.vscode
+
+# JAR files
 gson-2.10.1.jar
 sqlite-jdbc-3.41.2.1.jar
-private
-.vscode
-build
-dist
-server

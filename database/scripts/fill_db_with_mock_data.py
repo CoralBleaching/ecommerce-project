@@ -9,6 +9,8 @@ from datetime import datetime
 from typing import cast
 from unidecode import unidecode
 
+DB_PATH = "C:\\ieeecommerce-db.db"
+
 def convert_to_camel_case(string: str):
     cleaned_string = unidecode(string)
     cleaned_string = re.sub(r'[^a-zA-Z0-9\s]+', ' ', cleaned_string)
@@ -20,7 +22,7 @@ def convert_to_camel_case(string: str):
 
 def create_tables(
         cur: sqlite3.Cursor,
-        path: str = os.getcwd() + '/database/scripts/', 
+        path: str = DB_PATH, 
         sql_file: str = 'create-database.sql'):
     with open(path + sql_file) as sql_script:
         cur.executescript(sql_script.read())
@@ -225,13 +227,6 @@ def fill_category_product_and_has_picture_tables(
                                               product['name'],
                                               product['description'],
                                               str(stock)))
-                    # id_product = cur.lastrowid
-
-
-                    # cur.execute('''
-                    #     insert into HasPicture (id_product, id_picture)
-                    #     values (?, ?)
-                    # ''', (id_product, id_picture))
 
 
 def fill_price_table(cur: sqlite3.Cursor,
@@ -260,7 +255,7 @@ def main(dbpath: str,
          seed: int, 
          proportion_of_admins: float,
          proportion_sold_out: float):
-    dbpath = os.getcwd() + '/database/ieeecommerce-db.db'
+    dbpath = DB_PATH
     print(dbpath)
     try:
         rng = np.random.default_rng(seed)
@@ -297,7 +292,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dbpath', 
                         type=str, 
-                        default=cwd + '/database/ieeecommerce-db.db',
+                        default=DB_PATH,
                         help='The path to the SQLite3 database file.')
     parser.add_argument('--data_path', 
                         type=str, 
@@ -310,7 +305,7 @@ if __name__ == '__main__':
     parser.add_argument('--proportion_of_admins',
                         type=float, 
                         default=0.1, 
-                        help="Proportion of user that will be administrators.")
+                        help="Proportion of users that will be administrators.")
     parser.add_argument('--proportion_sold_out',
                         type=float, 
                         default=0.1, 
