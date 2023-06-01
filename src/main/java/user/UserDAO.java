@@ -6,6 +6,8 @@ package user;
 
 import transactions.ConstraintName;
 import transactions.TransactionResult;
+import utils.DatabaseUtil;
+
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,13 +20,15 @@ import java.sql.Statement;
  * @author renato
  */
 public class UserDAO {
+    private static final DatabaseUtil databaseUtil = new DatabaseUtil();
     private static final String CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART = "CHECK constraint failed",
-            CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR = ": ";
+            CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR = ": ",
+            DATABASE_PATH = databaseUtil.getDatabasePath();
 
     public static TransactionResult registerUser(User user, Address address) {
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:C:\\ieeecommerce-db.db";
+            String url = "jdbc:sqlite:" + DATABASE_PATH;
             try (Connection conn = DriverManager.getConnection(url)) {
 
                 var user_stmt = conn.prepareStatement(
@@ -88,7 +92,7 @@ public class UserDAO {
     }
 
     public static TransactionResult validateLogin(String username, String password) {
-        String url = "jdbc:sqlite:C:\\ieeecommerce-db.db";
+        String url = "jdbc:sqlite:" + DATABASE_PATH;
         try {
             Class.forName("org.sqlite.JDBC");
             try (Connection conn = DriverManager.getConnection(url)) {
@@ -125,7 +129,7 @@ public class UserDAO {
         Address address = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:C:\\ieeecommerce-db.db";
+            String url = "jdbc:sqlite:" + DATABASE_PATH;
             try (Connection conn = DriverManager.getConnection(url)) {
                 try (var stmt = conn.prepareStatement(
                         "select City.name as city, Address.street as street, "
@@ -170,7 +174,7 @@ public class UserDAO {
         User user = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:C:\\ieeecommerce-db.db";
+            String url = "jdbc:sqlite:" + DATABASE_PATH;
             try (Connection conn = DriverManager.getConnection(url)) {
                 try (var stmt = conn.prepareStatement(
                         "select id_user, name, username, email, is_admin from User"

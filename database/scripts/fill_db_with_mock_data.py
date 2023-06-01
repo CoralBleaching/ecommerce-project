@@ -9,22 +9,28 @@ from datetime import datetime
 from typing import cast
 from unidecode import unidecode
 
-DB_PATH = "C:\\ieeecommerce-db.db"
+CONFIG_FILE_PATH = 'src/main/resources/config.properties'
+DATA_PATH = 'database/mock_data/'
+DB_PATH = 'database/ieeecommerce-db.db'
+SQL_SCRIPT_PATH = 'database/scripts/create-database.sql'
 
 def convert_to_camel_case(string: str):
     cleaned_string = unidecode(string)
     cleaned_string = re.sub(r'[^a-zA-Z0-9\s]+', ' ', cleaned_string)
     words = cleaned_string.split()
     words = [words[0].lower()] + [word.title() for word in words[1:]]
-    camel_case_string = ''.join(words)
+    return ''.join(words)
 
-    return camel_case_string
+def replace_special_characters_with_codes(path: str):
+    return ''.join(
+        '\\u{:04x}'.format(ord(char)) if ord(char) >= 128 else char
+        for char in path
+    )
 
 def create_tables(
         cur: sqlite3.Cursor,
-        path: str = DB_PATH, 
-        sql_file: str = 'create-database.sql'):
-    with open(path + sql_file) as sql_script:
+        sql_file: str = SQL_SCRIPT_PATH):
+    with open(sql_file) as sql_script:
         cur.executescript(sql_script.read())
 
 
@@ -231,6 +237,12 @@ def fill_category_product_and_has_picture_tables(
 
 def fill_price_table(cur: sqlite3.Cursor,
                      rng: np.random.Generator | None):
+    FIVE_MONTHS = 150
+    NUMBER_OF_PRODUCTS_WITH_MULTIPLE_PRICES = 10
+    AVERAGE_PRICE = 6
+    STANDARD_DEVIATION_PRICE = 0.8
+    ROUND_TO = 2
+
     if rng is None:
         rng = np.random.default_rng()
         
@@ -241,12 +253,13 @@ def fill_price_table(cur: sqlite3.Cursor,
     stmt = 'insert into Price (id_product, timestamp, value) values (?, ?, ?)'
     now = datetime.now().toordinal()
 
-    for id_product in id_products + id_products[:10]:
-        timestamp = rng.integers(now - 150, now)
+    for id_product in id_products + \
+        id_products[:NUMBER_OF_PRODUCTS_WITH_MULTIPLE_PRICES]:
+        timestamp = rng.integers(now - FIVE_MONTHS, now)
         cur.execute(stmt, (
             id_product,
             str(datetime.fromordinal(timestamp)),
-            round(rng.lognormal(6, 0.8), 2) # interestingly shaped distribution
+            round(rng.lognormal(AVERAGE_PRICE, STANDARD_DEVIATION_PRICE), ROUND_TO)
         ))
 
 
@@ -255,8 +268,6 @@ def main(dbpath: str,
          seed: int, 
          proportion_of_admins: float,
          proportion_sold_out: float):
-    dbpath = DB_PATH
-    print(dbpath)
     try:
         rng = np.random.default_rng(seed)
         with sqlite3.connect(dbpath) as conn:
@@ -281,6 +292,11 @@ def main(dbpath: str,
             fill_category_product_and_has_picture_tables(
                 cur, data_path, rng, proportion_sold_out)
             fill_price_table(cur, rng)
+
+            with open(CONFIG_FILE_PATH, 'w', encoding='utf-8') as config_file:
+                full_db_path = f'database.path={os.getcwd()}/{DB_PATH}'\
+                    .replace('\\', '/')
+                config_file.write(replace_special_characters_with_codes(full_db_path))
     except sqlite3.Error as exc:
         print(exc)
     except IOError as exc:
@@ -296,7 +312,7 @@ if __name__ == '__main__':
                         help='The path to the SQLite3 database file.')
     parser.add_argument('--data_path', 
                         type=str, 
-                        default=cwd + '/database/mock_data/',
+                        default=cwd + '/' + DATA_PATH,
                         help='Path to the mock data directory.')
     parser.add_argument('--seed', 
                         type=int, 

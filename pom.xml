@@ -47,7 +47,10 @@
     <finalName>ecommerce-demo</finalName>
     <resources>
       <resource>
-        <directory>database</directory>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
       </resource>
     </resources>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
