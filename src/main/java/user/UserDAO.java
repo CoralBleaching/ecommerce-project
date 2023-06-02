@@ -108,7 +108,7 @@ public class UserDAO {
         return TransactionResult.Miscellaneous;
     }
 
-    public static TransactionResult updateUser(User user, Address address) {
+    public static TransactionResult updateUser(String oldUsername, User user, Address address) {
         try {
             Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:" + DATABASE_PATH;
@@ -122,13 +122,11 @@ public class UserDAO {
                 user_stmt.setString(2, user.getUsername());
                 user_stmt.setString(3, user.getPassword());
                 user_stmt.setString(4, user.getEmail());
-                user_stmt.setString(5, user.getUsername());
+                user_stmt.setString(5, oldUsername);
 
                 user_stmt.executeUpdate();
 
-                if (address == null) {
-                    return TransactionResult.Successful;
-                }
+                return TransactionResult.Successful;
             }
         } catch (ClassNotFoundException ex) {
             return TransactionResult.DatabaseConnectionError;
@@ -147,7 +145,6 @@ public class UserDAO {
                 return resultValue;
             }
         }
-        return TransactionResult.Miscellaneous;
     }
 
     public static TransactionResult validateLogin(String username, String password) {
