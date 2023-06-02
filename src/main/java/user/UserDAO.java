@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Locale;
 
 /**
  *
@@ -21,7 +22,7 @@ import java.sql.Statement;
  */
 public class UserDAO {
     private static final DatabaseUtil databaseUtil = new DatabaseUtil();
-    private static final String CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART = "CHECK constraint failed",
+    private static final String CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART = "[SQLITE_CONSTRAINT_CHECK] A CHECK constraint failed (CHECK constraint failed",
             CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR = ": ",
             DATABASE_PATH = databaseUtil.getDatabasePath();
 
@@ -40,6 +41,12 @@ public class UserDAO {
                 user_stmt.setString(2, user.getUsername());
                 user_stmt.setString(3, user.getPassword());
                 user_stmt.setString(4, user.getEmail());
+
+                user_stmt.executeUpdate();
+
+                if (address == null) {
+                    return TransactionResult.Successful;
+                }
 
                 int affectedRows = user_stmt.executeUpdate();
                 if (affectedRows > 0) {
@@ -72,6 +79,12 @@ public class UserDAO {
                         address_stmt.setString(6, address.getNumber());
                         address_stmt.setString(7, address.getZipcode());
                         address_stmt.setString(8, address.getDistrict());
+
+                        address_stmt.executeUpdate();
+
+                        conn.commit();
+
+                        return TransactionResult.Successful;
                     }
                 }
             }
@@ -81,14 +94,60 @@ public class UserDAO {
             String[] message = ex.getMessage().split(CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR);
 
             if (message[0].equals(CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART)) {
-                return ConstraintName.valueOf(message[1]).getTransactionResult();
+                String constraint = message[1]
+                        .replace(")", "");
+                constraint = constraint.substring(0, 1).toUpperCase()
+                        + constraint.substring(1);
+                return ConstraintName.valueOf(constraint).getTransactionResult();
             } else {
                 var resultValue = TransactionResult.Miscellaneous;
                 resultValue.appendToMessage(ex.getMessage());
                 return resultValue;
             }
         }
-        return TransactionResult.Successful;
+        return TransactionResult.Miscellaneous;
+    }
+
+    public static TransactionResult updateUser(User user, Address address) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String url = "jdbc:sqlite:" + DATABASE_PATH;
+            try (Connection conn = DriverManager.getConnection(url)) {
+
+                var user_stmt = conn.prepareStatement(
+                        "update User set "
+                                + "name = ?, username = ?, password = ?, email = ? "
+                                + "where username = ?");
+                user_stmt.setString(1, user.getName());
+                user_stmt.setString(2, user.getUsername());
+                user_stmt.setString(3, user.getPassword());
+                user_stmt.setString(4, user.getEmail());
+                user_stmt.setString(5, user.getUsername());
+
+                user_stmt.executeUpdate();
+
+                if (address == null) {
+                    return TransactionResult.Successful;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            return TransactionResult.DatabaseConnectionError;
+        } catch (SQLException ex) {
+            String[] message = ex.getMessage().split(CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR);
+
+            if (message[0].equals(CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART)) {
+                String constraint = message[1]
+                        .replace(")", "");
+                constraint = constraint.substring(0, 1).toUpperCase()
+                        + constraint.substring(1);
+                return ConstraintName.valueOf(constraint).getTransactionResult();
+            } else {
+                var resultValue = TransactionResult.Miscellaneous;
+                resultValue.appendToMessage(ex.getMessage());
+                return resultValue;
+            }
+        }
+        return TransactionResult.Miscellaneous;
     }
 
     public static TransactionResult validateLogin(String username, String password) {
@@ -105,6 +164,7 @@ public class UserDAO {
                         if (stmt_res.next()) {
                             stmt.close();
                             stmt_res.close();
+                            return TransactionResult.Successful;
                         }
                     }
                 }
@@ -116,7 +176,30 @@ public class UserDAO {
             System.out.println(ex.toString());
             return TransactionResult.UserNotFound;
         }
-        return TransactionResult.Successful;
+        return TransactionResult.Miscellaneous;
+    }
+
+    public static TransactionResult deleteByLogin(String username, String password) {
+        String url = "jdbc:sqlite:" + DATABASE_PATH;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            try (Connection conn = DriverManager.getConnection(url)) {
+                try (PreparedStatement stmt = conn.prepareStatement(
+                        "delete from User"
+                                + " where username = ?;")) {
+                    stmt.setString(1, username);
+                    // stmt.setString(2, password);
+                    stmt.executeUpdate();
+                    return TransactionResult.Successful;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            System.out.println(ex.toString());
+            return TransactionResult.DatabaseConnectionError;
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            return TransactionResult.UserNotFound;
+        }
     }
 
     public record AddressFetch(TransactionResult resultValue, Address address) {
@@ -191,6 +274,7 @@ public class UserDAO {
                                     stmt_res.getString("email"),
                                     null,
                                     stmt_res.getBoolean("is_admin"));
+                            return new UserFetch(TransactionResult.Successful, user);
                         }
                     }
                 }
@@ -202,7 +286,7 @@ public class UserDAO {
             System.out.println("[getUserByLoginNoAddress] " + ex);
             return new UserFetch(TransactionResult.UserNotFound, new User());
         }
-        return new UserFetch(TransactionResult.Successful, user);
+        return new UserFetch(TransactionResult.UserNotFound, null);
     }
 
     public static UserFetch getUserByLoginFull(String username, String password) {

@@ -9,14 +9,19 @@ package user;
  * @author renat
  */
 public enum Parameter {
+    Email("email"),
+    User("user"),
     Username("username"),
-    Password("password");
-    
+    Name("name"),
+    Password("password"),
+    Street("street");
+
     private final String name;
+
     private Parameter(String name) {
         this.name = name;
     }
-    
+
     public String get() {
         return name;
     }

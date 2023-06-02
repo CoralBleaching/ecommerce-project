@@ -4,14 +4,34 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
   <servlet>
-    <servlet-name>ApplicationServlet</servlet-name>
-    <servlet-class>main.ApplicationServlet</servlet-class>
+    <servlet-name>SignUpServlet</servlet-name>
+    <servlet-class>user.SignUpServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ApplicationServlet</servlet-name>
-    <url-pattern>/Application</url-pattern>
-  </servlet-mapping>    
+    <servlet-name>SignUpServlet</servlet-name>
+    <url-pattern>/SignUp</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UpdateServlet</servlet-name>
+    <servlet-class>user.UpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateServlet</servlet-name>
+    <url-pattern>/Update</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DeleteServlet</servlet-name>
+    <servlet-class>user.DeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteServlet</servlet-name>
+    <url-pattern>/Delete</url-pattern>
+  </servlet-mapping>
+
   <servlet>
         <servlet-name>LoginServlet</servlet-name>
       <servlet-class>user.LoginServlet</servlet-class>
@@ -20,6 +40,16 @@
       <servlet-name>LoginServlet</servlet-name>
       <url-pattern>/Login</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+      <servlet-name>LogoutServlet</servlet-name>
+      <servlet-class>user.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/SignOut</url-pattern>
+  </servlet-mapping>
+  
   <session-config>
       <session-timeout>
           30
