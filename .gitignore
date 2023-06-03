@@ -1,7 +1,7 @@
 # dirs
 target/*
 .vscode
+node_modules
 
 # files
-config.properties
 ieeecommerce-db.db
