@@ -3,6 +3,7 @@
     <!DOCTYPE html>
     <jsp:useBean id="user" class="user.User" scope="session" />
     <h1>Welcome, <jsp:getProperty name="user" property="name" /></h1>
+    <a href="Categories">Categories</a><br>
     <a href="SignOut">Sign out</a><br>
     <a href="update.jsp">Update your information</a><br>
     <a href="Delete">Delete account</a><br>

@@ -1,7 +1,7 @@
 create table if not exists User (
     id_user integer primary key,
     name varchar(255) not null,
-    username varchar(50) not null constraint username check (
+    username varchar(50) not null unique constraint username check (
         username not glob '*[^a-zA-Z0-9 ]*'
     ), -- Alphanumeric or space, localized
     password varchar(50) not null constraint password check (
@@ -82,14 +82,14 @@ create table if not exists Product (
 create table if not exists Subcategory (
     id_subcategory integer primary key,
     id_category integer not null,
-    name varchar(50) not null,
+    name varchar(50) not null unique, --unique
     description varchar(255),
     foreign key (id_category) references Category (id_category)
 );
 
 create table if not exists Category (
     id_category integer primary key,
-    name varchar(50) not null,
+    name varchar(50) not null unique, --unique
     description varchar(255)
 );
 

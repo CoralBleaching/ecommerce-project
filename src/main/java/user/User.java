@@ -1,27 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package user;
 
-/**
- *
- * @author renato
- */
 public class User {
 
     private int userId;
-    private String 
-            name, 
-            username, 
-            password, 
+    private String name,
+            username,
+            password,
             email;
     private Address address;
     private boolean isAdmin;
 
-    public User() {}
-    
-    public User(int userId, String name, String username, String password, String email, Address address, boolean isAdmin) {
+    public User() {
+    }
+
+    public User(int userId, String name, String username, String password, String email, Address address,
+            boolean isAdmin) {
         this.userId = userId;
         this.name = name;
         this.username = username;
@@ -30,7 +23,7 @@ public class User {
         this.address = address;
         this.isAdmin = isAdmin;
     }
-    
+
     public User(User other) {
         this.userId = other.userId;
         this.name = other.name;
@@ -40,17 +33,16 @@ public class User {
         this.address = new Address(other.address);
         this.isAdmin = other.isAdmin;
     }
-    
-    
+
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", name=" + name + 
+                ", name=" + name +
                 ", username=" + username +
-                ", password=" + password + 
+                ", password=" + password +
                 ", email=" + email +
-                ", address=" + address + 
+                ", address=" + address +
                 ", isAdmin=" + isAdmin +
                 '}';
     }
@@ -110,6 +102,5 @@ public class User {
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    
-    
+
 }

@@ -14,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Locale;
 
 /**
  *
@@ -24,7 +23,9 @@ public class UserDAO {
     private static final DatabaseUtil databaseUtil = new DatabaseUtil();
     private static final String CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART = "[SQLITE_CONSTRAINT_CHECK] A CHECK constraint failed (CHECK constraint failed",
             CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR = ": ",
-            DATABASE_PATH = databaseUtil.getDatabasePath();
+            DATABASE_PATH = databaseUtil.getDatabasePath(),
+            DB_FULL_URL = "jdbc:sqlite:" + DATABASE_PATH, // TODO: use this
+            DB_CLASS_NAME = "org.sqlite.JDBC"; // TODO: use this
 
     public static TransactionResult registerUser(User user, Address address) {
         try {
@@ -81,9 +82,6 @@ public class UserDAO {
                         address_stmt.setString(8, address.getDistrict());
 
                         address_stmt.executeUpdate();
-
-                        conn.commit();
-
                         return TransactionResult.Successful;
                     }
                 }
@@ -114,19 +112,20 @@ public class UserDAO {
             String url = "jdbc:sqlite:" + DATABASE_PATH;
             try (Connection conn = DriverManager.getConnection(url)) {
 
-                var user_stmt = conn.prepareStatement(
+                try (var user_stmt = conn.prepareStatement(
                         "update User set "
                                 + "name = ?, username = ?, password = ?, email = ? "
-                                + "where username = ?");
-                user_stmt.setString(1, user.getName());
-                user_stmt.setString(2, user.getUsername());
-                user_stmt.setString(3, user.getPassword());
-                user_stmt.setString(4, user.getEmail());
-                user_stmt.setString(5, oldUsername);
+                                + "where username = ?")) {
+                    user_stmt.setString(1, user.getName());
+                    user_stmt.setString(2, user.getUsername());
+                    user_stmt.setString(3, user.getPassword());
+                    user_stmt.setString(4, user.getEmail());
+                    user_stmt.setString(5, oldUsername);
 
-                user_stmt.executeUpdate();
+                    user_stmt.executeUpdate();
 
-                return TransactionResult.Successful;
+                    return TransactionResult.Successful;
+                }
             }
         } catch (ClassNotFoundException ex) {
             return TransactionResult.DatabaseConnectionError;
@@ -159,8 +158,6 @@ public class UserDAO {
                     stmt.setString(2, password);
                     try (ResultSet stmt_res = stmt.executeQuery()) {
                         if (stmt_res.next()) {
-                            stmt.close();
-                            stmt_res.close();
                             return TransactionResult.Successful;
                         }
                     }
@@ -205,6 +202,7 @@ public class UserDAO {
         }
     }
 
+    // TODO: incomplete
     public static AddressFetch getAddressByUserId(int user_id) {
         Address address = null;
         try {

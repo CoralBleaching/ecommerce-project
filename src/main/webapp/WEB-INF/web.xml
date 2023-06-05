@@ -6,6 +6,15 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <servlet>
+    <servlet-name>CategoryServlet</servlet-name>
+    <servlet-class>category.CategoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CategoryServlet</servlet-name>
+    <url-pattern>/Categories</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>SignUpServlet</servlet-name>
     <servlet-class>user.SignUpServlet</servlet-class>
   </servlet>

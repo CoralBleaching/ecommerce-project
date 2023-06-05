@@ -4,11 +4,11 @@
  */
 package user;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+// import com.google.gson.Gson;
+// import com.google.gson.JsonObject;
 import transactions.TransactionResult;
 import java.io.IOException;
-import java.io.PrintWriter;
+// import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import transactions.JsonLabel;
+// import transactions.JsonLabel;
 // import user.UserDAO.UserFetch;
 
 /**
@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter(Parameter.Password.get());
 
 		// response.addHeader("Access-Control-Allow-Origin",
-		// "http://localhost:3000");
+		// "http://localhost:5173");
 		// PrintWriter out = response.getWriter();
 		// response.setContentType("application/json");
 		// response.setCharacterEncoding("UTF-8");

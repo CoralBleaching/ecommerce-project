@@ -1,0 +1,16 @@
+
+Title          [Sign in/out] [Sign up/Settings] Cart  
+                                                      
+Departments     Order by: price (ascending/descending)
+                                                      
+Category1       Product1   |  Product2  | Product3    
+Subcategory11                                         
+Subcategory12   Product4   |  Product5  | Product6    
+...                                                   
+                Product7   |  Product8  | Product9    
+Category2                                             
+Subcategory21   Product10  |  Product11 | Product12   
+Subcategory22                                         
+...                ...           ...         ...      
+
+...
