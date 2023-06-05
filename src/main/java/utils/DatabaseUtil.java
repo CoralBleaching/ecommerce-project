@@ -9,6 +9,20 @@ public class DatabaseUtil {
     private static final String PROPERTIES_FILE = "config.properties";
     private static final String DB_PATH_PROPERTY = "database.path";
 
+    public enum WhitelistedDomains {
+        ViteReactTsApp("http://localhost:5173");
+
+        private final String url;
+
+        WhitelistedDomains(String url) {
+            this.url = url;
+        }
+
+        public String get() {
+            return url;
+        }
+    }
+
     public String getDatabasePath() {
         Properties properties = new Properties();
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE);

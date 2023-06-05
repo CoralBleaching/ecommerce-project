@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Category } from "../utils/types";
-import fetchAndDecode from "../utils/utils";
+import fetchAndDecode, { ServerUrl } from "../utils/utils";
 
 export interface DepartmentsMenuProps {
 
@@ -10,10 +10,11 @@ export default function DepartmentsMenu({}: DepartmentsMenuProps) {
   const [categories, setCategories] = useState<Category[]>([])
 
   useEffect(() => {
-    fetchAndDecode<{categories: Category[]}>("http://localhost:8080/ecommerce-demo/Categories", data => {
-      const fetchedCategories = data.categories;
-      setCategories(fetchedCategories)
-  })
+    fetchAndDecode<{categories: Category[]}>(ServerUrl.Categories, 
+      data => {
+        const fetchedCategories = data.categories
+        setCategories(fetchedCategories)
+      })
   }, [])
 
   return (

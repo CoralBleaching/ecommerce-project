@@ -4,7 +4,17 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <!-- Product -->
+  <servlet>
+    <servlet-name>ListProductsServlet</servlet-name>
+    <servlet-class>product.ListProductsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListProductsServlet</servlet-name>
+    <url-pattern>/Products</url-pattern>
+  </servlet-mapping>
 
+  <!-- Category -->
   <servlet>
     <servlet-name>CategoryServlet</servlet-name>
     <servlet-class>category.CategoryServlet</servlet-class>
@@ -14,6 +24,7 @@
     <url-pattern>/Categories</url-pattern>
   </servlet-mapping>
 
+  <!-- User -->
   <servlet>
     <servlet-name>SignUpServlet</servlet-name>
     <servlet-class>user.SignUpServlet</servlet-class>

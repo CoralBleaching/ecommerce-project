@@ -8,3 +8,10 @@ export default function fetchAndDecode<T>(url: string, callback: (data: T) => vo
     })
     .then(callback).catch(error => console.log(error))
 }
+
+const SERVER_URL = "http://localhost:8080/ecommerce-demo"
+
+export enum ServerUrl {
+  Categories = SERVER_URL + "/Categories",
+  Products = SERVER_URL + "/Products"
+}

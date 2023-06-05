@@ -5,7 +5,7 @@ import numpy as np
 import os
 import re
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import cast
 from unidecode import unidecode
 
@@ -252,13 +252,25 @@ def fill_price_table(cur: sqlite3.Cursor,
 
     stmt = 'insert into Price (id_product, timestamp, value) values (?, ?, ?)'
     now = datetime.now().toordinal()
+    start_time = datetime.strptime('00:00:00', '%H:%M:%S')
+    end_time = datetime.strptime('23:59:59', '%H:%M:%S')
 
     for id_product in id_products + \
         id_products[:NUMBER_OF_PRODUCTS_WITH_MULTIPLE_PRICES]:
         timestamp = rng.integers(now - FIVE_MONTHS, now)
+        date = datetime.fromordinal(timestamp)
+        time_delta = end_time - start_time
+        random_time = start_time + timedelta (
+            seconds=float(rng.random()*time_delta.total_seconds())
+        )
+        datetime_with_time = datetime (
+            date.year, date.month, date.day, random_time.hour, 
+            random_time.minute, random_time.second
+        )
+    
         cur.execute(stmt, (
             id_product,
-            str(datetime.fromordinal(timestamp)),
+            str(datetime_with_time),
             round(rng.lognormal(AVERAGE_PRICE, STANDARD_DEVIATION_PRICE), ROUND_TO)
         ))
 

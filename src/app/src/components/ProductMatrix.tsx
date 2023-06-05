@@ -1,5 +1,8 @@
-import ProductCard, { Product } from "./ProductCard";
+import { useEffect, useState } from "react";
+import ProductCard from "./ProductCard";
 import Subheader from "./Subheader";
+import { Product } from "../utils/types";
+import fetchAndDecode, { ServerUrl } from "../utils/utils";
 
 
 export interface ProductMatrixProps {
@@ -7,19 +10,22 @@ export interface ProductMatrixProps {
 }
 
 export default function ProductMatrix({}: ProductMatrixProps) {
-    // Sample product data
-    const products: Product[] = [];
+    const [products, setProducts] = useState<Product[]>([])
 
-    for (let i = 0; i < 13; i++) {
-        products.push({id: i.toString()})
-    }
+    useEffect(() => {
+       fetchAndDecode<{products: Product[]}>(ServerUrl.Products,
+        data => {
+            const fetchedProducts = data.products
+            setProducts(fetchedProducts)
+        }) 
+    },[])
   
     return (
         <div className="main-content">
             <Subheader />
             <div className="products-grid">
                 {products.map(product => (
-                    <ProductCard key={product.id} {...product} />
+                    <ProductCard key={product.name} product={product} />
                 ))} 
             </div>
         </div>

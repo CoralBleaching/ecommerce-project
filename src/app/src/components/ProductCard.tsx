@@ -1,15 +1,13 @@
-export interface Product {
-    id: string
-}
+import { Product } from "../utils/types"
 
 export interface ProductCardProps {
-    id: string
+    product: Product
 }
 
-export default function ProductCard({id}: ProductCardProps) {
+export default function ProductCard({product}: ProductCardProps) {
     return (
         <div className="card">
-            Product {id}
+            Product {product.name}
         </div>
     )
 }

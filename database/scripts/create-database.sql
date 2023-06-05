@@ -98,7 +98,8 @@ create table if not exists Price (
     id_product integer not null,
     timestamp datetime not null default current_timestamp,
     value float not null,
-    foreign key (id_product) references Product (id_product)
+    foreign key (id_product) references Product (id_product),
+    constraint unique_product_timestamp unique (id_product, timestamp) -- new
 );
 
 create table if not exists Picture (

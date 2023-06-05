@@ -8,6 +8,7 @@ public enum TransactionResult {
     InvalidPassword("The entered password is not valid. Need at least 8 characters, at least 1 letter and 1 number."),
     InvalidUsername("The entered username is not valid. Only letters, numbers and spaces are allowed."),
     Miscellaneous("Database operation error: "),
+    ProductNotFound("Sorry, we don't have this particular product."),
     Successful(""),
     UserNotFound("Username not registered.");
 

@@ -1,4 +1,4 @@
-package category;
+package product;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import category.CategoryDAO.CategoriesFetch;
+import product.ProductDAO.ProductsFetch;
 import utils.DatabaseUtil;
 
-public class CategoryServlet extends HttpServlet {
+public class ListProductsServlet extends HttpServlet {
     private static final Gson gson = new Gson();
 
     @Override
@@ -21,13 +21,14 @@ public class CategoryServlet extends HttpServlet {
             throws ServletException, IOException {
         response.addHeader("Access-Control-Allow-Origin",
                 DatabaseUtil.WhitelistedDomains.ViteReactTsApp.get());
-        CategoriesFetch fetchCategories = CategoryDAO.getAllCategories();
+
+        ProductsFetch fetchProducts = ProductDAO.getAllProducts();
 
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        String json = gson.toJson(fetchCategories);
+        String json = gson.toJson(fetchProducts);
         out.println(json);
         out.flush();
     }

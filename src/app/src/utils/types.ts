@@ -10,3 +10,14 @@ export interface Category {
     description: string
     subcategories: Subcategory[]
 }
+
+export interface Product {
+    idProduct: number
+    idPicture: number
+    stock: number
+    price: number
+    category: string
+    subcategory: string
+    name: string
+    description: string
+}
