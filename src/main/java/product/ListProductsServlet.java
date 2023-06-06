@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import product.ProductDAO.ProductsFetch;
+import user.Parameter;
 import utils.DatabaseUtil;
 
 public class ListProductsServlet extends HttpServlet {
@@ -22,7 +23,18 @@ public class ListProductsServlet extends HttpServlet {
         response.addHeader("Access-Control-Allow-Origin",
                 DatabaseUtil.WhitelistedDomains.ViteReactTsApp.get());
 
-        ProductsFetch fetchProducts = ProductDAO.getAllProducts();
+        String idCategoryString = request.getParameter(Parameter.Category.get());
+        String idSubcategoryString = request.getParameter(Parameter.Subcategory.get());
+
+        Integer idCategory = null, idSubcategory = null;
+        if (idCategoryString != null) {
+            idCategory = Integer.parseInt(idCategoryString);
+        }
+        if (idSubcategoryString != null) {
+            idSubcategory = Integer.parseInt(idSubcategoryString);
+        }
+
+        ProductsFetch fetchProducts = ProductDAO.getProductsByCategoryAndOrSubcategory(idCategory, idSubcategory);
 
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");

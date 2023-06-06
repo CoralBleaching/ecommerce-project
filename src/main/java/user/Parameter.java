@@ -1,20 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template
- */
 package user;
 
-/**
- *
- * @author renat
- */
+// TODO: export this to react app?
 public enum Parameter {
+    Category("category"),
     Email("email"),
     User("user"),
     Username("username"),
     Name("name"),
     Password("password"),
-    Street("street");
+    Street("street"),
+    Subcategory("subcategory");
 
     private final String name;
 

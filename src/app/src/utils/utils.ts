@@ -11,7 +11,7 @@ export default function fetchAndDecode<T>(url: string, callback: (data: T) => vo
 
 const SERVER_URL = "http://localhost:8080/ecommerce-demo"
 
-export enum ServerUrl {
-  Categories = SERVER_URL + "/Categories",
-  Products = SERVER_URL + "/Products"
+export enum ServerRoute {
+  AllCategories = SERVER_URL + "/Categories",
+  AllProducts = SERVER_URL + "/Products"
 }

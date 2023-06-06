@@ -7,7 +7,11 @@ export interface ProductCardProps {
 export default function ProductCard({product}: ProductCardProps) {
     return (
         <div className="card">
-            Product {product.name}
+            <ul>
+                <li>{product.name}</li>
+                <li>{product.price}</li>
+            </ul>
+            
         </div>
     )
 }

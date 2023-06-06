@@ -59,3 +59,11 @@
   margin-bottom: 2%;
   gap: 2em;
 }
+
+.menu-subcat {
+  cursor: pointer;
+}
+
+.menu-cat {
+  cursor: pointer;
+}
