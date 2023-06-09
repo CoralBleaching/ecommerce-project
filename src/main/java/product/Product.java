@@ -3,21 +3,25 @@ package product;
 public class Product {
     private int idProduct,
             idPicture,
-            stock;
+            stock,
+            hotness;
     private float price;
     private String category,
             subcategory,
             name,
-            description;
+            description,
+            timestamp;
 
     public Product() {
     }
 
-    public Product(int idProduct, int idPicture, int stock, float price, String category, String subcategory,
-            String name, String description) {
+    public Product(int idProduct, int idPicture, int stock, int hotness, String timestamp, float price,
+            String category, String subcategory, String name, String description) {
         this.idProduct = idProduct;
         this.idPicture = idPicture;
         this.stock = stock;
+        this.hotness = hotness;
+        this.timestamp = timestamp;
         this.price = price;
         this.category = category;
         this.subcategory = subcategory;
@@ -29,6 +33,8 @@ public class Product {
         this.idProduct = other.idProduct;
         this.idPicture = other.idPicture;
         this.stock = other.stock;
+        this.hotness = other.hotness;
+        this.timestamp = other.timestamp;
         this.price = other.price;
         this.category = other.category;
         this.subcategory = other.subcategory;
@@ -46,6 +52,14 @@ public class Product {
 
     public int getStock() {
         return stock;
+    }
+
+    public int getHotness() {
+        return hotness;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
     }
 
     public float getPrice() {
@@ -78,6 +92,14 @@ public class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public void setHotness(int hotness) {
+        this.hotness = hotness;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public void setPrice(float price) {

@@ -10,6 +10,7 @@ export default function ProductCard({product}: ProductCardProps) {
             <ul>
                 <li>{product.name}</li>
                 <li>{product.price}</li>
+                <li>{product.date?.toDateString()}</li>
             </ul>
             
         </div>

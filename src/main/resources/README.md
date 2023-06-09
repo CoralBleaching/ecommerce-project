@@ -1,0 +1,1 @@
+Run the fill_db_with_mock_data.py script in order to generate the config.properties file.

@@ -56,8 +56,31 @@
 }
 
 .sub-header {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 2%;
   gap: 2em;
+}
+
+.sub-header-component {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-start;
+  /* border: 1px solid gray; */
+  gap: 1em;
+  align-items: center;
+  
+}
+
+.search-bar {
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  font-size: 18px; /* Adjust the font size as needed */
+  width: 100%;
 }
 
 .menu-subcat {

@@ -20,4 +20,15 @@ export interface Product {
     subcategory: string
     name: string
     description: string
+    hotness: number
+    timestamp: string
+    date?: Date
+}
+
+export interface Evaluation {
+    idProduct: number
+    idSale: number
+    timestamp: Date 
+    review: string 
+    score: number
 }

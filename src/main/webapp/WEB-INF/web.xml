@@ -6,6 +6,15 @@
   <display-name>Archetype Created Web Application</display-name>
   <!-- Product -->
   <servlet>
+    <servlet-name>ListEvaluationsServlet</servlet-name>
+    <servlet-class>product.ListEvaluationsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListEvaluationsServlet</servlet-name>
+    <url-pattern>/Evaluations</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>ListProductsServlet</servlet-name>
     <servlet-class>product.ListProductsServlet</servlet-class>
   </servlet>

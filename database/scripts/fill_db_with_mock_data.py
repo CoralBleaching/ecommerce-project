@@ -1,18 +1,40 @@
 import argparse
 import base64
 import json
+import markovify
 import numpy as np
 import os
 import re
 import sqlite3
 from datetime import datetime, timedelta
-from typing import cast
 from unidecode import unidecode
 
+# user
+PROPORTION_OF_ADMINS = 0.1
+
+# price and products
+AVERAGE_PRICE = 6 
+AVERAGE_SOLD_ITEMS = 3
+EVALUATION_FREQUENCY = 0.7
+NUMBER_OF_PRODUCTS_WITH_MULTIPLE_PRICES = 10
+PROPORTION_SOLD_OUT = 0.1
+ROUND_TO = 2
+SENTENCES_PER_REVIEW = 7
+STANDARD_DEVIATION_PRICE = 0.8
+TEXT_EVALUATION_FREQUENCY = 0.6
+
+# paths and defaults
 CONFIG_FILE_PATH = 'src/main/resources/config.properties'
 DATA_PATH = 'database/mock_data/'
 DB_PATH = 'database/ieeecommerce-db.db'
+RNG_SEED = 2023
 SQL_SCRIPT_PATH = 'database/scripts/create-database.sql'
+
+# date and time
+DATE_GAP_IN_DAYS = 150
+END_TIME = '23:59:59'
+START_TIME = '00:00:00'
+TIME_FORMAT = '%H:%M:%S'
 
 def convert_to_camel_case(string: str):
     cleaned_string = unidecode(string)
@@ -21,11 +43,38 @@ def convert_to_camel_case(string: str):
     words = [words[0].lower()] + [word.title() for word in words[1:]]
     return ''.join(words)
 
+
+def generate_random_time(
+        rng: np.random.Generator | None,
+        start_time_str: str = START_TIME, 
+        end_time_str: str = END_TIME,
+        time_format: str = TIME_FORMAT,
+        date_gap: int = DATE_GAP_IN_DAYS):    
+    if rng is None:
+        rng = np.random.default_rng()
+
+    start_time = datetime.strptime(start_time_str, time_format)
+    end_time = datetime.strptime(end_time_str, time_format)
+
+    now = datetime.now().toordinal()
+    timestamp = rng.integers(now - date_gap, now)
+    generated_date = datetime.fromordinal(timestamp)
+    time_delta = end_time - start_time
+    generated_time = start_time + timedelta(
+        seconds=float(rng.random()*time_delta.total_seconds())
+    )
+    return datetime(
+        generated_date.year, generated_date.month, generated_date.day,
+        generated_time.hour, generated_time.minute, generated_time.second
+    )
+
+
 def replace_special_characters_with_codes(path: str):
     return ''.join(
         '\\u{:04x}'.format(ord(char)) if ord(char) >= 128 else char
         for char in path
     )
+
 
 def create_tables(
         cur: sqlite3.Cursor,
@@ -36,7 +85,7 @@ def create_tables(
 
 def fill_user_table(cur: sqlite3.Cursor,
                     data_path: str,
-                    proportion_of_admins: float,
+                    proportion_of_admins: float = PROPORTION_OF_ADMINS,
                     rng: np.random.Generator | None = None,):
     if rng is None:
         rng = np.random.default_rng()
@@ -157,7 +206,8 @@ def fill_address_table(cur: sqlite3.Cursor,
             ) values (?, ?, ?, ?, ?, ?)
             '''
             country = rng.choice(list(id_cities.keys()))
-            address_data = cast(dict[str, str], rng.choice(data[country]))
+            countries = np.array(data[country]) # prevents a type checking failure
+            address_data: dict[str, str] = rng.choice(countries)
             cur.execute(stmt, (
                 user['id_user'], 
                 str(rng.choice(id_cities[country])),
@@ -192,7 +242,11 @@ def fill_category_product_and_has_picture_tables(
         cur: sqlite3.Cursor,
         data_path: str,
         rng: np.random.Generator | None,
-        proportion_sold_out: float = 0.1
+        proportion_sold_out: float = PROPORTION_SOLD_OUT,
+        start_time: str = START_TIME,
+        end_time: str = END_TIME,
+        time_format: str = TIME_FORMAT,
+        date_gap: int = DATE_GAP_IN_DAYS
     ):
     if rng is None:
         rng = np.random.default_rng()
@@ -208,7 +262,8 @@ def fill_category_product_and_has_picture_tables(
         subcategory_stmt = '''insert into Subcategory 
             (id_category, name, description) values (?, ?, ?)'''
         product_stmt = '''insert into Product 
-        (id_subcategory, id_picture, name, description, stock) values (?, ?, ?, ?, ?)'''
+        (id_subcategory, id_picture, name, description, stock, hotness, timestamp) 
+        values (?, ?, ?, ?, ?, ?, ?)'''
 
         for category_name, category in categories.items():
             cur.execute(category_stmt, (category_name, category['description']))
@@ -221,27 +276,41 @@ def fill_category_product_and_has_picture_tables(
                 id_subcategory = cur.lastrowid
 
                 for product in products[category_name][subcat_name]:
-                    stock = rng.integers(1,30) if rng.random() < proportion_sold_out \
-                        else 0                    
+                    stock = int(rng.integers(1,30)) \
+                        if rng.random() < proportion_sold_out else 0
                     cur.execute('''
                         select id_picture from Picture where
                         Picture.name = ?
                     ''', (convert_to_camel_case(product['name']),))
                     id_picture = cur.fetchone()[0]
-                    cur.execute(product_stmt,(id_subcategory,
-                                              id_picture,
-                                              product['name'],
-                                              product['description'],
-                                              str(stock)))
+                    cur.execute(
+                        product_stmt,
+                        (
+                            id_subcategory,
+                            id_picture,
+                            product['name'],
+                            product['description'],
+                            stock,
+                            int(rng.integers(1, 5, endpoint=True)),
+                            str(generate_random_time(
+                            rng, start_time, end_time, time_format, date_gap)
+                            )
+                        )
+                    )
 
 
-def fill_price_table(cur: sqlite3.Cursor,
-                     rng: np.random.Generator | None):
-    FIVE_MONTHS = 150
-    NUMBER_OF_PRODUCTS_WITH_MULTIPLE_PRICES = 10
-    AVERAGE_PRICE = 6
-    STANDARD_DEVIATION_PRICE = 0.8
-    ROUND_TO = 2
+def fill_price_table(
+        cur: sqlite3.Cursor,
+        rng: np.random.Generator | None,
+        number_of_products_with_multiple_prices: int = \
+             NUMBER_OF_PRODUCTS_WITH_MULTIPLE_PRICES,
+        average_price: float = AVERAGE_PRICE,
+        standard_deviation_price: float = STANDARD_DEVIATION_PRICE,
+        round_to: int = ROUND_TO,
+        start_time: str = START_TIME, 
+        end_time: str = END_TIME,
+        time_format: str = TIME_FORMAT,
+        date_gap: int = DATE_GAP_IN_DAYS):
 
     if rng is None:
         rng = np.random.default_rng()
@@ -251,35 +320,96 @@ def fill_price_table(cur: sqlite3.Cursor,
     rng.shuffle(id_products)
 
     stmt = 'insert into Price (id_product, timestamp, value) values (?, ?, ?)'
-    now = datetime.now().toordinal()
-    start_time = datetime.strptime('00:00:00', '%H:%M:%S')
-    end_time = datetime.strptime('23:59:59', '%H:%M:%S')
 
     for id_product in id_products + \
-        id_products[:NUMBER_OF_PRODUCTS_WITH_MULTIPLE_PRICES]:
-        timestamp = rng.integers(now - FIVE_MONTHS, now)
-        date = datetime.fromordinal(timestamp)
-        time_delta = end_time - start_time
-        random_time = start_time + timedelta (
-            seconds=float(rng.random()*time_delta.total_seconds())
-        )
-        datetime_with_time = datetime (
-            date.year, date.month, date.day, random_time.hour, 
-            random_time.minute, random_time.second
-        )
-    
+        id_products[:number_of_products_with_multiple_prices]:
         cur.execute(stmt, (
             id_product,
-            str(datetime_with_time),
-            round(rng.lognormal(AVERAGE_PRICE, STANDARD_DEVIATION_PRICE), ROUND_TO)
+            str(generate_random_time(rng, start_time, end_time, time_format, date_gap)),
+            round(rng.lognormal(average_price, standard_deviation_price), round_to)
         ))
 
+def fill_sale_sold_and_evaluation_tables(
+        cur: sqlite3.Cursor,
+        rng: np.random.Generator,
+        data_path: str = DATA_PATH,
+        average_sold_items: int = AVERAGE_SOLD_ITEMS,
+        evaluation_frequency: float = EVALUATION_FREQUENCY,
+        text_evaluation_frequency: float = TEXT_EVALUATION_FREQUENCY,
+        sentences_per_review: int = SENTENCES_PER_REVIEW,
+        start_time: str = START_TIME, 
+        end_time: str = END_TIME,
+        time_format: str = TIME_FORMAT,
+        date_gap: int = DATE_GAP_IN_DAYS):
+    
+    if rng is None:
+        rng = np.random.default_rng() 
 
+    cur.execute('select id_user from User')
+    user_ids = next(zip(*cur.fetchall()))
+
+    cur.execute('select id_price, id_product from Price')
+    price_ids, product_ids = list(zip(*cur.fetchall()))
+
+    for user_id in user_ids:
+        timestamp = generate_random_time(
+        rng, start_time, end_time, time_format, date_gap)
+        cur.execute('insert into Sale (id_user, timestamp) values (?, ?)',
+                    (user_id, timestamp))
+        sale_id = cur.lastrowid
+
+        with open(data_path + 'review.txt', 'r', encoding='utf-8') as review_file:
+            text_model = markovify.Text(review_file.read()).compile()
+
+            number_of_sold_items = rng.binomial(average_sold_items * 2, 0.5)
+            price_ids_sold = rng.choice(list(enumerate(price_ids)),number_of_sold_items)
+            for index, price_id_sold in price_ids_sold:
+                price_id_sold = int(price_id_sold)
+                cur.execute('''insert into Sold (id_sale, id_price, quantity)
+                values (?, ?, ?)''', (sale_id, price_id_sold, 1))
+
+                if rng.random() < evaluation_frequency:
+                    review = ''
+                    review_timestamp: datetime | None = None
+                    while (review_timestamp is None or review_timestamp <= timestamp):
+                        review_timestamp = generate_random_time(
+                            rng, start_time, end_time, time_format, date_gap)
+                    score = int(rng.integers(3, 5, endpoint=True))
+                    if rng.random() < text_evaluation_frequency:
+                        for _ in range(sentences_per_review):
+                            new_sentence = text_model.make_sentence()
+                            if new_sentence is not None:
+                                review += new_sentence
+                        cur.execute('''insert into Evaluation (id_product, id_sale,
+                        timestamp, score, review) values (?, ?, ?, ?, ?)''',
+                        (product_ids[index], sale_id, review_timestamp, score, review))
+                    else:
+                        cur.execute('''insert into Evaluation (id_product, id_sale,
+                        timestamp, score) values (?, ?, ?, ?)''',
+                        (product_ids[index], sale_id, review_timestamp, score))
+            
+
+        
+    
 def main(dbpath: str, 
          data_path: str, 
          seed: int, 
          proportion_of_admins: float,
-         proportion_sold_out: float):
+         proportion_sold_out: float,
+         average_price: float,
+         average_sold_items: int,
+         evaluation_frequency: float,
+         number_of_products_with_multiple_prices: int,
+         round_to: int,
+         standard_deviation_price: float,
+         text_evaluation_frequency: float,
+         sentences_per_review: int,
+         config_file_path: str,
+         sql_script_path: str,
+         date_gap_in_days: int,
+         end_time: str,
+         start_time: str,
+         time_format: str):
     try:
         rng = np.random.default_rng(seed)
         with sqlite3.connect(dbpath) as conn:
@@ -292,10 +422,13 @@ def main(dbpath: str,
             cur.execute('drop table if exists Country')
             cur.execute('drop table if exists Picture')
             cur.execute('drop table if exists Price')
+            cur.execute('drop table if exists Sale')
+            cur.execute('drop table if exists Sold')
+            cur.execute('drop table if exists Evaluation')
             cur.execute('drop table if exists Subcategory')
             cur.execute('drop table if exists Category')
             cur.execute('drop table if exists Product')
-            create_tables(cur)
+            create_tables(cur, sql_script_path)
             user_data = fill_user_table(cur, data_path, proportion_of_admins, rng)
             fill_credit_card_table(cur, user_data, rng)
             fill_country_state_and_city_tables(cur, data_path, rng)
@@ -303,10 +436,20 @@ def main(dbpath: str,
             fill_picture_table(cur, data_path, rng)
             fill_category_product_and_has_picture_tables(
                 cur, data_path, rng, proportion_sold_out)
-            fill_price_table(cur, rng)
+            fill_price_table(
+                cur, rng, number_of_products_with_multiple_prices,
+                average_price, standard_deviation_price, round_to,
+                start_time, end_time, time_format, date_gap_in_days)
+            fill_sale_sold_and_evaluation_tables(
+                cur, rng, data_path, average_sold_items, evaluation_frequency,
+                text_evaluation_frequency, sentences_per_review, start_time,
+                end_time, time_format, date_gap_in_days
+            )
 
-            with open(CONFIG_FILE_PATH, 'w', encoding='utf-8') as config_file:
-                full_db_path = f'database.path={os.getcwd()}/{DB_PATH}'\
+            cur.close()
+
+            with open(config_file_path, 'w', encoding='utf-8') as config_file:
+                full_db_path = f'database.path={os.getcwd()}/{dbpath}'\
                     .replace('\\', '/')
                 config_file.write(replace_special_characters_with_codes(full_db_path))
     except sqlite3.Error as exc:
@@ -328,20 +471,91 @@ if __name__ == '__main__':
                         help='Path to the mock data directory.')
     parser.add_argument('--seed', 
                         type=int, 
-                        default=2023, 
+                        default=RNG_SEED, 
                         help='Seed for the RNG.')
     parser.add_argument('--proportion_of_admins',
                         type=float, 
-                        default=0.1, 
+                        default=PROPORTION_OF_ADMINS, 
                         help="Proportion of users that will be administrators.")
     parser.add_argument('--proportion_sold_out',
                         type=float, 
-                        default=0.1, 
+                        default=PROPORTION_SOLD_OUT, 
                         help="Proportion of out of stock products.")
+    parser.add_argument('--average_price',
+                        type=float,
+                        default=AVERAGE_PRICE,
+                        help="Average price of the products.")
+    parser.add_argument('--average_sold_items',
+                        type=int,
+                        default=AVERAGE_SOLD_ITEMS,
+                        help="Average number of products sold per sale.")
+    parser.add_argument('--evaluation_frequency',
+                        type=int,
+                        default=EVALUATION_FREQUENCY,
+                        help="Fraction of product sales where the user makes an " +
+                        "evaluation.")
+    parser.add_argument('--number_of_products_with_multiple_prices',
+                        type=int,
+                        default=NUMBER_OF_PRODUCTS_WITH_MULTIPLE_PRICES,
+                        help="Number of products with multiple prices.")
+    parser.add_argument('--round_to',
+                        type=int,
+                        default=ROUND_TO,
+                        help="Number of decimal places to round to.")
+    parser.add_argument('--standard_deviation_price',
+                        type=float,
+                        default=STANDARD_DEVIATION_PRICE,
+                        help="Standard deviation of product prices.")
+    parser.add_argument('--text_evaluation_frequency',
+                        type=int,
+                        default=TEXT_EVALUATION_FREQUENCY,
+                        help="Fraction of evaluations where the user makes a review.")
+    parser.add_argument('--sentences_per_review',
+                        type=int,
+                        default=SENTENCES_PER_REVIEW,
+                        help="Number of sentences generated for each product review.")
+    parser.add_argument('--config_file_path',
+                        type=str,
+                        default=CONFIG_FILE_PATH,
+                        help='The path to the config file.')
+    parser.add_argument('--sql_script_path',
+                        type=str,
+                        default=SQL_SCRIPT_PATH,
+                        help='The path to the SQL script file.')
+    parser.add_argument('--date_gap_in_days',
+                        type=int,
+                        default=DATE_GAP_IN_DAYS,
+                        help='The gap in days for date manipulation.')
+    parser.add_argument('--end_time',
+                        type=str,
+                        default=END_TIME,
+                        help='The end time of the day.')
+    parser.add_argument('--start_time',
+                        type=str,
+                        default=START_TIME,
+                        help='The start time of the day.')
+    parser.add_argument('--time_format',
+                        type=str,
+                        default=TIME_FORMAT,
+                        help='The format of the time.')
 
     args = parser.parse_args()
-    main(args.dbpath, 
-         args.data_path, 
-         args.seed, 
-         args.proportion_of_admins,
-         args.proportion_sold_out)
+    main(dbpath=args.dbpath, 
+        data_path=args.data_path, 
+        seed=args.seed, 
+        proportion_of_admins=args.proportion_of_admins,
+        proportion_sold_out=args.proportion_sold_out,
+        average_price=args.average_price,
+        average_sold_items=args.average_sold_items,
+        evaluation_frequency=args.evaluation_frequency,
+        number_of_products_with_multiple_prices=args.number_of_products_with_multiple_prices,
+        round_to=args.round_to,
+        standard_deviation_price=args.standard_deviation_price,
+        text_evaluation_frequency=args.text_evaluation_frequency,
+        sentences_per_review=args.sentences_per_review,
+        config_file_path=args.config_file_path,
+        sql_script_path=args.sql_script_path,
+        date_gap_in_days=args.date_gap_in_days,
+        end_time=args.end_time,
+        start_time=args.start_time,
+        time_format=args.time_format)

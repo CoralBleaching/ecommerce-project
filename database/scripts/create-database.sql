@@ -76,7 +76,19 @@ create table if not exists Product (
     name varchar(255) not null,
     description text not null,
     stock integer not null,
+    hotness integer not null constraint hotness check (hotness >= 1 and hotness <= 5), -- new
+    timestamp datetime not null, -- new
     foreign key (id_subcategory) references Subcategory (id_subcategory)
+);
+
+create table if not exists Evaluation ( -- new
+    id_product integer not null,
+    id_sale integer not null,
+    timestamp datetime not null,
+    review text,
+    score float not null constraint score check (score >= 1 and score <= 5),
+    foreign key (id_product) references Product (id_product),
+    foreign key (id_sale) references sale (id_sale)
 );
 
 create table if not exists Subcategory (

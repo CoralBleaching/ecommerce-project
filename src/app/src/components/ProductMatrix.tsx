@@ -23,6 +23,9 @@ export default function ProductMatrix({idCategory, idSubcategory}: ProductMatrix
         fetchAndDecode<{products: Product[]}>(requestUrl,
         data => {
             const fetchedProducts = data.products
+            fetchedProducts.forEach((product) => {
+                product.date = new Date(product.timestamp)
+            })
             setProducts(fetchedProducts)
         }) 
     },[idCategory, idSubcategory])

@@ -8,6 +8,7 @@ public enum Parameter {
     Username("username"),
     Name("name"),
     Password("password"),
+    ProductId("idProduct"),
     Street("street"),
     Subcategory("subcategory");
 
