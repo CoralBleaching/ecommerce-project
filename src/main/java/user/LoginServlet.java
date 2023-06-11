@@ -7,6 +7,8 @@ package user;
 // import com.google.gson.Gson;
 // import com.google.gson.JsonObject;
 import transactions.TransactionResult;
+import utils.Parameter;
+
 import java.io.IOException;
 // import java.io.PrintWriter;
 

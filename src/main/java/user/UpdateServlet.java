@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import transactions.TransactionResult;
+import utils.Parameter;
 
 public class UpdateServlet extends HttpServlet {
     @Override
@@ -19,7 +20,7 @@ public class UpdateServlet extends HttpServlet {
         String email = request.getParameter(Parameter.Email.get());
         String new_username = request.getParameter(Parameter.Username.get());
         String password = request.getParameter(Parameter.Password.get());
-        
+
         HttpSession session = request.getSession(true);
         User oldUser = (User) session.getAttribute(Parameter.User.get());
         String oldUsername = oldUser.getUsername();

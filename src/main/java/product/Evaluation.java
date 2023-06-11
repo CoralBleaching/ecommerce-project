@@ -1,7 +1,5 @@
 package product;
 
-import java.time.LocalDate;
-
 public class Evaluation {
     int idProduct,
             idSale,

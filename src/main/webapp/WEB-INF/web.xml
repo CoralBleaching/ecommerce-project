@@ -15,6 +15,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>ProductCountServlet</servlet-name>
+    <servlet-class>product.ProductCountServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductCountServlet</servlet-name>
+    <url-pattern>/ProductCount</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>ListProductsServlet</servlet-name>
     <servlet-class>product.ListProductsServlet</servlet-class>
   </servlet>

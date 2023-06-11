@@ -90,3 +90,7 @@
 .menu-cat {
   cursor: pointer;
 }
+
+.active {
+  color: gold;
+}

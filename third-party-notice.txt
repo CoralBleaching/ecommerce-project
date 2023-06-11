@@ -1,0 +1,7 @@
+SQL Pagination Without OFFSET
+-----------------------------
+CC-4.0 by Stephan Sokolow
+
+http://blog.ssokolow.com/archives/2009/12/23/sql-pagination-without-offset/
+
+License text available at: https://creativecommons.org/licenses/by-sa/4.0/

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import product.ProductDAO.EvaluationsFetch;
-import user.Parameter;
 import utils.DatabaseUtil;
+import utils.Parameter;
 
 public class ListEvaluationsServlet extends HttpServlet {
     private static final Gson gson = new Gson();

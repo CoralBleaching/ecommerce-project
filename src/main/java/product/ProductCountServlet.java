@@ -8,14 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
-import product.ProductDAO.ProductsFetch;
 import utils.DatabaseUtil;
 import utils.Parameter;
 
-public class ListProductsServlet extends HttpServlet {
-    private static final Gson gson = new Gson();
+public class ProductCountServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
@@ -25,34 +23,25 @@ public class ListProductsServlet extends HttpServlet {
 
         String idCategoryString = request.getParameter(Parameter.Category.get());
         String idSubcategoryString = request.getParameter(Parameter.Subcategory.get());
-        String orderBy = request.getParameter(Parameter.ProductOrdering.get());
         String searchText = request.getParameter(Parameter.SearchTerms.get());
-        String resultsPerPageString = request.getParameter(Parameter.ResultsPerPage.get());
-        String pageNumberString = request.getParameter(Parameter.PageNumber.get());
 
-        Integer idCategory = null, idSubcategory = null, resultsPerPage = null, pageNumber = null;
+        Integer idCategory = null, idSubcategory = null;
         if (idCategoryString != null) {
             idCategory = Integer.parseInt(idCategoryString);
         }
         if (idSubcategoryString != null) {
             idSubcategory = Integer.parseInt(idSubcategoryString);
         }
-        if (resultsPerPageString != null) {
-            resultsPerPage = Integer.parseInt(resultsPerPageString);
-        }
-        if (pageNumberString != null) {
-            pageNumber = Integer.parseInt(pageNumberString);
-        }
 
-        ProductsFetch fetchProducts = ProductDAO.getProducts(idCategory, idSubcategory,
-                orderBy, searchText, resultsPerPage, pageNumber);
+        Integer count = ProductDAO.getProductCount(idCategory, idSubcategory, searchText);
 
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        String json = gson.toJson(fetchProducts);
-        out.println(json);
+        var json = new JsonObject();
+        json.addProperty("count", count);
+        out.println(json.toString());
         out.flush();
     }
 }

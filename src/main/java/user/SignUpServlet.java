@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import transactions.TransactionResult;
+import utils.Parameter;
 
 public class SignUpServlet extends HttpServlet {
     @Override

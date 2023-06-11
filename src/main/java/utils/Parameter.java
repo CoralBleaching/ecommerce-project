@@ -1,16 +1,21 @@
-package user;
+package utils;
 
 // TODO: export this to react app?
 public enum Parameter {
     Category("category"),
     Email("email"),
-    User("user"),
-    Username("username"),
+    LastValue("lastValue"),
     Name("name"),
+    PageNumber("pageNumber"),
     Password("password"),
     ProductId("idProduct"),
+    ProductOrdering("orderBy"),
+    ResultsPerPage("resultsPerPage"),
+    SearchTerms("searchText"),
     Street("street"),
-    Subcategory("subcategory");
+    Subcategory("subcategory"),
+    User("user"),
+    Username("username"),;
 
     private final String name;
 
