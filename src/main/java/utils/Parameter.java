@@ -4,10 +4,10 @@ package utils;
 public enum Parameter {
     Category("category"),
     Email("email"),
-    LastValue("lastValue"),
     Name("name"),
     PageNumber("pageNumber"),
     Password("password"),
+    PictureId("idPicture"),
     ProductId("idProduct"),
     ProductOrdering("orderBy"),
     ResultsPerPage("resultsPerPage"),

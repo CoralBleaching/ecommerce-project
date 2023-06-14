@@ -62,7 +62,6 @@ public class ProductDAO {
                 query += "    )\n";
             }
             query += ";";
-            System.out.println(query);
 
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
                     var stmt = conn.prepareStatement(query);) {
@@ -163,7 +162,7 @@ public class ProductDAO {
             Class.forName(DB_CLASS_NAME);
 
             String query = generateProductQuery(idCategory, idSubcategory, orderBy,
-                    searchText, resultsPerPage, pageNumber, true);
+                    searchText, resultsPerPage, pageNumber, false);
 
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
                     var prod_stmt = conn.prepareStatement(query)) {
@@ -227,6 +226,52 @@ public class ProductDAO {
             return new EvaluationsFetch(TransactionResult.DatabaseConnectionError, null);
         } catch (SQLException ex) {
             return new EvaluationsFetch(TransactionResult.EvaluationNotFound, null);
+        }
+    }
+
+    public static List<String> getPicturesById(Integer[] ids) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+            String query = "select data from Picture where id_picture = ?;";
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    var stmt = conn.prepareStatement(query)) {
+                List<String> pictures = new ArrayList<>();
+                for (Integer id : ids) {
+                    stmt.setInt(1, id);
+                    try (var res = stmt.executeQuery()) {
+                        if (res.next()) {
+                            pictures.add(res.getString("data"));
+                        } else {
+                            pictures.add(null);
+                        }
+                    }
+                }
+                return pictures;
+            }
+        } catch (ClassNotFoundException exc) {
+            return null;
+        } catch (SQLException exc) {
+            return null;
+        }
+    }
+
+    public static String getPictureById(Integer id) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+            String query = "select data from Picture where id_picture = " + Integer.toString(id) + ";";
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    var stmt = conn.prepareStatement(query);
+                    var res = stmt.executeQuery()) {
+                if (res.next()) {
+                    return res.getString("data");
+                } else {
+                    return null;
+                }
+            }
+        } catch (ClassNotFoundException exc) {
+            return null;
+        } catch (SQLException exc) {
+            return null;
         }
     }
 }

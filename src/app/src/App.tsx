@@ -5,17 +5,20 @@ import ProductMatrix from './components/ProductMatrix'
 import { useState } from 'react'
 
 export default function App() {
-  const [idCategory, setIdCategory] = useState<number | undefined>(undefined)
-  const [idSubcategory, setIdSubcategory] = useState<number | undefined>(undefined)
+  const [activeIndex, setActiveIndex] = useState<number>(1)
+  const [idCategory, setIdCategory] = useState<number>()
+  const [idSubcategory, setIdSubcategory] = useState<number>()
 
   function onCategoryClick(newIdCategory: number) {
     setIdCategory(newIdCategory)
     setIdSubcategory(() => undefined)
+    setActiveIndex(() => 1)
   }
 
   function onSubcategoryClick(newIdSubcategory: number) {
     setIdSubcategory(newIdSubcategory)
     setIdCategory(() => undefined)
+    setActiveIndex(() => 1)
   }
 
   return (
@@ -27,6 +30,7 @@ export default function App() {
         onSubcategoryClick={onSubcategoryClick} 
       />
       <ProductMatrix 
+        parentActiveIndex={activeIndex}
         idCategory={idCategory} 
         idSubcategory={idSubcategory}/>
     </section>

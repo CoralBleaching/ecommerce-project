@@ -6,6 +6,7 @@ import fetchAndDecode, { Order, ServerRoute } from "../utils/utils";
 import PaginationBar from "./PaginationBar";
 
 export interface ProductMatrixProps {
+  parentActiveIndex: number
   idCategory?: number;
   idSubcategory?: number;
 }
@@ -20,18 +21,24 @@ type Parameters = {
 };
 
 export default function ProductMatrix({
+  parentActiveIndex,
   idCategory,
   idSubcategory,
 }: ProductMatrixProps) {
   const RESULTS_PER_PAGE = 9;
-  const INITIAL_PAGE = 1;
+  // const INITIAL_PAGE = 1;
   const MAX_VISIBLE_INDICES = 4;
 
   const [products, setProducts] = useState<Product[]>([]);
+  // const [pictures, setPictures] = useState<string[]>([])
   const [orderBy, setOrderBy] = useState<string>(Order.Hotness);
   const [searchText, setSearchText] = useState<string | undefined>();
-  const [activeIndex, setActiveIndex] = useState(INITIAL_PAGE);
+  const [activeIndex, setActiveIndex] = useState(parentActiveIndex);
   const [totalIndices, setTotalIndices] = useState<number>();
+
+  useEffect(() => {
+    setActiveIndex(parentActiveIndex)
+  }, [parentActiveIndex])
 
   useEffect(() => {
     let params: Parameters = {};
@@ -50,6 +57,7 @@ export default function ProductMatrix({
     })
     console.log("totalIndices = ", totalIndices)
   }, [idCategory, idSubcategory, searchText, totalIndices])
+
 
   useEffect(() => {
     // TODO: import parameter names?
@@ -73,8 +81,35 @@ export default function ProductMatrix({
         product.date = new Date(product.timestamp);
       });
       setProducts(fetchedProducts);
+      // loadPics();
     });
   }, [idCategory, idSubcategory, orderBy, searchText, activeIndex]);
+
+  // function loadPics() {
+  //   let pictureIds: number[] = [];
+  //   products.forEach((product) => {
+  //     pictureIds.push(product.idPicture)
+  //   })
+  //   fetch(ServerRoute.Pictures, {
+  //     // mode: "no-cors",
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify(pictureIds)
+  //   }).then(response => response.text())
+  //   .then(text => {
+  //     console.log(text)
+  //     const data = JSON.parse(text) as {pictures: string[]}
+  //     const decodedPictures = data.pictures.map(encodedPicture => 
+  //       encodedPicture ? atob(encodedPicture) : ""
+  //     );
+  //     setPictures(() => decodedPictures);
+  //     console.log(pictures);
+  //   })
+  // }
+
+  
 
 
   function onSetOrder(newOrder: string) {

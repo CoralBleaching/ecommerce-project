@@ -15,6 +15,24 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>PicturesServlet</servlet-name>
+    <servlet-class>product.PicturesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PicturesServlet</servlet-name>
+    <url-pattern>/Pictures</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PictureServlet</servlet-name>
+    <servlet-class>product.PictureServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PictureServlet</servlet-name>
+    <url-pattern>/Picture</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>ProductCountServlet</servlet-name>
     <servlet-class>product.ProductCountServlet</servlet-class>
   </servlet>

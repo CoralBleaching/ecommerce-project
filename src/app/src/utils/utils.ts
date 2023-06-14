@@ -14,6 +14,8 @@ const SERVER_URL = "http://localhost:8080/ecommerce-demo"
 export enum ServerRoute {
   AllCategories = SERVER_URL + "/Categories",
   AllProducts = SERVER_URL + "/Products",
+  Picture = SERVER_URL + "/Picture",
+  Pictures = SERVER_URL + "/Pictures",
   ProductCount = SERVER_URL + "/ProductCount"
 }
 
