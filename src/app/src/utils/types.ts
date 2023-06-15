@@ -32,3 +32,22 @@ export interface Evaluation {
     review: string 
     score: number
 }
+
+export interface User {
+    idUser?: number,
+    name: string,
+    username: string,
+    password: string,
+    email: string,
+}
+
+export interface Address {
+    city: string,
+    state: string,
+    country: string,
+    street: string,
+    number: string,
+    zipcode: string,
+    district: string,
+    label: string
+}
