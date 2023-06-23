@@ -31,6 +31,7 @@ create table if not exists Address (
     number varchar(50),
     zipcode varchar(50) not null,
     district varchar(50),
+    label varchar(50), -- new
     foreign key (id_user) references User (id_user),
     foreign key (id_city) references City (id_city)
 );

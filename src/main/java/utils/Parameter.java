@@ -8,6 +8,7 @@ public enum Parameter {
     PageNumber("pageNumber"),
     Password("password"),
     PictureId("idPicture"),
+    Products("products"),
     ProductId("idProduct"),
     ProductOrdering("orderBy"),
     ResultsPerPage("resultsPerPage"),

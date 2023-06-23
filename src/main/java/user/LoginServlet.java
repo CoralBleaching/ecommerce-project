@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
 				username, password);
 		if (validationResult.wasSuccessful()) {
 			HttpSession session = request.getSession(true);
-			var fetchUser = UserDAO.getUserByLoginFull(username, password);
+			var fetchUser = UserDAO.getUserByLogin(username, password);
 
 			session.setAttribute(Parameter.User.get(), fetchUser.user());
 			/*

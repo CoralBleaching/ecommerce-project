@@ -4,7 +4,7 @@ import DepartmentsMenu from "./components/DepartmentsMenu"
 import ProductMatrix from "./components/ProductMatrix"
 import { useState } from "react"
 import Modal from "./components/Modal"
-import Multistepform from "./components/Multistepform"
+import MultiStepForm from "./components/MultiStepForm"
 
 export default function App() {
   const [activeIndex, setActiveIndex] = useState<number>(1)
@@ -38,7 +38,7 @@ export default function App() {
         {/* <h1>Modal Content</h1>
         <p>This is the content of the modal.</p>
         <button onClick={handleCloseModal}>Close Modal</button> */}
-        <Multistepform />
+        <MultiStepForm />
       </Modal>
 
       <Header handleOpenModal={handleOpenModal} />

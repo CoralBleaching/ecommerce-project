@@ -184,6 +184,8 @@ def fill_address_table(cur: sqlite3.Cursor,
                        rng: np.random.Generator | None = None):
     if rng is None:
         rng = np.random.default_rng()
+
+    LABELS = ['Home', 'Work']
     
     with open(data_path + 'streets.json', encoding='utf-8') as raw_data:
         data: dict[str, list[dict[str, str]]] = json.loads(raw_data.read())
@@ -200,23 +202,28 @@ def fill_address_table(cur: sqlite3.Cursor,
             id_cities[country] = next(zip(*cur.fetchall()))
         
         for user in user_data:
+            no_of_addresses = rng.choice(range(3), p=(0.25, 0.5, 0.25))
             stmt = '''
             insert into Address (
-                id_user, id_city, street, number, zipcode, district
-            ) values (?, ?, ?, ?, ?, ?)
+                id_user, id_city, street, number, zipcode, district, label
+            ) values (?, ?, ?, ?, ?, ?, ?)
             '''
             country = rng.choice(list(id_cities.keys()))
-            countries = np.array(data[country]) # prevents a type checking failure
-            address_data: dict[str, str] = rng.choice(countries)
-            cur.execute(stmt, (
-                user['id_user'], 
-                str(rng.choice(id_cities[country])),
-                address_data['street'], 
-                address_data['number'], 
-                ''.join(map(str, rng.integers(1,9+1,8))), 
-                address_data['district']
+            city = str(rng.choice(id_cities[country]))
+
+            for i in range(no_of_addresses):
+                addresses = np.array(data[country])
+                address_data: dict[str, str] = rng.choice(addresses)
+                cur.execute(stmt, (
+                    user['id_user'], 
+                    city,
+                    address_data['street'], 
+                    address_data['number'], 
+                    ''.join(map(str, rng.integers(1,9+1,8))), 
+                    address_data['district'],
+                    LABELS[i]
+                    )
                 )
-            )
 
 
 def fill_picture_table(

@@ -25,7 +25,7 @@ public class UpdateServlet extends HttpServlet {
         User oldUser = (User) session.getAttribute(Parameter.User.get());
         String oldUsername = oldUser.getUsername();
 
-        User user = new User(-1, name, new_username, password, email, null, false);
+        User user = new User(-1, name, new_username, password, email, false);
 
         TransactionResult updateResult = UserDAO.updateUser(oldUsername, user, null);
 

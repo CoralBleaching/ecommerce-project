@@ -7,20 +7,17 @@ public class User {
             username,
             password,
             email;
-    private Address address;
     private boolean isAdmin;
 
     public User() {
     }
 
-    public User(int userId, String name, String username, String password, String email, Address address,
-            boolean isAdmin) {
+    public User(int userId, String name, String username, String password, String email, boolean isAdmin) {
         this.userId = userId;
         this.name = name;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.address = address;
         this.isAdmin = isAdmin;
     }
 
@@ -30,7 +27,6 @@ public class User {
         this.username = other.username;
         this.password = other.password;
         this.email = other.email;
-        this.address = new Address(other.address);
         this.isAdmin = other.isAdmin;
     }
 
@@ -42,7 +38,6 @@ public class User {
                 ", username=" + username +
                 ", password=" + password +
                 ", email=" + email +
-                ", address=" + address +
                 ", isAdmin=" + isAdmin +
                 '}';
     }
@@ -85,14 +80,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public boolean isIsAdmin() {

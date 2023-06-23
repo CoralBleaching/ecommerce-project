@@ -1,7 +1,6 @@
 import { Address } from "../utils/types";
 import FormWrapper from "./FormWrapper";
 import InputSelection from "./InputSelection";
-import SelectBox from "./SelectBox";
 
 let cityOptions = [
     "Rio Branco", "Cruzeiro do Sul", "Sena Madureira",
@@ -58,20 +57,24 @@ export default function AddressForm({address, updateFields}: AddressFormProps) {
             value={address.street}
             onChange={e => updateFields({street: e.target.value})}/>
             <label>Number</label>
-            <input autoFocus required type="email" 
+            <input autoFocus required type="text" 
             value={address.number}
             onChange={e => updateFields({number: e.target.value})}/>
             <label>City</label>
-            <InputSelection options={cityOptions} 
-            onChange={e => updateFields({city: e.target.value})}/>
+            <InputSelection 
+                defaultValue={address.city}
+                options={cityOptions} 
+                onChange={value => updateFields({city: value})}/>
             <label>State</label>
-            <SelectBox options={stateOptions}
-            defaultOption={address.state}
-            onChange={e => updateFields({state: e.target.value})}/>
+            <InputSelection
+                defaultValue={address.state} 
+                options={stateOptions}
+                onChange={value => updateFields({state: value})}/>
             <label>Country</label>
-            <SelectBox options={countryOptions} 
-            defaultOption={address.country}
-            onChange={e => updateFields({country: e.target.value})}/>
+            <InputSelection
+                defaultValue={address.country} 
+                options={countryOptions} 
+                onChange={value => updateFields({country: value})}/>
         </FormWrapper>
     )
 }

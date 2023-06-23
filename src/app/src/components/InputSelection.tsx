@@ -1,18 +1,19 @@
 // Note: this is another component almost entirely built by chatGPT, CSS included.
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 interface InputSelectionProps {
+  defaultValue: string,
   options: string[]
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange: (e: string) => void
 }
 
-export default function InputSelection ({ options }: InputSelectionProps) {
+export default function InputSelection ({ defaultValue, options, onChange }: InputSelectionProps) {
   const [selectedOption, setSelectedOption] = useState<string>()
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState(defaultValue)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isValidValue, setIsValidValue] = useState(true)
-  const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState(defaultValue ?? "");
 
   const filteredOptions = options.filter((option) =>
     option.toLowerCase().includes(filterText.toLowerCase())
@@ -27,20 +28,30 @@ export default function InputSelection ({ options }: InputSelectionProps) {
     }
     setFilterText(value);
     setInputValue(value)
-    setIsValidValue(options.some((option) => option === value))
+    setIsValidValue(() => options.some((option) => option === value))
   }
 
+  useEffect(() => {
+    if (isValidValue) {
+      setSelectedOption(inputValue)
+    }
+  }, [isValidValue])
+
   function handleOptionSelect (option: string) {
-    setFilterText(option);
+    setFilterText(option)
     setSelectedOption(option)
     setInputValue(option)
-    setIsDropdownOpen(false)
     setIsValidValue(true)
   }
 
   function toggleDropdown () {
     setIsDropdownOpen(!isDropdownOpen)
   }
+
+  useEffect(() => {
+    setIsDropdownOpen(false)
+    if (selectedOption) onChange(selectedOption)    
+  }, [selectedOption])
 
   return (
     <div className="input-selection">
@@ -53,7 +64,7 @@ export default function InputSelection ({ options }: InputSelectionProps) {
       <button type="button" onClick={toggleDropdown}>{isDropdownOpen ? "▲" : "▼"}</button>
       {isDropdownOpen && (
         <ul className="dropdown">
-          {filteredOptions/*.slice(0, 4)*/.map((option) => (
+          {filteredOptions.map((option) => (
             <li key={option} onClick={() => handleOptionSelect(option)}>
               {option}
             </li>

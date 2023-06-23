@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package user;
 
 import transactions.ConstraintName;
@@ -24,14 +20,13 @@ public class UserDAO {
     private static final String CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART = "[SQLITE_CONSTRAINT_CHECK] A CHECK constraint failed (CHECK constraint failed",
             CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR = ": ",
             DATABASE_PATH = databaseUtil.getDatabasePath(),
-            DB_FULL_URL = "jdbc:sqlite:" + DATABASE_PATH, // TODO: use this
-            DB_CLASS_NAME = "org.sqlite.JDBC"; // TODO: use this
+            DB_FULL_URL = "jdbc:sqlite:" + DATABASE_PATH,
+            DB_CLASS_NAME = "org.sqlite.JDBC";
 
     public static TransactionResult registerUser(User user, Address address) {
         try {
-            Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:" + DATABASE_PATH;
-            try (Connection conn = DriverManager.getConnection(url)) {
+            Class.forName(DB_CLASS_NAME);
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
 
                 var user_stmt = conn.prepareStatement(
                         "insert into User ("
@@ -108,9 +103,8 @@ public class UserDAO {
 
     public static TransactionResult updateUser(String oldUsername, User user, Address address) {
         try {
-            Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:" + DATABASE_PATH;
-            try (Connection conn = DriverManager.getConnection(url)) {
+            Class.forName(DB_CLASS_NAME);
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
 
                 try (var user_stmt = conn.prepareStatement(
                         "update User set "
@@ -147,10 +141,9 @@ public class UserDAO {
     }
 
     public static TransactionResult validateLogin(String username, String password) {
-        String url = "jdbc:sqlite:" + DATABASE_PATH;
         try {
-            Class.forName("org.sqlite.JDBC");
-            try (Connection conn = DriverManager.getConnection(url)) {
+            Class.forName(DB_CLASS_NAME);
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
                 try (PreparedStatement stmt = conn.prepareStatement(
                         "select username, password from User"
                                 + " where username = ? and password = ?;")) {
@@ -174,10 +167,9 @@ public class UserDAO {
     }
 
     public static TransactionResult deleteByLogin(String username, String password) {
-        String url = "jdbc:sqlite:" + DATABASE_PATH;
         try {
-            Class.forName("org.sqlite.JDBC");
-            try (Connection conn = DriverManager.getConnection(url)) {
+            Class.forName(DB_CLASS_NAME);
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
                 try (PreparedStatement stmt = conn.prepareStatement(
                         "delete from User"
                                 + " where username = ?;")) {
@@ -196,64 +188,11 @@ public class UserDAO {
         }
     }
 
-    public record AddressFetch(TransactionResult resultValue, Address address) {
-        public boolean wasSuccessful() {
-            return resultValue == TransactionResult.Successful;
-        }
-    }
-
-    // TODO: incomplete
-    public static AddressFetch getAddressByUserId(int user_id) {
-        Address address = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:" + DATABASE_PATH;
-            try (Connection conn = DriverManager.getConnection(url)) {
-                try (var stmt = conn.prepareStatement(
-                        "select City.name as city, Address.street as street, "
-                                + "Address.number as number, Address.zipcode as zipcode, "
-                                + "Address.district as district, State.name as state, "
-                                + "Country.name as country"
-                                + "from Address, City, State, Country where "
-                                + "Address.id_user = ? and "
-                                + "Adress.id_city = City.id_city and "
-                                + "City.id_state = State.id_state and "
-                                + "State.id_country = Country.id_country")) {
-                    stmt.setInt(1, user_id);
-                    try (var stmt_res = stmt.executeQuery()) {
-                        if (stmt_res.next()) {
-                            address = new Address(
-                                    stmt_res.getString("city"),
-                                    stmt_res.getString("state"),
-                                    stmt_res.getString("country"),
-                                    stmt_res.getString("street"),
-                                    stmt_res.getString("number"),
-                                    stmt_res.getString("zipcode"),
-                                    stmt_res.getString("district"));
-                        }
-                    }
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            return new AddressFetch(TransactionResult.DatabaseConnectionError, new Address());
-        } catch (SQLException ex) {
-            return new AddressFetch(TransactionResult.AddressNotFound, new Address());
-        }
-        return new AddressFetch(TransactionResult.Successful, address);
-    }
-
-    public record UserFetch(TransactionResult resultValue, User user) {
-        public boolean wasSuccessful() {
-            return resultValue == TransactionResult.Successful;
-        }
-    }
-
-    public static UserFetch getUserByLoginNoAddress(String username, String password) {
+    public static UserFetch getUserByLogin(String username, String password) {
         User user = null;
         try {
-            Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:" + DATABASE_PATH;
-            try (Connection conn = DriverManager.getConnection(url)) {
+            Class.forName(DB_CLASS_NAME);
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
                 try (var stmt = conn.prepareStatement(
                         "select id_user, name, username, email, is_admin from User"
                                 + " where username = ? and password = ?")) {
@@ -267,7 +206,6 @@ public class UserDAO {
                                     stmt_res.getString("username"),
                                     null,
                                     stmt_res.getString("email"),
-                                    null,
                                     stmt_res.getBoolean("is_admin"));
                             return new UserFetch(TransactionResult.Successful, user);
                         }
@@ -282,23 +220,6 @@ public class UserDAO {
             return new UserFetch(TransactionResult.UserNotFound, new User());
         }
         return new UserFetch(TransactionResult.UserNotFound, null);
-    }
-
-    public static UserFetch getUserByLoginFull(String username, String password) {
-        UserFetch userFetch = getUserByLoginNoAddress(username, password);
-        System.out.println("[getUserByLoginFull] " + userFetch);
-        if (userFetch.wasSuccessful()) {
-            AddressFetch addressFetch = getAddressByUserId(
-                    userFetch.user().getUserId());
-            if (addressFetch.wasSuccessful()) {
-                User user = new User(userFetch.user());
-                user.setAddress(new Address(addressFetch.address()));
-                return new UserFetch(userFetch.resultValue(), user);
-            }
-            return new UserFetch(
-                    addressFetch.resultValue(), userFetch.user());
-        }
-        return userFetch;
     }
 
 }

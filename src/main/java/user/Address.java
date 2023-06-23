@@ -10,12 +10,14 @@ package user;
  */
 public class Address {
     private String city, state, country,
-                   street, number, zipcode,
-                   district;
-    
-    public Address() {}
-    
-    public Address(String City, String State, String Country, String street, String number, String zipcode, String district) {
+            street, number, zipcode,
+            district, label;
+
+    public Address() {
+    }
+
+    public Address(String City, String State, String Country, String street, String number, String zipcode,
+            String district, String label) {
         this.city = City;
         this.state = State;
         this.country = Country;
@@ -23,8 +25,9 @@ public class Address {
         this.number = number;
         this.zipcode = zipcode;
         this.district = district;
+        this.label = label;
     }
-    
+
     public Address(Address other) {
         this.city = other.city;
         this.state = other.state;
@@ -33,8 +36,9 @@ public class Address {
         this.number = other.number;
         this.zipcode = other.zipcode;
         this.district = other.district;
+        this.label = other.label;
     }
-    
+
     @Override
     public String toString() {
         return "Address{" +
@@ -45,9 +49,10 @@ public class Address {
                 ", number=" + number +
                 ", zipcode=" + zipcode +
                 ", district=" + district +
+                ", label=" + label +
                 '}';
     }
-    
+
     public String getCity() {
         return city;
     }
@@ -55,7 +60,7 @@ public class Address {
     public void setCity(String city) {
         this.city = city;
     }
-    
+
     public String getState() {
         return state;
     }
@@ -71,37 +76,45 @@ public class Address {
     public void setCountry(String country) {
         this.country = country;
     }
-    
+
     public String getStreet() {
         return street;
     }
-    
+
     public void setStreet(String street) {
         this.street = street;
     }
-    
+
     public String getNumber() {
         return number;
     }
-    
+
     public void setNumber(String number) {
         this.number = number;
     }
-    
+
     public String getZipcode() {
         return zipcode;
     }
-    
+
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
-    
+
     public String getDistrict() {
         return district;
     }
-    
+
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
 }

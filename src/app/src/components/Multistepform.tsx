@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import useMultistepform from "../utils/useMultistepform";
+import useMultiStepForm from "../utils/useMultiStepForm";
 import AddressForm from "./AddressForm";
 import UserForm from "./UserForm";
 import { Address, User } from "../utils/types";
@@ -27,7 +27,7 @@ interface MultistepformProps {
 
 }
 
-export default function Multistepform({}: MultistepformProps) {
+export default function MultiStepForm({}: MultistepformProps) {
     const [user, setUser] = useState<User>(INITIAL_USER_DATA)
     const [address, setAddress] = useState<Address>(INITIAL_ADDRESS_DATA)
     const {
@@ -38,7 +38,10 @@ export default function Multistepform({}: MultistepformProps) {
         step,
         onBack,
         onNext,
-    } = useMultistepform([<UserForm user={user} updateFields={updateUser} />, <AddressForm address={address} updateFields={updateAddress} />])
+    } = useMultiStepForm([
+        <UserForm user={user} updateFields={updateUser} />, 
+        <AddressForm address={address} updateFields={updateAddress} />
+    ])
 
     function updateUser(fields: Partial<User>) {
         setUser(previous => { 
@@ -69,10 +72,7 @@ export default function Multistepform({}: MultistepformProps) {
             <div className="multi-step-form-buttons">
                 {!isFirstStep && 
                     <button type="button" onClick={onBack}>Back</button>}
-                {!isLastStep ? 
-                    <button type="submit">Next</button>
-                    : <button type="submit">Submit</button>
-                }
+                    <button type="submit">{!isLastStep ? "Next" : "Submit"}</button>
             </div>
         </form>
     )

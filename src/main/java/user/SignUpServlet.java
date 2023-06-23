@@ -21,7 +21,7 @@ public class SignUpServlet extends HttpServlet {
         String username = request.getParameter(Parameter.Username.get());
         String password = request.getParameter(Parameter.Password.get());
 
-        User user = new User(-1, name, username, password, email, null, false);
+        User user = new User(-1, name, username, password, email, false);
 
         TransactionResult registrationResult = UserDAO.registerUser(user, null);
 
