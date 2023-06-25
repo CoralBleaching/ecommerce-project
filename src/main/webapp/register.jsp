@@ -1,14 +1,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="user.Parameter" %>
+<%@page import="utils.Parameter" %>
+<%@page import="utils.Token"%>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Registration</title>
+        <link rel="stylesheet" href="style.css">
+        <title><%= Token.RegisterUserTitle.get() %></title>
     </head>
     <body>
-        <h1>Registration form</h1>
+        <%@include file="header.jsp" %>
+        <h1><%= Token.RegisterUserForm.get() %></h1>
         <form action="SignUp" method="post">
             <label for="<%= Parameter.Name.get() %>">Name:</label>
             <input type="text" id="<%= Parameter.Name.get() %>" name="<%= Parameter.Name.get() %>" required><br>

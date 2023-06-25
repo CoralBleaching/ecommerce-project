@@ -24,6 +24,24 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>PictureInfoServlet</servlet-name>
+    <servlet-class>product.PictureInfoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PictureInfoServlet</servlet-name>
+    <url-pattern>/PictureInfo</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RegisterPictureServlet</servlet-name>
+    <servlet-class>product.RegisterPictureServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterPictureServlet</servlet-name>
+    <url-pattern>/RegisterPicture</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>PictureServlet</servlet-name>
     <servlet-class>product.PictureServlet</servlet-class>
   </servlet>
@@ -48,6 +66,33 @@
   <servlet-mapping>
     <servlet-name>ListProductsServlet</servlet-name>
     <url-pattern>/Products</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ListProductsAdminServlet</servlet-name>
+    <servlet-class>product.ListProductsAdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListProductsAdminServlet</servlet-name>
+    <url-pattern>/ProductsEdit</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UpdateProductServlet</servlet-name>
+    <servlet-class>product.UpdateProductServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateProductServlet</servlet-name>
+    <url-pattern>/ProductUpdate</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RemoveProductServlet</servlet-name>
+    <servlet-class>product.RemoveProductServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoveProductServlet</servlet-name>
+    <url-pattern>/ProductRemove</url-pattern>
   </servlet-mapping>
 
   <!-- Category -->

@@ -5,3 +5,9 @@
     border-radius: 5px; /* Rounded corners */
     padding: 10px; /* Padding around the content */
   }
+  
+  .header-menu {
+      display: flex;
+      justify-content: flex-start;
+      gap: 2em;
+  }

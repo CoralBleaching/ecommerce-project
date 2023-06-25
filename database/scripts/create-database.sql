@@ -12,7 +12,7 @@ create table if not exists User (
     email varchar(50) not null constraint email check (
         email like '%@%.%'
     ),
-    is_admin boolean not null default false
+    is_admin boolean not null default 'false'
 );
 
 create table if not exists CreditCard (
@@ -21,7 +21,7 @@ create table if not exists CreditCard (
     name_on_card varchar(50) not null,
     ccv varchar(3) not null,
     expiry_date varchar(4) not null,
-    foreign key (id_user) references User (id_user)
+    foreign key (id_user) references User (id_user) on delete cascade
 );
 
 create table if not exists Address (
@@ -32,7 +32,7 @@ create table if not exists Address (
     zipcode varchar(50) not null,
     district varchar(50),
     label varchar(50), -- new
-    foreign key (id_user) references User (id_user),
+    foreign key (id_user) references User (id_user) on delete cascade,
     foreign key (id_city) references City (id_city)
 );
 
@@ -59,14 +59,14 @@ create table if not exists Sale (
     id_sale integer primary key,
     id_user integer not null,
     timestamp datetime not null,
-    foreign key (id_user) references User (id_user)
+    foreign key (id_user) references User (id_user) on delete cascade
 );
 
 create table if not exists Sold (
     id_sale integer not null,
     id_price integer not null,
     quantity integer not null,
-    foreign key (id_sale) references Sale (id_sale),
+    foreign key (id_sale) references Sale (id_sale) on delete cascade,
     foreign key (id_price) references Price (id_price)
 );
 
@@ -88,8 +88,8 @@ create table if not exists Evaluation ( -- new
     timestamp datetime not null,
     review text,
     score float not null constraint score check (score >= 1 and score <= 5),
-    foreign key (id_product) references Product (id_product),
-    foreign key (id_sale) references sale (id_sale)
+    foreign key (id_product) references Product (id_product) on delete cascade,
+    foreign key (id_sale) references sale (id_sale) on delete cascade
 );
 
 create table if not exists Subcategory (
@@ -97,7 +97,7 @@ create table if not exists Subcategory (
     id_category integer not null,
     name varchar(50) not null unique, --unique
     description varchar(255),
-    foreign key (id_category) references Category (id_category)
+    foreign key (id_category) references Category (id_category) on delete cascade
 );
 
 create table if not exists Category (
@@ -111,7 +111,7 @@ create table if not exists Price (
     id_product integer not null,
     timestamp datetime not null default current_timestamp,
     value float not null,
-    foreign key (id_product) references Product (id_product),
+    foreign key (id_product) references Product (id_product) on delete cascade,
     constraint unique_product_timestamp unique (id_product, timestamp) -- new
 );
 

@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="user.Parameter" %>
+<%@page import="utils.Parameter" %>
 <html>
     <head>
         <meta charset="UTF-8">

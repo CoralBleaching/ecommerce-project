@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import category.CategoryDAO;
+import category.CategoryDAO.CategoriesFetch;
 import product.ProductDAO.ProductsFetch;
 import user.User;
-import utils.DatabaseUtil;
 import utils.Parameter;
+import utils.SessionVariable;
 
 public class ListProductsAdminServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.addHeader("Access-Control-Allow-Origin",
-                DatabaseUtil.WhitelistedDomains.ViteReactTsApp.get());
 
         HttpSession session = request.getSession(true);
 
@@ -40,23 +40,26 @@ public class ListProductsAdminServlet extends HttpServlet {
 
         Integer idCategory = null, idSubcategory = null, resultsPerPage = null, pageNumber = null;
         if (idCategoryString != null) {
-            idCategory = Integer.parseInt(idCategoryString);
+            idCategory = Integer.valueOf(idCategoryString);
         }
-        if (idSubcategoryString != null) {
-            idSubcategory = Integer.parseInt(idSubcategoryString);
+        if (idSubcategoryString != null && !idSubcategoryString.equals("undefined")) {
+            idSubcategory = Integer.valueOf(idSubcategoryString);
         }
         if (resultsPerPageString != null) {
-            resultsPerPage = Integer.parseInt(resultsPerPageString);
+            resultsPerPage = Integer.valueOf(resultsPerPageString);
         }
         if (pageNumberString != null) {
-            pageNumber = Integer.parseInt(pageNumberString);
+            pageNumber = Integer.valueOf(pageNumberString);
         }
 
         ProductsFetch fetchProducts = ProductDAO.getProducts(idCategory, idSubcategory,
                 orderBy, searchText, resultsPerPage, pageNumber);
 
-        if (fetchProducts.wasSuccessful()) {
-            session.setAttribute(Parameter.Products.get(), fetchProducts.products());
+        CategoriesFetch fetchCategories = CategoryDAO.getAllCategories();
+
+        if (fetchProducts.wasSuccessful() && fetchCategories.wasSuccessful()) {
+            session.setAttribute(SessionVariable.Products.get(), fetchProducts.products());
+            session.setAttribute(SessionVariable.Categories.get(), fetchCategories.categories());
             RequestDispatcher dispatcher = request.getRequestDispatcher("products.jsp");
             dispatcher.forward(request, response);
             return;

@@ -49,37 +49,12 @@ public class UserDAO {
                     var generatedKeys = user_stmt.getGeneratedKeys();
                     if (generatedKeys.next()) {
                         int id_user = generatedKeys.getInt(1);
-                        var address_stmt = conn.prepareStatement(
-                                "insert into Address ("
-                                        + "id_user, id_city, street, "
-                                        + "number, zipcode, district"
-                                        + ") "
-                                        + "values (?, ("
-                                        + "select id_city from City "
-                                        + "where name = ? and id_state = ("
-                                        + "select id_state from State "
-                                        + "where name = ? and id_country = ("
-                                        + "select id_country from Country "
-                                        + "where name = ?"
-                                        + ")"
-                                        + ")"
-                                        + "), "
-                                        + "?, ?, ?, ?)"
-
-                        );
-                        address_stmt.setInt(1, id_user);
-                        address_stmt.setString(2, address.getCity());
-                        address_stmt.setString(3, address.getState());
-                        address_stmt.setString(4, address.getCountry());
-                        address_stmt.setString(5, address.getStreet());
-                        address_stmt.setString(6, address.getNumber());
-                        address_stmt.setString(7, address.getZipcode());
-                        address_stmt.setString(8, address.getDistrict());
-
-                        address_stmt.executeUpdate();
+                        // AddressDAO.registerAddressToUserId(id_user); TODO
                         return TransactionResult.Successful;
                     }
                 }
+
+                return TransactionResult.AddressNotFound; // TODO: improve
             }
         } catch (ClassNotFoundException ex) {
             return TransactionResult.DatabaseConnectionError;
@@ -92,13 +67,12 @@ public class UserDAO {
                 constraint = constraint.substring(0, 1).toUpperCase()
                         + constraint.substring(1);
                 return ConstraintName.valueOf(constraint).getTransactionResult();
-            } else {
-                var resultValue = TransactionResult.Miscellaneous;
-                resultValue.appendToMessage(ex.getMessage());
-                return resultValue;
             }
+
+            var resultValue = TransactionResult.Miscellaneous;
+            resultValue.appendToMessage(ex.getMessage());
+            return resultValue;
         }
-        return TransactionResult.Miscellaneous;
     }
 
     public static TransactionResult updateUser(String oldUsername, User user, Address address) {
@@ -109,7 +83,7 @@ public class UserDAO {
                 try (var user_stmt = conn.prepareStatement(
                         "update User set "
                                 + "name = ?, username = ?, password = ?, email = ? "
-                                + "where username = ?")) {
+                                + "where username = ?;")) {
                     user_stmt.setString(1, user.getName());
                     user_stmt.setString(2, user.getUsername());
                     user_stmt.setString(3, user.getPassword());
@@ -153,6 +127,9 @@ public class UserDAO {
                         if (stmt_res.next()) {
                             return TransactionResult.Successful;
                         }
+                        var res = TransactionResult.Miscellaneous;
+                        res.appendToMessage("wtf"); // TODO: idk what happened
+                        return res;
                     }
                 }
             }
@@ -163,7 +140,6 @@ public class UserDAO {
             System.out.println(ex.toString());
             return TransactionResult.UserNotFound;
         }
-        return TransactionResult.Miscellaneous;
     }
 
     public static TransactionResult deleteByLogin(String username, String password) {
@@ -206,17 +182,17 @@ public class UserDAO {
                                     stmt_res.getString("username"),
                                     null,
                                     stmt_res.getString("email"),
-                                    stmt_res.getBoolean("is_admin"));
+                                    Boolean.parseBoolean(stmt_res.getString("is_admin")));
                             return new UserFetch(TransactionResult.Successful, user);
                         }
                     }
                 }
             }
         } catch (ClassNotFoundException ex) {
-            System.out.println("[getUserByLoginNoAddress] " + ex);
+            System.out.println("[getUserByLogin] " + ex);
             return new UserFetch(TransactionResult.DatabaseConnectionError, new User());
         } catch (SQLException ex) {
-            System.out.println("[getUserByLoginNoAddress] " + ex);
+            System.out.println("[getUserByLogin] " + ex);
             return new UserFetch(TransactionResult.UserNotFound, new User());
         }
         return new UserFetch(TransactionResult.UserNotFound, null);

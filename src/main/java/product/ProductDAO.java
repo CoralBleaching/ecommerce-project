@@ -1,18 +1,17 @@
-/*
- * SQL Pagination Without OFFSET - CC-4.0 by Stephan Sokolow
- * https://creativecommons.org/licenses/by-sa/4.0/
- */
-
 package product;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import transactions.TransactionResult;
 import utils.DatabaseUtil;
+
+// TODO: ability to remove evaluations?
 
 public class ProductDAO {
     private static final DatabaseUtil databaseUtil = new DatabaseUtil();
@@ -202,6 +201,177 @@ public class ProductDAO {
         }
     }
 
+    public static ProductFetch getProduct(Integer idProduct) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+
+            String query = "select\n" +
+                    "    p.id_product, p.id_picture, p.name, p.description, p.stock, p.hotness, p.timestamp,\n" +
+                    "    c.name as category, s.name as subcategory, pr.value as price\n" +
+                    "from Product p, Category c, Subcategory s, Price pr, (\n" +
+                    "        select id_product, max(timestamp) as max_timestamp \n" +
+                    "        from Price \n" +
+                    "        group by id_product\n" +
+                    "    ) as latest_price\n" +
+                    "where\n" +
+                    "    p.id_product = " + Integer.toString(idProduct) + " and\n" +
+                    "    s.id_subcategory = p.id_subcategory and\n" +
+                    "    c.id_category = s.id_category and\n" +
+                    "    p.id_product = latest_price.id_product and\n" +
+                    "    latest_price.id_product = pr.id_product and\n" +
+                    "    latest_price.max_timestamp = pr.timestamp\n" +
+                    ";";
+
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    var prod_stmt = conn.prepareStatement(query);
+                    var prod_res = prod_stmt.executeQuery();) {
+                if (prod_res.next()) {
+                    Product product = new Product(
+                            prod_res.getInt("id_product"),
+                            prod_res.getInt("id_picture"),
+                            prod_res.getInt("stock"),
+                            prod_res.getInt("hotness"),
+                            prod_res.getString("timestamp"),
+                            prod_res.getFloat("price"),
+                            prod_res.getString("category"),
+                            prod_res.getString("subcategory"),
+                            prod_res.getString("name"),
+                            prod_res.getString("description"));
+                    return new ProductFetch(TransactionResult.Successful, product);
+                }
+                return new ProductFetch(TransactionResult.ProductNotFound, null);
+            }
+        } catch (ClassNotFoundException ex) {
+            return new ProductFetch(TransactionResult.DatabaseConnectionError, null);
+        } catch (SQLException ex) {
+            return new ProductFetch(TransactionResult.ProductNotFound, null);
+        }
+    }
+
+    public static void updatePrice(Integer productId, Float newValue, Connection conn)
+            throws ClassNotFoundException, SQLException {
+        if (conn == null) {
+            Class.forName(DB_CLASS_NAME);
+            conn = DriverManager.getConnection(DB_FULL_URL);
+        }
+        String query = "insert into Price (id_product, value) values (?, ?);";
+        var stmt = conn.prepareStatement(query);
+        stmt.setInt(1, productId);
+        stmt.setFloat(2, newValue);
+        stmt.executeUpdate();
+    }
+
+    public static TransactionResult updateProduct(
+            Integer productId, Integer pictureId, String name, String description, Integer category,
+            Integer subcategory, Integer stock, Integer hotness, Float price) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+
+            String subcategoryQuery = "select Subcategory.id_subcategory as id_subcategory from Subcategory, Category \n"
+                    + "where Category.id_category = " + Integer.toString(category) + "\n"
+                    + " and Subcategory.id_subcategory = " + Integer.toString(subcategory) + "\n"
+                    + " and Subcategory.id_category = Category.id_category;";
+            String productQuery = "update Product set " +
+                    "name = ?,  description = ?, stock = ?, hotness = ?, id_subcategory = ?, id_picture = ? " +
+                    "where id_product = " + Integer.toString(productId) + ";";
+
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    var subcategory_stmt = conn.prepareStatement(subcategoryQuery);
+                    var subcat_res = subcategory_stmt.executeQuery();
+                    var product_stmt = conn.prepareStatement(productQuery);) {
+                subcat_res.next(); // TODO: implement check
+                int id_subcategory = subcat_res.getInt("id_subcategory");
+                product_stmt.setString(1, name);
+                product_stmt.setString(2, description);
+                product_stmt.setInt(3, stock);
+                product_stmt.setInt(4, hotness);
+                product_stmt.setInt(5, id_subcategory);
+                product_stmt.setInt(6, pictureId);
+
+                int product_res = product_stmt.executeUpdate();
+                if (product_res > 0) {
+                    updatePrice(productId, price, conn);
+                    return TransactionResult.Successful;
+                }
+
+                return TransactionResult.Miscellaneous;
+            }
+        } catch (ClassNotFoundException ex) {
+            return TransactionResult.DatabaseConnectionError;
+        } catch (SQLException ex) {
+            return TransactionResult.InvalidUsername; // TODO: create value
+        }
+    }
+
+    public static TransactionResult registerProduct(
+            String name, String description, Integer category, Integer subcategory,
+            Integer pictureId, Integer stock, Integer hotness, Float price) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+
+            String subcategoryQuery = "select Subcategory.id_subcategory as id_subcategory from Subcategory, Category \n"
+                    + "where Category.id_category = " + Integer.toString(category) + "\n"
+                    + " and Subcategory.id_subcategory = " + Integer.toString(subcategory) + "\n"
+                    + " and Subcategory.id_category = Category.id_category;";
+            String productQuery = "insert into Product\n" +
+                    "    (name, description, stock, hotness, id_subcategory, id_picture)\n" +
+                    "values (?, ?, ?, ?, ?, ?)\n" +
+                    ";";
+
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    var subcategory_stmt = conn.prepareStatement(subcategoryQuery);
+                    var subcat_res = subcategory_stmt.executeQuery();
+                    var product_stmt = conn.prepareStatement(productQuery, Statement.RETURN_GENERATED_KEYS);) {
+                subcat_res.next(); // TODO: implement check
+                int id_subcategory = subcat_res.getInt("id_subcategory");
+                product_stmt.setString(1, name);
+                product_stmt.setString(2, description);
+                product_stmt.setInt(3, stock);
+                product_stmt.setInt(4, hotness);
+                product_stmt.setInt(5, id_subcategory);
+                product_stmt.setInt(6, pictureId);
+
+                int product_res = product_stmt.executeUpdate();
+                if (product_res > 0) {
+                    try (var generatedKeys = product_stmt.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            int productId = generatedKeys.getInt(1);
+                            updatePrice(productId, price, conn);
+                            return TransactionResult.Successful;
+                        }
+                    }
+                }
+
+                return TransactionResult.Miscellaneous;
+            }
+        } catch (ClassNotFoundException ex) {
+            return TransactionResult.DatabaseConnectionError;
+        } catch (SQLException ex) {
+            return TransactionResult.InvalidUsername; // TODO: create value
+        }
+    }
+
+    public static TransactionResult removeProductById(int idProduct) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+            String productQuery = "delete from Product where " +
+                    "id_product = " + Integer.toString(idProduct) + ";";
+
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    var product_stmt = conn.prepareStatement(productQuery);) {
+                int product_res = product_stmt.executeUpdate();
+                if (product_res > 0) {
+                    return TransactionResult.Successful;
+                }
+                return TransactionResult.Miscellaneous;
+            }
+        } catch (ClassNotFoundException ex) {
+            return TransactionResult.DatabaseConnectionError;
+        } catch (SQLException ex) {
+            return TransactionResult.ProductNotFound; // TODO: adjust
+        }
+    }
+
     public static EvaluationsFetch getEvaluationByProductId(int idProduct) {
         try {
             Class.forName(DB_CLASS_NAME);
@@ -229,25 +399,22 @@ public class ProductDAO {
         }
     }
 
-    public static List<String> getPicturesById(Integer[] ids) {
+    // TODO: introduce pagination
+    public static List<PictureInfo> getPictureInfos() {
         try {
             Class.forName(DB_CLASS_NAME);
-            String query = "select data from Picture where id_picture = ?;";
+            String query = "select id_picture, name from Picture";
+            List<PictureInfo> pictureInfos = new ArrayList<>();
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
-                    var stmt = conn.prepareStatement(query)) {
-                List<String> pictures = new ArrayList<>();
-                for (Integer id : ids) {
-                    stmt.setInt(1, id);
-                    try (var res = stmt.executeQuery()) {
-                        if (res.next()) {
-                            pictures.add(res.getString("data"));
-                        } else {
-                            pictures.add(null);
-                        }
-                    }
+                    var stmt = conn.prepareStatement(query);
+                    var res = stmt.executeQuery()) {
+                while (res.next()) {
+                    pictureInfos.add(new PictureInfo(
+                            res.getInt("id_picture"),
+                            res.getString("name")));
                 }
-                return pictures;
             }
+            return pictureInfos;
         } catch (ClassNotFoundException exc) {
             return null;
         } catch (SQLException exc) {
@@ -274,4 +441,48 @@ public class ProductDAO {
             return null;
         }
     }
+
+    public static void registerPicture(String name, String data) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    PreparedStatement stmt = conn.prepareStatement("insert into Picture (name, data) values (?, ?)")) {
+                stmt.setString(1, name);
+                stmt.setString(2, data);
+                stmt.executeUpdate();
+            }
+        } catch (ClassNotFoundException exc) {
+
+        } catch (SQLException e) {
+
+        }
+    }
+
+    public static void updatePicture(Integer pictureId, String name, String data) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+            String query;
+            if (data == null) {
+                query = "update Picture set name = ? where id_picture = ?;";
+            } else {
+                query = "update Picture set name = ?, data = ? where id_picture = ? ;";
+            }
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, name);
+                if (data == null) {
+                    stmt.setInt(2, pictureId);
+                } else {
+                    stmt.setString(2, data);
+                    stmt.setInt(3, pictureId);
+                }
+                stmt.executeUpdate();
+            }
+        } catch (ClassNotFoundException exc) {
+
+        } catch (SQLException e) {
+
+        }
+    }
+
 }

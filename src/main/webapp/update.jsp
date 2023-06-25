@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="user.Parameter" %>
+<%@page import="utils.Parameter" %>
 <%@page import="user.User" %>
 
 <%
@@ -19,9 +19,11 @@ if (user != null) {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
         <title>Update</title>
     </head>
     <body>
+        <%@include file="header.jsp" %>
         <h1>Update your information</h1>
         <form action="Update" method="post">
             <label for="<%= Parameter.Name.get() %>">Name:</label>

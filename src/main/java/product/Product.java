@@ -122,4 +122,11 @@ public class Product {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "Product [idProduct=" + idProduct + ", idPicture=" + idPicture + ", stock=" + stock + ", hotness="
+                + hotness + ", price=" + price + ", category=" + category + ", subcategory=" + subcategory + ", name="
+                + name + ", description=" + description + ", timestamp=" + timestamp + "]";
+    }
+
 }

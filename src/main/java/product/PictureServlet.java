@@ -24,7 +24,7 @@ public class PictureServlet extends HttpServlet {
         String idPictureString = request.getParameter(Parameter.PictureId.get());
         Integer idPicture = null;
         if (idPictureString != null) {
-            idPicture = Integer.parseInt(idPictureString);
+            idPicture = Integer.valueOf(idPictureString);
         }
 
         PrintWriter out = response.getWriter();
