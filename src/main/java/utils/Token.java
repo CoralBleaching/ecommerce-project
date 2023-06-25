@@ -2,6 +2,7 @@ package utils;
 
 public enum Token {
     EditPicturesTitle("Edit pictures"),
+    RegisterCategoryForm("Enter the category information"),
     RegisterPictureTitle("Upload the image file"),
     RegisterProductForm("Product information"),
     RegisterProductTitle("Register the product"),

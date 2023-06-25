@@ -67,4 +67,53 @@ public class CategoryDAO {
             return new CategoriesFetch(TransactionResult.CategoryNotFound, null);
         }
     }
+
+    public static void registerCategory(String name, String description) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+            boolean hasName = name != null;
+            boolean hasDescription = description != null;
+            boolean hasBoth = hasName && hasDescription;
+            String query = "insert into Category (" +
+                    (hasName ? "name" : "") +
+                    (hasBoth ? ", " : "") +
+                    (hasDescription ? "description" : "") +
+                    ") values (?" + (hasBoth ? ", ?);" : ");");
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    var stmt = conn.prepareStatement(query);) {
+                stmt.setString(1, name);
+                stmt.setString(2, description);
+                stmt.executeUpdate();
+            }
+        } catch (ClassNotFoundException exc) {
+
+        } catch (SQLException exc) {
+
+        }
+    }
+
+    public static void updateCategory(Integer idCategory, String name, String description) {
+        try {
+            Class.forName(DB_CLASS_NAME);
+            boolean hasName = name != null;
+            boolean hasDescription = description != null;
+            boolean hasBoth = hasName && hasDescription;
+            String query = "update Category set " +
+                    (hasName ? name : "") + " = ? " +
+                    (hasBoth ? ", " : "") +
+                    (hasDescription ? description : "") + " = ? " +
+                    " where id_category = ?;";
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    var stmt = conn.prepareStatement(query);) {
+                stmt.setString(1, name);
+                stmt.setString(2, description);
+                stmt.setInt(3, idCategory);
+                stmt.executeUpdate();
+            }
+        } catch (ClassNotFoundException exc) {
+
+        } catch (SQLException exc) {
+
+        }
+    }
 }

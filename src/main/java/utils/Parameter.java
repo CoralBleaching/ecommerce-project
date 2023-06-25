@@ -4,9 +4,11 @@ package utils;
 public enum Parameter {
     Categories("categories"),
     Category("category"),
+    CategoryId("categoryId"),
     Description("description"),
     Email("email"),
     Hotness("hotness"),
+    IsCategoryEditing("isCategoryUpdate"),
     IsPictureUpdate("isPictureUpdate"),
     IsProductEditing("isProductEditing"),
     Name("name"),
@@ -24,6 +26,10 @@ public enum Parameter {
     Stock("stock"),
     Street("street"),
     Subcategory("subcategory"),
+    SubcategoryCategoryId("subcategoryCategoryId"),
+    SubcategoryDescription("subcategoryDescription"),
+    SubcategoryId("subcategoryId"),
+    SubcategoryName("subcategoryName"),
     User("user"),
     Username("username"),
     ;

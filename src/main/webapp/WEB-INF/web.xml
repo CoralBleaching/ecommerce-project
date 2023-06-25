@@ -105,6 +105,15 @@
     <url-pattern>/Categories</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>RegisterCategoryServlet</servlet-name>
+    <servlet-class>category.RegisterCategoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterCategoryServlet</servlet-name>
+    <url-pattern>/CategoryUpdate</url-pattern>
+  </servlet-mapping>
+
   <!-- User -->
   <servlet>
     <servlet-name>SignUpServlet</servlet-name>

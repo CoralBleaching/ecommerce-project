@@ -2,6 +2,8 @@ package utils;
 
 public enum SessionVariable {
     Categories("categories"),
+    Category("category"),
+    CategoryId("categoryId"),
     IsPictureUpdate("isPictureUpdate"),
     IsProductUpdate("isProductUpdate"),
     PictureData("pictureData"),
@@ -9,6 +11,7 @@ public enum SessionVariable {
     PictureInfos("pictureInfos"),
     Product("product"),
     Products("products"),
+    SubcategoryId("subcategoryId"),
     User("user"),
     ;
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <% if (session.getAttribute("user") != null) { %>
     <div class="header-menu">
-        <a href="Categories">Categories</a>
+        <a href="CategoryUpdate">Categories</a>
         <a href="ProductsEdit">Products</a>
         <a href="PictureInfo">Pictures</a>
         <a href="SignOut">Sign out</a>
