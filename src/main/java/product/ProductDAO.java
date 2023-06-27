@@ -341,13 +341,14 @@ public class ProductDAO {
                         }
                     }
                 }
-
                 return TransactionResult.Miscellaneous;
             }
         } catch (ClassNotFoundException ex) {
             return TransactionResult.DatabaseConnectionError;
         } catch (SQLException ex) {
-            return TransactionResult.InvalidUsername; // TODO: create value
+            TransactionResult res = TransactionResult.Miscellaneous;
+            res.appendToMessage(ex.toString());
+            return res; // TODO: create value
         }
     }
 

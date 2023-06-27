@@ -25,7 +25,8 @@ export default function ProductCard({product}: ProductCardProps) {
             <ul>
                 <li>{product.name}</li>
                 <li>{product.price}</li>
-                <li>{product.date?.toDateString()}</li>
+                {/* <li>{product.date?.toDateString()}</li> */}
+                <li>{product.description}</li>
             </ul>
             <img className="card-image"
                 src={`data:image/jpeg;base64,${picture}`} alt="Image" 

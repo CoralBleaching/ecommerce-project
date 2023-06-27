@@ -114,6 +114,24 @@
     <url-pattern>/CategoryUpdate</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>RemoveCategoryServlet</servlet-name>
+    <servlet-class>category.RemoveCategoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoveCategoryServlet</servlet-name>
+    <url-pattern>/CategoryRemove</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RemoveSubcategoryServlet</servlet-name>
+    <servlet-class>category.RemoveSubcategoryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoveSubcategoryServlet</servlet-name>
+    <url-pattern>/SubcategoryRemove</url-pattern>
+  </servlet-mapping>
+
   <!-- User -->
   <servlet>
     <servlet-name>SignUpServlet</servlet-name>

@@ -395,7 +395,37 @@ def fill_sale_sold_and_evaluation_tables(
                         timestamp, score) values (?, ?, ?, ?)''',
                         (product_ids[index], sale_id, review_timestamp, score))
             
+def create_triggers(cur: sqlite3.Cursor):
+    cur.execute('''
+    create trigger prevent_category_removal
+            before delete
+                on Category
+        for each row
+    begin
+        select raise(abort, "Cannot remove category due to existing subcategories.") 
+        where exists (
+                select 1
+                    from Subcategory
+                    where id_category = old.id_category
+            );
+    end;
 
+    ''')
+
+    cur.execute('''
+    create trigger prevent_subcategory_removal
+            before delete
+                on Subcategory
+        for each row
+    begin
+        select raise(abort, "Cannot remove subcategory due to existing products.") 
+        where exists (
+                select 1
+                    from Product
+                    where id_subcategory = old.id_subcategory
+            );
+    end;
+    ''')
         
     
 def main(dbpath: str, 
@@ -452,6 +482,7 @@ def main(dbpath: str,
                 text_evaluation_frequency, sentences_per_review, start_time,
                 end_time, time_format, date_gap_in_days
             )
+            create_triggers(cur)
 
             cur.close()
 

@@ -78,7 +78,7 @@ create table if not exists Product (
     description text not null,
     stock integer not null,
     hotness integer not null constraint hotness check (hotness >= 1 and hotness <= 5), -- new
-    timestamp datetime not null, -- new
+    timestamp datetime not null default (strftime('%Y-%m-%d %H:%M:%S', 'now')), -- new
     foreign key (id_subcategory) references Subcategory (id_subcategory)
 );
 

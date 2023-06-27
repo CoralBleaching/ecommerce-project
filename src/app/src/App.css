@@ -37,6 +37,7 @@
   width: 20vw;
   height: 20vh;
   scroll-behavior: auto;
+  height: max-content;
 }
 
 .navbar {

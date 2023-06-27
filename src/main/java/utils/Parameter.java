@@ -12,6 +12,8 @@ public enum Parameter {
     IsPictureUpdate("isPictureUpdate"),
     IsProductEditing("isProductEditing"),
     Name("name"),
+    NewSubcategoryName("newSubcategoryName"),
+    NewSubcategoryDescription("newSubcategoryDescription"),
     PageNumber("pageNumber"),
     Password("password"),
     PictureFile("pictureFile"),

@@ -4,6 +4,7 @@
     border: 1px solid #990000; /* Dark red border */
     border-radius: 5px; /* Rounded corners */
     padding: 10px; /* Padding around the content */
+    width: max-content;
   }
   
   .header-menu {

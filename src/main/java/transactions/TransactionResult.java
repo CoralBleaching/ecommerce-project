@@ -2,7 +2,8 @@ package transactions;
 
 public enum TransactionResult {
     AddressNotFound("Address wasn't registed for the user."),
-    CategoryNotFound("The product category isn't available."),
+    CategoryNotEmpty("Cannot remove category that contains subcategories."),
+    CategoryNotFound("The product category doesn't exist."),
     DatabaseConnectionError("There was a problem connecting to the server."),
     EvaluationNotFound("There's no evaluation for this product or product info is incorrect."),
     InvalidEmail("The entered email is not valid. Valid example: something@provider.com"),
@@ -10,8 +11,11 @@ public enum TransactionResult {
     InvalidUsername("The entered username is not valid. Only letters, numbers and spaces are allowed."),
     Miscellaneous("Database operation error: "),
     ProductNotFound("Sorry, we don't have this particular product."),
+    SubcategoryNotFound("The product subcategory doesn't exist."),
+    SubcategoryNotEmpty("Cannot remove subcategory that contains products."),
     Successful(""),
-    UserNotFound("Username not registered.");
+    UserNotFound("Username not registered."),
+    ;
 
     private String message;
 
