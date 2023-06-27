@@ -33,30 +33,121 @@
         <link rel="stylesheet" href="style.css">
         <title>Categories</title>
     </head>
-    <body onLoad="updateSubcategories()">
+    <body>
         
         <%@include file="header.jsp" %>
+
         
         <% if (user != null && user.isIsAdmin()) { %>
             <h1><%= Token.RegisterCategoryForm.get() %></h1><br><br>
+                                    
+            <% if (request.getAttribute("message") != null) { %>
+                <div class="warning-box">
+                    <strong>
+                        <%= request.getAttribute("message") %>
+                    </strong>
+                </div>
+            <% } %>
+            
             <h2>Category information</h2>
             <form action="CategoryUpdate" method="post" id="categoryForm"> 
                 <script>
-                    counter = 0;
+                    var counter = 0;
                     
-                    function addSubcategoryInput() {
-                        let input = document.createElement("input");
-                        let name = String("<%= Parameter.SubcategoryName.get() %>");
-                        input.type = "text";
-                        input.name = name + String(counter);
-                        input.id = name + String(counter);
-                        input.required = true;
-                        let label = document.createElement("label");
-                        label.for = name + String(counter);
-                        label.innerHTML = "Name:";
-                        form = document.getElementById("categoryForm");
-                        form.appendChild(label);
-                        form.appendChild(input);
+                    function addSubcategoryInput(formId, submitButtonId, submitButtonText, elementsToRemove) {
+                        let titleSpan = document.createElement("span");
+                        titleSpan.innerText = "New subcategory " + String(counter + 1);
+                        
+                        let nameInput = document.createElement("input");
+                        const name = String("<%= Parameter.NewSubcategoryName.get() %>");
+                        nameInput.type = "text";
+                        nameInput.name = name + String(counter);
+                        nameInput.id = name + String(counter);
+                        nameInput.required = true;
+                        
+                        let nameLabel = document.createElement("label");
+                        nameLabel.for = name + String(counter);
+                        nameLabel.innerHTML = "Name:";
+                  
+                        let descriptionInput = document.createElement("input");
+                        const description = String("<%= Parameter.NewSubcategoryDescription.get() %>");
+                        descriptionInput.type = "text";
+                        descriptionInput.name = description + String(counter);
+                        descriptionInput.id = description + String(counter);
+                        descriptionInput.required = true;
+                        
+                        let descriptionlabel = document.createElement("label");
+                        descriptionlabel.for = description + String(counter);
+                        descriptionlabel.innerHTML = "Description";
+                        
+                        const submitButton = document.getElementById(submitButtonId);
+                        submitButton.value = submitButtonText;
+                        
+                        let form = document.getElementById(formId);
+                        form.removeChild(submitButton);
+                        form.appendChild(titleSpan);
+                        form.appendChild(document.createElement("br"));
+                        form.appendChild(nameLabel);
+                        form.appendChild(nameInput);
+                        form.appendChild(document.createElement("br"));
+                        form.appendChild(descriptionlabel);
+                        form.appendChild(descriptionInput);
+                        form.appendChild(document.createElement("br"));
+                        form.appendChild(document.createElement("br"));
+                        form.appendChild(submitButton);
+                        
+                        elementsToRemove.forEach(elementInfo => {
+                            parent = document.getElementById(elementInfo.parent);
+                            child = document.getElementById(elementInfo.child);
+                            if (parent !== null && child !== null) {
+                                parent.removeChild(child);
+                            }
+                        });
+                        
+                        counter++;
+                    }
+                    
+                    function removeSubcategory(event, subcategoryId) {
+                        event.preventDefault();
+                        
+                        var nestedForm = document.createElement('form');
+                        nestedForm.action = 'SubcategoryRemove';
+                        nestedForm.method = 'post';
+
+                        var paramInput = document.createElement('input');
+                        paramInput.type = 'hidden';
+                        paramInput.name = '<%= Parameter.SubcategoryId.get() %>';
+                        paramInput.value = subcategoryId;
+
+                        nestedForm.appendChild(paramInput);
+                        document.body.appendChild(nestedForm);
+                        nestedForm.submit();
+                    }
+                    
+                    function saveCategoryAndSubcategories(event) {
+                        event.preventDefault();
+                        
+                        let subcategoryForm = document.getElementById("subcategoryForm");
+                        let categoryNameInput = document.getElementById("<%= Parameter.Name.get() %>");
+                        let categoryDescriptionInput = document.getElementById("<%= Parameter.Description.get() %>");
+                                                
+                        /*let hiddenCategoryNameInput = document.createElement("input");
+                        hiddenCategoryNameInput.type = "hidden";
+                        hiddenCategoryNameInput.name = "<%= Parameter.Name.get() %>";
+                        hiddenCategoryNameInput.value = categoryNameInput.value;
+                        
+                        
+                        let hiddenCategoryDescriptionInput = document.createElement("input");
+                        hiddenCategoryDescriptionInput.type = "hidden";
+                        hiddenCategoryDescriptionInput.name = "<%= Parameter.Description.get() %>";
+                        hiddenCategoryDescriptionInput.value = categoryDescriptionInput.value;
+                        
+                        subcategoryForm.appendChild(hiddenCategoryNameInput);
+                        subcategoryForm.appendChild(hiddenCategoryDescriptionInput);*/
+                        
+                        subcategoryForm.appendChild(categoryNameInput);
+                        subcategoryForm.appendChild(categoryDescriptionInput);
+                        subcategoryForm.submit();
                     }
                 </script>
                 
@@ -83,7 +174,7 @@
                 <label for="<%= Parameter.Description.get() %>">Description</label>
                 <input 
                     type="text" 
-                    id="<%= Parameter.Description.get() %> " 
+                    id="<%= Parameter.Description.get() %>" 
                     name="<%= Parameter.Description.get() %>" 
                     <% if (category != null) { %>
                         value="<%= category.getDescription() %>"
@@ -93,20 +184,46 @@
                 
                 <% if (category == null) { %>
                 <br>
-                <button type="button" onClick="addSubcategoryInput()">Add subcategory</button>
-                <br><br>
+                <button type="button" 
+                        onClick="addSubcategoryInput(
+                                    'categoryForm', 
+                                    'categorySubmitButton',
+                                    'Register category and subcategories',
+                                    [])">
+                    Add subcategory
+                </button>
+                <br>
                 <% } %>
-
-                <input type="submit" value="<%= ((category == null) ? "Add" : "Update") + " category" %>">
-            </form><br><br>
+                
+                <br>
+                <input type="submit" 
+                       value="<%= ((category == null) ? "Register" : "Update") + " category" %>"
+                       id="categorySubmitButton">
+            </form>
+                      
             
             <% if (category != null) { %>
+            
+                <br><br>
+                
+                <form action="CategoryRemove" method="post">
+                    <input type="hidden" 
+                           name="<%= Parameter.CategoryId.get() %>" 
+                           value="<%= category.getIdCategory() %>">
+                    <input type="submit" value="Delete category">
+                </form>
+            
                 <h2>Edit subcategories</h2>
-                <form action="CategoryUpdate" method="post">
+                <form action="CategoryUpdate" method="post" id="subcategoryForm">
+                    <input type="hidden" name="<%= Parameter.IsCategoryEditing.get() %>" value="true">
+                    <input type="hidden" name="<%= Parameter.CategoryId.get() %>" value="<%= category.getIdCategory() %>">
+                    
                     <% Integer counter = 0; %>
                     <% for (Subcategory subcategory : category.getSubcategories() ) { %>
-                        <input type="hidden" name="<%= String.format("%s%d", Parameter.SubcategoryId.get(), counter) %>"
-
+                        <input type="hidden" 
+                               name="<%= String.format("%s%d", Parameter.SubcategoryId.get(), counter) %>" 
+                               value="<%= subcategory.getIdSubcategory() %>">
+                        
                         <% String name = String.format("%s%d", Parameter.SubcategoryName.get(), counter); %>
                         <label for="<%= name %>">Name:</label>
                         <input 
@@ -128,7 +245,7 @@
                         <br>
 
                         <% String subcategoryCategoryId = String.format("%s%d", Parameter.SubcategoryCategoryId.get(), counter); %>
-                        <label for="<%= subcategoryCategoryId %>">Category:</label>
+                        <label for="<%= subcategoryCategoryId %>">Belongs to category:</label>
                         <select id="<%= subcategoryCategoryId %>"  
                                 name="<%= subcategoryCategoryId %>">
                             <% for (Category categoryOption : categories) { %>
@@ -138,10 +255,33 @@
                                 </option>
                             <% } %>
                         </select>
+                        <br>
+                        <button type="button" 
+                                onClick="removeSubcategory(event, '<%= subcategory.getIdSubcategory() %>')">
+                                Remove
+                        </button>
                         <br><br>
-
+                        
                         <% counter++; %>
                     <% } %>
+                    
+                    <br>
+                    <button type="button" 
+                            onClick="addSubcategoryInput(
+                                        'subcategoryForm', 
+                                        'subcategorySubmitButton',
+                                        'Save edits to category and subcategories',
+                                        [{'parent': 'categoryForm',
+                                          'child':'categorySubmitButton'}])">
+                        Add subcategory
+                    </button>
+
+                    <br>
+                    <input type="button" 
+                           value="Save"
+                           id="subcategorySubmitButton"
+                           onClick="saveCategoryAndSubcategories(event)">
+                    <br><br>
                 </form>
             <% } %>
             
@@ -149,11 +289,15 @@
             <form action="CategoryUpdate" method="post">
                 <label for="<%= Parameter.CategoryId.get() %>">Category:</label>
                 <select id="<%= Parameter.CategoryId.get() %>"  
-                        name="<%= Parameter.CategoryId.get() %>" 
-                        onChange="updateSubcategories()">
+                        name="<%= Parameter.CategoryId.get() %>">
                     <option value="0">-</option>
                     <% for (Category categoryOption : categories) { %>
-                        <option value="<%= categoryOption.getIdCategory() %>">
+                        <option value="<%= categoryOption.getIdCategory() %>"
+                                <% if (category != null && 
+                                    category.getIdCategory() == categoryOption.getIdCategory()) { %>
+                                    selected 
+                                <% } %>
+                        >
                             <%= categoryOption.getName() %>
                         </option>
                     <% } %>
@@ -162,18 +306,14 @@
                 
                 <input type="submit" value="Load selection">
             </form>
+                <form action="CategoryUpdate" method="post">
+                    <input type="submit" value="Clear selection">
+                </form>
             
         <% } else { %>
             User not logged in as admin.
         <% } %>
-                
-        <% if (request.getAttribute("message") != null) { %>
-            <div class="warning-box">
-                <strong>
-                    <%= request.getAttribute("message") %>
-                </strong>
-            </div>
-        <% } %>
+
     </body>
 </html>
 

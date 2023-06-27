@@ -1,6 +1,8 @@
 package category;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import category.CategoryDAO.CategoriesFetch;
+import transactions.TransactionResult;
 import user.User;
 import utils.Parameter;
 import utils.SessionVariable;
@@ -44,7 +47,6 @@ public class RegisterCategoryServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         Integer categoryId = getIntegerParameter(request.getParameter(Parameter.CategoryId.get()));
-        Integer subcategoryId = getIntegerParameter(request.getParameter(Parameter.SubcategoryId.get()));
 
         CategoriesFetch fetchCategories = CategoryDAO.getAllCategories();
 
@@ -58,17 +60,91 @@ public class RegisterCategoryServlet extends HttpServlet {
         if (categoryId != null && categoryId != 0) {
             session.setAttribute(SessionVariable.CategoryId.get(), categoryId);
         } else {
-            session.setAttribute(SessionVariable.CategoryId.get(), null);
-        }
-        if (subcategoryId != null && categoryId != 0) {
-            session.setAttribute(SessionVariable.SubcategoryId.get(), subcategoryId);
-        } else {
-            session.setAttribute(SessionVariable.SubcategoryId.get(), null);
-
+            categoryId = (Integer) request.getAttribute(Parameter.CategoryId.get());
+            session.setAttribute(SessionVariable.CategoryId.get(), categoryId);
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("editCategory.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private record OldSubcategory(Integer id, String name, String description, Integer categoryId) {
+    }
+
+    private record NewSubcategory(String name, String description) {
+    }
+
+    private record GatheredSubcategories(List<OldSubcategory> old, List<NewSubcategory> neww) {
+    }
+
+    private GatheredSubcategories gatherAllSubcategoryParameters(
+            HttpServletRequest request, HttpServletResponse response) {
+
+        List<OldSubcategory> oldSubcategories = new ArrayList<>();
+        List<NewSubcategory> newSubcategories = new ArrayList<>();
+
+        Integer id, categoryId;
+        String name, description;
+        int counter = 0;
+        while (true) {
+            String idParameter = String.format("%s%d", Parameter.SubcategoryId.get(), counter);
+            String nameParameter = String.format("%s%d", Parameter.SubcategoryName.get(), counter);
+            String descriptionParameter = String.format("%s%d", Parameter.SubcategoryDescription.get(), counter);
+            String categoryIdParameter = String.format("%s%d", Parameter.SubcategoryCategoryId.get(), counter);
+
+            id = getIntegerParameter(request.getParameter(idParameter));
+            if (id == null) {
+                break;
+            }
+            name = request.getParameter(nameParameter);
+            description = request.getParameter(descriptionParameter);
+            categoryId = getIntegerParameter(request.getParameter(categoryIdParameter));
+
+            var oldSubcategory = new OldSubcategory(id, name, description, categoryId);
+            oldSubcategories.add(oldSubcategory);
+
+            counter++;
+        }
+
+        counter = 0;
+        while (true) {
+            String nameParameter = String.format("%s%d", Parameter.NewSubcategoryName.get(), counter);
+            String descriptionParameter = String.format("%s%d", Parameter.NewSubcategoryDescription.get(), counter);
+
+            name = request.getParameter(nameParameter);
+            description = request.getParameter(descriptionParameter);
+            if (name == null) {
+                break;
+            }
+            var newSubcategory = new NewSubcategory(name, description);
+            newSubcategories.add(newSubcategory);
+
+            counter++;
+        }
+
+        return new GatheredSubcategories(oldSubcategories, newSubcategories);
+    }
+
+    private TransactionResult registerSubcategories(Integer categoryId, List<NewSubcategory> newSubcategories) {
+        for (NewSubcategory neww : newSubcategories) {
+            TransactionResult registerResult = CategoryDAO.registerSubcategory(neww.name(), neww.description(),
+                    categoryId);
+            if (registerResult != TransactionResult.Successful) {
+                return registerResult;
+            }
+        }
+        return TransactionResult.Successful;
+    }
+
+    private TransactionResult updateSubcategories(List<OldSubcategory> oldSubcategories) {
+        for (OldSubcategory old : oldSubcategories) {
+            TransactionResult updateResult = CategoryDAO.updateSubcategory(old.id(), old.name(), old.description(),
+                    old.categoryId());
+            if (updateResult != TransactionResult.Successful) {
+                return updateResult;
+            }
+        }
+        return TransactionResult.Successful;
     }
 
     private void registerCategory(HttpServletRequest request, HttpServletResponse response)
@@ -78,13 +154,23 @@ public class RegisterCategoryServlet extends HttpServlet {
         String categoryDescription = request.getParameter(Parameter.Description.get());
 
         if (categoryName != null || categoryDescription != null) {
+            GatheredSubcategories subcategoriesInfo = gatherAllSubcategoryParameters(request, response);
+
             if (categoryId != null) {
                 CategoryDAO.updateCategory(categoryId, categoryName, categoryDescription);
+                request.setAttribute("message", "Updated category " + categoryName + ".");
             } else {
-                CategoryDAO.registerCategory(categoryName, categoryDescription);
+                var registration = CategoryDAO.registerCategory(categoryName, categoryDescription);
+                categoryId = registration.Id();
+                request.setAttribute("message", "Added category " + categoryName + ".");
             }
+            updateSubcategories(subcategoriesInfo.old());
+            registerSubcategories(categoryId, subcategoriesInfo.neww());
 
-            request.setAttribute("message", "Added category " + categoryName + ".");
+            HttpSession session = request.getSession(true);
+
+            CategoriesFetch fetchCategories = CategoryDAO.getAllCategories();
+            session.setAttribute(SessionVariable.Categories.get(), fetchCategories.categories());
             RequestDispatcher dispatcher = request.getRequestDispatcher("editCategory.jsp");
             dispatcher.forward(request, response);
         }
