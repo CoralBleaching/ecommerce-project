@@ -11,9 +11,7 @@ import utils.DatabaseUtil;
 
 public class AddressDAO {
     private static final DatabaseUtil databaseUtil = new DatabaseUtil();
-    private static final String CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART = "[SQLITE_CONSTRAINT_CHECK] A CHECK constraint failed (CHECK constraint failed",
-            CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR = ": ",
-            DATABASE_PATH = databaseUtil.getDatabasePath(),
+    private static final String DATABASE_PATH = databaseUtil.getDatabasePath(),
             DB_FULL_URL = "jdbc:sqlite:" + DATABASE_PATH,
             DB_CLASS_NAME = "org.sqlite.JDBC";
 

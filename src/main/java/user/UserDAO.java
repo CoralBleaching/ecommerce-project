@@ -7,23 +7,33 @@ import utils.DatabaseUtil;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- *
- * @author renato
- */
 public class UserDAO {
     private static final DatabaseUtil databaseUtil = new DatabaseUtil();
-    private static final String CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART = "[SQLITE_CONSTRAINT_CHECK] A CHECK constraint failed (CHECK constraint failed",
-            CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR = ": ",
+    private static final String CONSTRAINT_ERROR_MSG = "[SQLITE_CONSTRAINT_CHECK]",
+            MSG_SEPARATOR = ":",
             DATABASE_PATH = databaseUtil.getDatabasePath(),
             DB_FULL_URL = "jdbc:sqlite:" + DATABASE_PATH,
             DB_CLASS_NAME = "org.sqlite.JDBC";
+    private static final int OFFSET_BEGIN = 2,
+            OFFSET_END = 1;
 
-    public static TransactionResult registerUser(User user, Address address) {
+    private static String getConstraintString(String message) {
+        int length = message.length();
+        int index = message.lastIndexOf(MSG_SEPARATOR, length) + OFFSET_BEGIN;
+        return message.substring(index, length - OFFSET_END);
+    }
+
+    public record SignUpFetch(TransactionResult resultValue, User user) {
+        public boolean wasSuccessful() {
+            return resultValue == TransactionResult.Successful;
+        }
+    }
+
+    public static SignUpFetch registerUser(String name, String username,
+            String password, String email) {
         try {
             Class.forName(DB_CLASS_NAME);
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
@@ -33,45 +43,43 @@ public class UserDAO {
                                 + "name, username, password, email"
                                 + ") values (?, ?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
-                user_stmt.setString(1, user.getName());
-                user_stmt.setString(2, user.getUsername());
-                user_stmt.setString(3, user.getPassword());
-                user_stmt.setString(4, user.getEmail());
+                user_stmt.setString(1, name);
+                user_stmt.setString(2, username);
+                user_stmt.setString(3, password);
+                user_stmt.setString(4, email);
 
                 user_stmt.executeUpdate();
 
-                if (address == null) {
-                    return TransactionResult.Successful;
-                }
-
-                int affectedRows = user_stmt.executeUpdate();
-                if (affectedRows > 0) {
-                    var generatedKeys = user_stmt.getGeneratedKeys();
+                try (var generatedKeys = user_stmt.getGeneratedKeys();) {
                     if (generatedKeys.next()) {
-                        int id_user = generatedKeys.getInt(1);
-                        // AddressDAO.registerAddressToUserId(id_user); TODO
-                        return TransactionResult.Successful;
+                        Integer id_user = generatedKeys.getInt(1);
+                        User user = new User(
+                                id_user,
+                                name,
+                                username,
+                                password,
+                                email,
+                                false);
+                        return new SignUpFetch(TransactionResult.Successful, user);
                     }
                 }
-
-                return TransactionResult.AddressNotFound; // TODO: improve
+                return new SignUpFetch(TransactionResult.UserUnknownError, null);
             }
-        } catch (ClassNotFoundException ex) {
-            return TransactionResult.DatabaseConnectionError;
-        } catch (SQLException ex) {
-            String[] message = ex.getMessage().split(CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR);
+        } catch (ClassNotFoundException exc) {
+            return new SignUpFetch(TransactionResult.DatabaseConnectionError, null);
+        } catch (SQLException exc) {
+            boolean isConstraintError = exc.getMessage().startsWith(CONSTRAINT_ERROR_MSG);
 
-            if (message[0].equals(CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART)) {
-                String constraint = message[1]
-                        .replace(")", "");
-                constraint = constraint.substring(0, 1).toUpperCase()
-                        + constraint.substring(1);
-                return ConstraintName.valueOf(constraint).getTransactionResult();
+            if (isConstraintError) {
+                var constraint = getConstraintString(exc.getMessage());
+                return new SignUpFetch(
+                        ConstraintName.valueOf(constraint).getTransactionResult(),
+                        null);
             }
 
-            var resultValue = TransactionResult.Miscellaneous;
-            resultValue.appendToMessage(ex.getMessage());
-            return resultValue;
+            var res = TransactionResult.Miscellaneous;
+            res.appendToMessage(exc.getMessage());
+            return new SignUpFetch(res, null);
         }
     }
 
@@ -95,50 +103,19 @@ public class UserDAO {
                     return TransactionResult.Successful;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException exc) {
             return TransactionResult.DatabaseConnectionError;
-        } catch (SQLException ex) {
-            String[] message = ex.getMessage().split(CHECK_CONSTRAINT_ERROR_MSG_SEPARATOR);
+        } catch (SQLException exc) {
+            boolean isConstraintError = exc.getMessage().startsWith(CONSTRAINT_ERROR_MSG);
 
-            if (message[0].equals(CHECK_CONSTRAINT_ERROR_MSG_FIRST_PART)) {
-                String constraint = message[1]
-                        .replace(")", "");
-                constraint = constraint.substring(0, 1).toUpperCase()
-                        + constraint.substring(1);
+            if (isConstraintError) {
+                var constraint = getConstraintString(exc.getMessage());
                 return ConstraintName.valueOf(constraint).getTransactionResult();
-            } else {
-                var resultValue = TransactionResult.Miscellaneous;
-                resultValue.appendToMessage(ex.getMessage());
-                return resultValue;
             }
-        }
-    }
 
-    public static TransactionResult validateLogin(String username, String password) {
-        try {
-            Class.forName(DB_CLASS_NAME);
-            try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
-                try (PreparedStatement stmt = conn.prepareStatement(
-                        "select username, password from User"
-                                + " where username = ? and password = ?;")) {
-                    stmt.setString(1, username);
-                    stmt.setString(2, password);
-                    try (ResultSet stmt_res = stmt.executeQuery()) {
-                        if (stmt_res.next()) {
-                            return TransactionResult.Successful;
-                        }
-                        var res = TransactionResult.Miscellaneous;
-                        res.appendToMessage("wtf"); // TODO: idk what happened
-                        return res;
-                    }
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            System.out.println(ex.toString());
-            return TransactionResult.DatabaseConnectionError;
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-            return TransactionResult.UserNotFound;
+            var res = TransactionResult.Miscellaneous;
+            res.appendToMessage(exc.getMessage());
+            return res;
         }
     }
 
@@ -155,12 +132,19 @@ public class UserDAO {
                     return TransactionResult.Successful;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            System.out.println(ex.toString());
+        } catch (ClassNotFoundException exc) {
             return TransactionResult.DatabaseConnectionError;
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-            return TransactionResult.UserNotFound;
+        } catch (SQLException exc) {
+            boolean isConstraintError = exc.getMessage().startsWith(CONSTRAINT_ERROR_MSG);
+
+            if (isConstraintError) {
+                var constraint = getConstraintString(exc.getMessage());
+                return ConstraintName.valueOf(constraint).getTransactionResult();
+            }
+
+            var res = TransactionResult.Miscellaneous;
+            res.appendToMessage(exc.getMessage());
+            return res;
         }
     }
 
@@ -185,17 +169,26 @@ public class UserDAO {
                                     Boolean.parseBoolean(stmt_res.getString("is_admin")));
                             return new UserFetch(TransactionResult.Successful, user);
                         }
+                        return new UserFetch(TransactionResult.UserNotFound, null);
                     }
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            System.out.println("[getUserByLogin] " + ex);
+        } catch (ClassNotFoundException exc) {
             return new UserFetch(TransactionResult.DatabaseConnectionError, new User());
-        } catch (SQLException ex) {
-            System.out.println("[getUserByLogin] " + ex);
-            return new UserFetch(TransactionResult.UserNotFound, new User());
+        } catch (SQLException exc) {
+            boolean isConstraintError = exc.getMessage().startsWith(CONSTRAINT_ERROR_MSG);
+
+            if (isConstraintError) {
+                var constraint = getConstraintString(exc.getMessage());
+                return new UserFetch(
+                        ConstraintName.valueOf(constraint).getTransactionResult(),
+                        null);
+            }
+
+            var res = TransactionResult.Miscellaneous;
+            res.appendToMessage(exc.getMessage());
+            return new UserFetch(res, null);
         }
-        return new UserFetch(TransactionResult.UserNotFound, null);
     }
 
 }

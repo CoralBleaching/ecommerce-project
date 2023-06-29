@@ -1,34 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template
- */
 package transactions;
 
-/**
- *
- * @author renat
- */
 public enum ConstraintName {
-    Username("username"),
-    Password("password"),
-    Email("email");
-    
-    private final String name;
-    private ConstraintName(String name) {
-        this.name = name;
-    }
-    
+    username,
+    password,
+    email;
+
     public TransactionResult getTransactionResult() {
         switch (this) {
-            case Username -> { return TransactionResult.InvalidUsername; }
-            case Password -> { return TransactionResult.InvalidPassword; }
-            case Email -> { return TransactionResult.InvalidEmail; }
+            case username -> {
+                return TransactionResult.InvalidUsername;
+            }
+            case password -> {
+                return TransactionResult.InvalidPassword;
+            }
+            case email -> {
+                return TransactionResult.InvalidEmail;
+            }
             default -> throw new AssertionError(this.name());
         }
-    }
-    
-    @Override
-    public String toString() {
-        return name;
     }
 }

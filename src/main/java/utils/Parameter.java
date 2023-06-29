@@ -9,6 +9,7 @@ public enum Parameter {
     Email("email"),
     Hotness("hotness"),
     IsCategoryEditing("isCategoryUpdate"),
+    IsFromStoreFront("isFromStoreFront"),
     IsPictureUpdate("isPictureUpdate"),
     IsProductEditing("isProductEditing"),
     Name("name"),

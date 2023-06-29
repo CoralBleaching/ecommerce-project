@@ -6,7 +6,7 @@ import { Address, User } from "../utils/types";
 
 
 const INITIAL_USER_DATA: User = {
-    idUser: -1,
+    idUser: undefined,
     name: "",
     username: "",
     password: "",

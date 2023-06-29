@@ -2,7 +2,7 @@ package user;
 
 public class User {
 
-    private int userId;
+    private Integer userId;
     private String name,
             username,
             password,
@@ -12,7 +12,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String name, String username, String password, String email, boolean isAdmin) {
+    public User(Integer userId, String name, String username, String password, String email, boolean isAdmin) {
         this.userId = userId;
         this.name = name;
         this.username = username;
@@ -42,11 +42,11 @@ public class User {
                 '}';
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
