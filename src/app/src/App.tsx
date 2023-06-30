@@ -4,13 +4,16 @@ import DepartmentsMenu from "./components/DepartmentsMenu"
 import ProductMatrix from "./components/ProductMatrix"
 import { useState } from "react"
 import Modal from "./components/Modal"
-import MultiStepForm from "./components/MultiStepForm"
+import SignUpForm from "./components/SignUpForm"
+import SignInForm from "./components/SignInForm"
 
 export default function App() {
   const [activeIndex, setActiveIndex] = useState<number>(1)
   const [idCategory, setIdCategory] = useState<number>()
   const [idSubcategory, setIdSubcategory] = useState<number>()
-  const [modalOpen, setModalOpen] = useState(false)
+  const [signInModalOpen, setSignInModalOpen] = useState(false)
+  const [signUpModalOpen, setSignUpModalOpen] = useState(false)
+  const [isSignedIn, setIsSignedIn] = useState(false)
 
   function onCategoryClick(newIdCategory: number) {
     setIdCategory(newIdCategory)
@@ -24,24 +27,29 @@ export default function App() {
     setActiveIndex(() => 1)
   }
 
-  function handleOpenModal() {
-    setModalOpen(true)
+  function onGoToSignUp() {
+    setSignInModalOpen(false)
+    setSignUpModalOpen(true)
   }
 
-  function handleCloseModal() {
-    setModalOpen(false)
+  function onGoToSignIn() {
+    setSignInModalOpen(true)
+    setSignUpModalOpen(false)
   }
 
   return (
     <>
-      <Modal open={modalOpen} onClose={handleCloseModal}>
-        {/* <h1>Modal Content</h1>
-        <p>This is the content of the modal.</p>
-        <button onClick={handleCloseModal}>Close Modal</button> */}
-        <MultiStepForm />
+      <Modal open={signInModalOpen} onClose={() => setSignInModalOpen(false)}>
+        <SignInForm setIsSignedIn={setIsSignedIn} goToSignUp={onGoToSignUp} />
       </Modal>
 
-      <Header handleOpenModal={handleOpenModal} />
+      <Modal open={signUpModalOpen} onClose={() => setSignUpModalOpen(false)}>
+        <SignUpForm goToSignIn={onGoToSignIn} />
+      </Modal>
+
+      <Header isSignedIn={isSignedIn}
+              handleOpenSignInModal={() => setSignInModalOpen(true)} 
+              handleOpenSignUpModal={() => setSignUpModalOpen(true)}/>
 
       <section className="content">
         <DepartmentsMenu

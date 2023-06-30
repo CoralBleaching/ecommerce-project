@@ -1,11 +1,13 @@
 interface HeaderProps {
-    handleOpenModal: () => void
-    // handleCloseModal: () => void
+    isSignedIn: boolean
+    handleOpenSignUpModal: () => void
+    handleOpenSignInModal: () => void
 }
 
 export default function Header({
-    handleOpenModal, 
-    // handleCloseModal
+    isSignedIn,
+    handleOpenSignUpModal, 
+    handleOpenSignInModal, 
 }: HeaderProps) {
 
 
@@ -13,8 +15,12 @@ export default function Header({
         <header className="header">
             <h1 className="title">Super Store</h1>
             <div className="buttons">
-                <button onClick={handleOpenModal}>Sign In/Out</button>
-                <button>Sign Up/Settings</button>
+                <button onClick={handleOpenSignInModal}>
+                        {isSignedIn ? "Sign Out" : "Sign In"}
+                </button>
+                <button onClick={handleOpenSignUpModal}>
+                        {isSignedIn ? "Settings" : "Sign Up"}
+                </button>
                 <button>Cart</button>
             </div>
         </header>

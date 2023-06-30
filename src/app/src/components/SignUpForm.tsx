@@ -4,24 +4,13 @@ import AddressForm from "./AddressForm";
 import UserForm from "./UserForm";
 import { Address, User } from "../utils/types";
 
-
-const INITIAL_USER_DATA: User = {
-    idUser: undefined,
-    name: "",
-    username: "",
-    password: "",
-    email: "",
-}
-const INITIAL_ADDRESS_DATA: Partial<Address> = {
+interface SignUpFormProps {
+    goToSignIn: () => void
 }
 
-interface MultistepformProps {
-
-}
-
-export default function MultiStepForm({}: MultistepformProps) {
-    const [user, setUser] = useState<User>(INITIAL_USER_DATA)
-    const [address, setAddress] = useState<Partial<Address>>(INITIAL_ADDRESS_DATA)
+export default function SignUpForm({goToSignIn}: SignUpFormProps) {
+    const [user, setUser] = useState<Partial<User>>({})
+    const [address, setAddress] = useState<Partial<Address>>({})
     const {
         currentStepIndex,
         totalSteps,
@@ -54,6 +43,11 @@ export default function MultiStepForm({}: MultistepformProps) {
         alert("Success!")
     }   
 
+    function handleGoToSignIn(event: FormEvent) {
+        event.preventDefault()
+        goToSignIn()
+    }
+
     function isInstanceFilled<T>(object: Partial<T>, skipValues: (keyof T)[] = []): boolean {
         return Object.entries(object).every(([key,value]) => {
             if (skipValues.includes(key as keyof T)) {
@@ -74,6 +68,7 @@ export default function MultiStepForm({}: MultistepformProps) {
     }
 
     return (
+        <>
         <form className="multi-step-form" onSubmit={onSubmit}>
             <div className="step-counter">
                 {currentStepIndex + 1} / {totalSteps} 
@@ -87,6 +82,9 @@ export default function MultiStepForm({}: MultistepformProps) {
                     <button type="submit">{renderSubmitButton()}</button>
             </div>
         </form>
+        Already have an account? 
+        <button type="button" onClick={handleGoToSignIn}>Sign In</button>
+        </>
     )
 
 }

@@ -18,6 +18,7 @@ export enum ServerRoute {
   Picture = SERVER_URL + "/Picture",
   Pictures = SERVER_URL + "/Pictures",
   ProductCount = SERVER_URL + "/ProductCount",
+  SignIn = SERVER_URL + "/Login"
 }
 
 export enum Order {

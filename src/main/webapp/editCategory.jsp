@@ -38,7 +38,7 @@
         <%@include file="header.jsp" %>
 
         
-        <% if (user != null && user.isIsAdmin()) { %>
+        <% if (user != null && user.isAdmin) { %>
             <h1><%= Token.RegisterCategoryForm.get() %></h1><br><br>
                                     
             <% if (request.getAttribute("message") != null) { %>
@@ -130,20 +130,6 @@
                         let subcategoryForm = document.getElementById("subcategoryForm");
                         let categoryNameInput = document.getElementById("<%= Parameter.Name.get() %>");
                         let categoryDescriptionInput = document.getElementById("<%= Parameter.Description.get() %>");
-                                                
-                        /*let hiddenCategoryNameInput = document.createElement("input");
-                        hiddenCategoryNameInput.type = "hidden";
-                        hiddenCategoryNameInput.name = "<%= Parameter.Name.get() %>";
-                        hiddenCategoryNameInput.value = categoryNameInput.value;
-                        
-                        
-                        let hiddenCategoryDescriptionInput = document.createElement("input");
-                        hiddenCategoryDescriptionInput.type = "hidden";
-                        hiddenCategoryDescriptionInput.name = "<%= Parameter.Description.get() %>";
-                        hiddenCategoryDescriptionInput.value = categoryDescriptionInput.value;
-                        
-                        subcategoryForm.appendChild(hiddenCategoryNameInput);
-                        subcategoryForm.appendChild(hiddenCategoryDescriptionInput);*/
                         
                         subcategoryForm.appendChild(categoryNameInput);
                         subcategoryForm.appendChild(categoryDescriptionInput);

@@ -2,7 +2,7 @@ import { User } from "../utils/types";
 import FormWrapper from "./FormWrapper";
 
 interface UserFormProps {
-    user: User,
+    user: Partial<User>
     updateFields: (fields: Partial<User>) => void
 }
 
