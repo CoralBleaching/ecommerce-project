@@ -12,15 +12,7 @@ const INITIAL_USER_DATA: User = {
     password: "",
     email: "",
 }
-const INITIAL_ADDRESS_DATA: Address = {
-    city: "",
-    state: "",
-    country: "",
-    street: "",
-    number: "",
-    zipcode: "",
-    district: "",
-    label: ""
+const INITIAL_ADDRESS_DATA: Partial<Address> = {
 }
 
 interface MultistepformProps {
@@ -29,18 +21,19 @@ interface MultistepformProps {
 
 export default function MultiStepForm({}: MultistepformProps) {
     const [user, setUser] = useState<User>(INITIAL_USER_DATA)
-    const [address, setAddress] = useState<Address>(INITIAL_ADDRESS_DATA)
+    const [address, setAddress] = useState<Partial<Address>>(INITIAL_ADDRESS_DATA)
     const {
         currentStepIndex,
         totalSteps,
         isFirstStep,
         isLastStep,
+        isSkippable,
         step,
         onBack,
         onNext,
     } = useMultiStepForm([
-        <UserForm user={user} updateFields={updateUser} />, 
-        <AddressForm address={address} updateFields={updateAddress} />
+        {step: <UserForm user={user} updateFields={updateUser} />, skippable: false}, 
+        {step: <AddressForm address={address} updateFields={updateAddress} />, skippable: true}
     ])
 
     function updateUser(fields: Partial<User>) {
@@ -61,6 +54,25 @@ export default function MultiStepForm({}: MultistepformProps) {
         alert("Success!")
     }   
 
+    function isInstanceFilled<T>(object: Partial<T>, skipValues: (keyof T)[] = []): boolean {
+        return Object.entries(object).every(([key,value]) => {
+            if (skipValues.includes(key as keyof T)) {
+                return true
+            }
+            return value !== undefined
+        })
+    }
+
+    function renderSubmitButton() {
+        if (!isLastStep) {
+            return "Next"
+        }
+        if (isSkippable && !isInstanceFilled(address, ['label']) ) {
+            return "Skip and register"
+        }
+        return "Register"
+    }
+
     return (
         <form className="multi-step-form" onSubmit={onSubmit}>
             <div className="step-counter">
@@ -72,7 +84,7 @@ export default function MultiStepForm({}: MultistepformProps) {
             <div className="multi-step-form-buttons">
                 {!isFirstStep && 
                     <button type="button" onClick={onBack}>Back</button>}
-                    <button type="submit">{!isLastStep ? "Next" : "Submit"}</button>
+                    <button type="submit">{renderSubmitButton()}</button>
             </div>
         </form>
     )

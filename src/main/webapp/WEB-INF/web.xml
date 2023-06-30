@@ -177,7 +177,20 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/SignOut</url-pattern>
   </servlet-mapping>
+
+  <!-- Address -->
   
+  <servlet>
+        <servlet-name>CountryInfoServlet</servlet-name>
+      <servlet-class>user.CountryInfoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>CountryInfoServlet</servlet-name>
+      <url-pattern>/CountryInfo</url-pattern>
+  </servlet-mapping>
+
+  <!-- Session -->
+
   <session-config>
       <session-timeout>
           30

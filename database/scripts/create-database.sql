@@ -25,7 +25,7 @@ create table if not exists CreditCard (
 );
 
 create table if not exists Address (
-    id_address integer primary key, --new
+    id_address integer primary key, -- new
     id_user integer not null,
     id_city integer not null,
     street varchar(50) not null,
@@ -41,6 +41,7 @@ create table if not exists City (
     id_city integer primary key,
     id_state integer not null,
     name varchar(50) not null,
+    unique (id_state, name), -- new
     foreign key (id_state) references State (id_state)
 );
 
@@ -48,6 +49,7 @@ create table if not exists State (
     id_state integer primary key,
     id_country integer not null,
     name varchar(50) not null,
+    unique (id_country, name), -- new
     foreign key (id_country) references Country (id_country)
 );
 

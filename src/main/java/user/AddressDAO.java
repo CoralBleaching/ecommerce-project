@@ -29,6 +29,14 @@ public class AddressDAO {
         }
     }
 
+    public record CountriesFetch(TransactionResult resultValue, List<Country> countries) {
+        public record State(String name, List<String> cities) {
+        }
+
+        public record Country(String name, List<State> states) {
+        }
+    }
+
     public static TransactionResult registerAddress(Integer userId, Integer cityId,
             String street, String number, String zipcode, String disctrict, String label) {
         try {
@@ -105,6 +113,57 @@ public class AddressDAO {
             return new AddressesFetch(TransactionResult.DatabaseConnectionError, null);
         } catch (SQLException ex) {
             return new AddressesFetch(TransactionResult.AddressNotFound, null);
+        }
+    }
+
+    public static CountriesFetch getCountryStateCityInfo() {
+        try {
+            Class.forName(DB_CLASS_NAME);
+            String countryQueryString = "select id_country, name from Country;";
+            String stateQueryString = "select id_state, name from State where id_country = ?;";
+            String cityQueryString = "select name from City where id_state = ?;";
+
+            try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
+                    var country_stmt = conn.prepareStatement(countryQueryString);
+                    var state_stmt = conn.prepareStatement(stateQueryString);
+                    var city_stmt = conn.prepareStatement(cityQueryString);
+                    var country_res = country_stmt.executeQuery();) {
+                List<CountriesFetch.Country> countries = new ArrayList<>();
+                while (country_res.next()) {
+                    int countryId = country_res.getInt("id_country");
+                    String countryName = country_res.getString("name");
+                    List<CountriesFetch.State> states = new ArrayList<>();
+
+                    state_stmt.setInt(1, countryId);
+                    try (var state_res = state_stmt.executeQuery()) {
+                        while (state_res.next()) {
+                            int stateId = state_res.getInt("id_state");
+                            String stateName = state_res.getString("name");
+                            List<String> cities = new ArrayList<>();
+
+                            city_stmt.setInt(1, stateId);
+                            try (var city_res = city_stmt.executeQuery()) {
+                                while (city_res.next()) {
+                                    String cityName = city_res.getString("name");
+                                    cities.add(cityName);
+                                }
+                            }
+
+                            states.add(new CountriesFetch.State(stateName, cities));
+                        }
+                    }
+
+                    countries.add(new CountriesFetch.Country(countryName, states));
+                }
+
+                return new CountriesFetch(TransactionResult.Successful, countries);
+            }
+        } catch (ClassNotFoundException exc) {
+            return new CountriesFetch(TransactionResult.DatabaseConnectionError, null);
+        } catch (SQLException exc) { // TODO: improve?
+            var res = TransactionResult.Miscellaneous;
+            res.appendToMessage(exc.getMessage());
+            return new CountriesFetch(res, null);
         }
     }
 

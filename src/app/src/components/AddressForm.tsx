@@ -1,77 +1,121 @@
-import { Address } from "../utils/types";
+import { useEffect, useState } from "react";
+import { Address, Country } from "../utils/types";
 import FormWrapper from "./FormWrapper";
 import InputSelection from "./InputSelection";
-
-let cityOptions = [
-    "Rio Branco", "Cruzeiro do Sul", "Sena Madureira",
-    "Maceió", "Arapiraca", "Rio Largo",
-    "Macapá", "Santana", "Laranjal do Jari",
-    "Manaus", "Parintins", "Itacoatiara",
-    "Salvador", "Feira de Santana", "Vitória da Conquista",
-    "Fortaleza", "Caucaia", "Juazeiro do Norte",
-    "Brasília", "Ceilândia", "Taguatinga",
-    "Vitória", "Vila Velha", "Serra",
-    "Goiânia", "Aparecida de Goiânia", "Anápolis",
-    "São Luís", "Imperatriz", "Timon",
-    "Cuiabá", "Várzea Grande", "Rondonópolis",
-    "Campo Grande", "Dourados", "Três Lagoas",
-    "Belo Horizonte", "Uberlândia", "Contagem",
- "Belém", "Ananindeua", "Santarém",
-    "João Pessoa", "Campina Grande", "Santa Rita",
-    "Curitiba", "Londrina", "Maringá",
-    "Recife", "Jaboatão dos Guararapes", "Olinda",
-    "Teresina", "Parnaíba", "Picos",
- "Rio de Janeiro", "São Gonçalo", "Duque de Caxias",
-    "Natal", "Mossoró", "Parnamirim",
-    "Porto Alegre", "Caxias do Sul", "Pelotas",
-    "Porto Velho", "Ji-Paraná", "Ariquemes",
-    "Boa Vista", "Caracaraí", "Pacaraima",
-    "Florianópolis", "Joinville", "Blumenau",
-    "São Paulo", "Guarulhos", "Campinas",
-    "Aracaju", "Nossa Senhora do Socorro", "São Cristóvão",
-    "Palmas", "Araguaína", "Gurupi"]
-
-let stateOptions = [
-    "Ceará",
-    "Pernambuco",
-    "Bahia",
-]
-
-let countryOptions = [
-    "Brazil",
-    "Argentina",
-    "Mexico",
-]
-
+import fetchAndDecode, { ServerRoute } from "../utils/utils";
 
 interface AddressFormProps {
-    address: Address,
+    address: Partial<Address>,
     updateFields: (fields: Partial<Address>) => void
 }
 
 export default function AddressForm({address, updateFields}: AddressFormProps) {
+    const [countryInfo, setCountryInfo] = useState<Country[]>([])
+    const [cityOptions, setCityOptions] = useState<string[]>()
+    const [stateOptions, setStateOptions] = useState<string[]>()
+    const [countryOptions, setCountryOptions] = useState<string[]>()
+    const [selectedCity, setSelectedCity] = useState(address.city)
+    const [selectedState, setSelectedState] = useState(address.state)
+    const [selectedCountry, setSelectedCountry] = useState(address.country)
+
+    
+    useEffect(function fillCountryInfo() {
+        fetchAndDecode<{countries: Country[]}>(
+            ServerRoute.CountryStateCityInfo, (data) => {
+                const countryData = data.countries
+                setCountryInfo(countryData)
+            }
+        )
+        setCountryOptions(countryInfo.map(country => country.name))
+    }, [countryInfo])
+
+    function onCountrySelection(value: string) {
+        if (countryInfo.some(({name}) => name === value)) {
+            setSelectedCountry(value)
+        }
+        setSelectedState(undefined)
+        setSelectedCity(undefined)
+        setStateOptions(
+            countryInfo.find(({name}) => name === value)
+                ?.states.map(state => state.name) ?? []
+        )
+    }
+
+    function onStateSelection(value: string) {
+        setSelectedState(value)
+        setSelectedCity(undefined)
+        countryInfo.forEach(country => {
+            if (country.states.some(({name}) => name === value)) {
+                setSelectedCountry(() => country.name)
+
+                setCityOptions(
+                    country.states.find(({name}) => name === value)?.cities
+                )
+            }
+        })
+    }
+
+    function onCitySelection(value: string) {
+        setSelectedCity(value)
+    } 
+
+    useEffect(function updateCity() {
+        updateFields({city: selectedCity})
+    }, [selectedCity])
+
+    useEffect(function updateState() {
+        updateFields({state: selectedState})
+    }, [selectedState])
+
+    useEffect(function updateCountry() {
+        updateFields({country: selectedCountry})
+    }, [selectedCountry])
+
+
     return (
         <FormWrapper title="Address information" description="You can fill out your address information later at your first checkout.">
-            <label >Street</label>
-            <input autoFocus required type="text" title="Street"
-            value={address.street}
+            <label>Street</label>
+            <input autoFocus type="text" title="Street"
+            value={address?.street ?? ""}
             onChange={e => updateFields({street: e.target.value})}/>
+
             <label>Number</label>
-            <input autoFocus required type="text" title="number"
-            value={address.number}
+            <input autoFocus type="text" title="number"
+            value={address?.number ?? ""}
             onChange={e => updateFields({number: e.target.value})}/>
-            <InputSelection title="City"
-                defaultValue={address.city}
-                options={cityOptions} 
-                onChange={value => updateFields({city: value})}/>
-            <InputSelection title="State"
-                defaultValue={address.state} 
-                options={stateOptions}
-                onChange={value => updateFields({state: value})}/>
+
+            <label>District</label>
+            <input autoFocus type="text" title="District"
+            value={address?.district ?? ""}
+            onChange={e => updateFields({district: e.target.value})}/>
+
+            <label>Zipcode</label>
+            <input autoFocus type="text" title="Zipcode"
+            value={address?.zipcode ?? ""}
+            onChange={e => updateFields({zipcode: e.target.value})}/>
+
             <InputSelection title="Country"
-                defaultValue={address.country} 
-                options={countryOptions} 
-                onChange={value => updateFields({country: value})}/>
+                defaultValue={selectedCountry ?? "Select or type a country name..."} 
+                options={countryOptions ?? []} 
+                onChange={value => onCountrySelection(value)}/>
+
+            <InputSelection title="State"
+                defaultValue={selectedState ?? (selectedCountry ? "Select or type a state name..." : "")} 
+                placeholder="Waiting for you to select a country..."
+                options={stateOptions ?? []}
+                onChange={value => onStateSelection(value)}/>
+
+            <InputSelection title="City"
+                defaultValue={selectedCity ?? (selectedState ? "Select or type a city name..." : "")}
+                placeholder="Waiting for you to select a state..."
+                options={cityOptions ?? []} 
+                onChange={value => onCitySelection(value)}/>
+
+            <label>Label</label>
+            <input autoFocus type="text" title="Label"
+            placeholder='(Optional) Set a label for this address, e.g. "Home"'
+            value={address?.label ?? ""}
+            onChange={e => updateFields({label: e.target.value})}/>
         </FormWrapper>
     )
 }

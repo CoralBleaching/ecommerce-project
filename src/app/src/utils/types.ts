@@ -42,6 +42,7 @@ export interface User {
 }
 
 export interface Address {
+    addressId?: number,
     city: string,
     state: string,
     country: string,
@@ -50,4 +51,14 @@ export interface Address {
     zipcode: string,
     district: string,
     label: string
+}
+
+type State = {
+    name: string
+    cities: string[]
+}
+
+export interface Country {
+    name: string
+    states: State[]
 }

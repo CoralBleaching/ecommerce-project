@@ -14,9 +14,10 @@ const SERVER_URL = "http://localhost:8080/ecommerce-demo"
 export enum ServerRoute {
   AllCategories = SERVER_URL + "/Categories",
   AllProducts = SERVER_URL + "/Products",
+  CountryStateCityInfo = SERVER_URL + "/CountryInfo",
   Picture = SERVER_URL + "/Picture",
   Pictures = SERVER_URL + "/Pictures",
-  ProductCount = SERVER_URL + "/ProductCount"
+  ProductCount = SERVER_URL + "/ProductCount",
 }
 
 export enum Order {
@@ -24,5 +25,5 @@ export enum Order {
   PriceDescending = "price-descending",
   Hotness = "hotness",
   Newest = "newest",
-  Oldest = "oldest"
+  Oldest = "oldest",
 }
