@@ -52,26 +52,23 @@ interface AddressFormProps {
 export default function AddressForm({address, updateFields}: AddressFormProps) {
     return (
         <FormWrapper title="Address information" description="You can fill out your address information later at your first checkout.">
-            <label>Street</label>
-            <input autoFocus required type="text" 
+            <label >Street</label>
+            <input autoFocus required type="text" title="Street"
             value={address.street}
             onChange={e => updateFields({street: e.target.value})}/>
             <label>Number</label>
-            <input autoFocus required type="text" 
+            <input autoFocus required type="text" title="number"
             value={address.number}
             onChange={e => updateFields({number: e.target.value})}/>
-            <label>City</label>
-            <InputSelection 
+            <InputSelection title="City"
                 defaultValue={address.city}
                 options={cityOptions} 
                 onChange={value => updateFields({city: value})}/>
-            <label>State</label>
-            <InputSelection
+            <InputSelection title="State"
                 defaultValue={address.state} 
                 options={stateOptions}
                 onChange={value => updateFields({state: value})}/>
-            <label>Country</label>
-            <InputSelection
+            <InputSelection title="Country"
                 defaultValue={address.country} 
                 options={countryOptions} 
                 onChange={value => updateFields({country: value})}/>

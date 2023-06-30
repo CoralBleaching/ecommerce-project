@@ -10,7 +10,7 @@ export default function FormWrapper({title, description, children}: FormWrapperP
     return (
         <>
             <h2 className="form-title">{title}</h2>
-            <span className="form-description">{description}</span>
+            <h4 className="form-description">{description}<br/><br/></h4>
             <div className="form-step">{children}</div>
         </>
     )

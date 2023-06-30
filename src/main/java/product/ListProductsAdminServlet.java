@@ -25,7 +25,7 @@ public class ListProductsAdminServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         User user = (User) session.getAttribute("user");
-        if (!user.isIsAdmin()) {
+        if (!user.isAdmin) {
             request.setAttribute("message", "User not logged in as admin.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
             dispatcher.forward(request, response);

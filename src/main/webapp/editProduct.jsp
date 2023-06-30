@@ -40,7 +40,7 @@
         
         <%@include file="header.jsp" %>
         
-        <% if (user != null && user.isIsAdmin()) { %>
+        <% if (user != null && user.isAdmin) { %>
             <h1><%= Token.RegisterProductForm.get()  %></h1>
 
             <form action="ProductUpdate" method="post">

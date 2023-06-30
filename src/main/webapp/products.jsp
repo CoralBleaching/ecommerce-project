@@ -25,7 +25,7 @@
 
 <body onLoad="updateSubcategories()">
     <%@include file="header.jsp" %>
-    <% if (user != null && user.isIsAdmin()) { %>
+    <% if (user != null && user.isAdmin) { %>
         <h1><%= Token.RegisterProductTitle.get() %></h1>
         
         <a href="ProductUpdate">Register new product</a><br><br>    

@@ -27,7 +27,7 @@
     </head>
     <body>
         <%@include file="header.jsp" %>
-        <% if (user != null && user.isIsAdmin()) { %>
+        <% if (user != null && user.isAdmin) { %>
             <h1><%= Token.RegisterPictureTitle.get() %></h1>
             <form action="RegisterPicture" method="post" enctype="multipart/form-data">            
                 <% if (isUpdateRequest) { %>

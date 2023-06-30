@@ -27,7 +27,7 @@ public class PictureInfoServlet extends HttpServlet {
 
         User user = (User) session.getAttribute("user");
 
-        if (user == null || !user.isIsAdmin()) {
+        if (user == null || !user.isAdmin) {
             request.setAttribute("message", "User not logged in as admin.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
             dispatcher.forward(request, response);

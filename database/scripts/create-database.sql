@@ -25,6 +25,7 @@ create table if not exists CreditCard (
 );
 
 create table if not exists Address (
+    id_address integer primary key, --new
     id_user integer not null,
     id_city integer not null,
     street varchar(50) not null,

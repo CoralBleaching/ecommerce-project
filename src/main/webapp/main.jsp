@@ -1,4 +1,6 @@
+<%@page import="user.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>    
+<% User user = (User) session.getAttribute("user"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,8 +11,7 @@
     </head>
     <body>
     <%@include file="header.jsp" %> 
-    <jsp:useBean id="user" class="user.User" scope="session" />
-    <h1>Welcome, <jsp:getProperty name="user" property="name" /></h1>
+    <h1>Welcome, <%= user.name %></h1>
     <% if (request.getAttribute("message") != null) { %>
         <div class="warning-box">
             <strong>

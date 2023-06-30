@@ -19,7 +19,7 @@ public class DeleteServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         User user = (User) session.getAttribute(Parameter.User.get());
         session.invalidate();
-        TransactionResult deletionResult = UserDAO.deleteByLogin(user.getUsername(), null);
+        TransactionResult deletionResult = UserDAO.deleteByLogin(user.userId);
 
         if (deletionResult.wasSuccessful()) {
             request.setAttribute("message", "Your account was removed.");

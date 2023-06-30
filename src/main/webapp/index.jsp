@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1>IEEECOMMERCE SHOP</h1></br>
+        <h1>Super Store</h1></br>
         <h2>Login</h2></br>
         <form action="Login" method="post">
             <div>

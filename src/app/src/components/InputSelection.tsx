@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from "react"
 
 interface InputSelectionProps {
-  defaultValue: string,
+  title: string
+  defaultValue: string
   options: string[]
   onChange: (e: string) => void
 }
 
-export default function InputSelection ({ defaultValue, options, onChange }: InputSelectionProps) {
+export default function InputSelection ({title, defaultValue, options, onChange }: InputSelectionProps) {
   const [selectedOption, setSelectedOption] = useState<string>()
   const [inputValue, setInputValue] = useState(defaultValue)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -54,23 +55,26 @@ export default function InputSelection ({ defaultValue, options, onChange }: Inp
   }, [selectedOption])
 
   return (
-    <div className="input-selection">
-      <input
-        type="text"
-        value={filterText}
-        onChange={handleInputChange}
-        className={isValidValue ? "" : "invalid"}
-      />
-      <button type="button" onClick={toggleDropdown}>{isDropdownOpen ? "▲" : "▼"}</button>
-      {isDropdownOpen && (
-        <ul className="dropdown">
-          {filteredOptions.map((option) => (
-            <li key={option} onClick={() => handleOptionSelect(option)}>
-              {option}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <>
+      <label>{title}</label>
+      <div className="input-selection">
+        <input title={title}
+          type="text"
+          value={filterText}
+          onChange={handleInputChange}
+          className={isValidValue ? "" : "invalid"}
+          />
+        <button type="button" onClick={toggleDropdown}>{isDropdownOpen ? "▲" : "▼"}</button>
+        {isDropdownOpen && (
+          <ul className="dropdown">
+            {filteredOptions.map((option) => (
+              <li key={option} onClick={() => handleOptionSelect(option)}>
+                {option}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
   )
 }

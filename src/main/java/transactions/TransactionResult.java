@@ -10,12 +10,16 @@ public enum TransactionResult {
     InvalidPassword("The entered password is not valid. Need at least 8 characters, at least 1 letter and 1 number."),
     InvalidUsername("The entered username is not valid. Only letters, numbers and spaces are allowed."),
     Miscellaneous("Operation error: "),
+    MissingCity("Must select a city."),
+    MissingStreet("Missing \"street\" field."),
+    MissingZipcode("Must enter a valid zipcode."),
+    ProblemRegisteringAddress("Problem registering address"),
     ProductNotFound("Sorry, we don't have this particular product."),
     SubcategoryNotFound("The product subcategory doesn't exist."),
     SubcategoryNotEmpty("Cannot remove subcategory that contains products."),
     Successful(""),
-    UserUnknownError("Unexpected error."),
-    UserNotFound("Username not registered."),
+    UserUnknownError("Unexpected error: Please login and try again."),
+    UserNotFound("Username not registered or incorrect password."),
     ;
 
     private final String baseMsg;

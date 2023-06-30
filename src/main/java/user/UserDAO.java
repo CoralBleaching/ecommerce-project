@@ -3,6 +3,7 @@ package user;
 import transactions.ConstraintName;
 import transactions.TransactionResult;
 import utils.DatabaseUtil;
+import static utils.DatabaseUtil.CONSTRAINT_ERROR_MSG;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -12,19 +13,9 @@ import java.sql.Statement;
 
 public class UserDAO {
     private static final DatabaseUtil databaseUtil = new DatabaseUtil();
-    private static final String CONSTRAINT_ERROR_MSG = "[SQLITE_CONSTRAINT_CHECK]",
-            MSG_SEPARATOR = ":",
-            DATABASE_PATH = databaseUtil.getDatabasePath(),
+    private static final String DATABASE_PATH = databaseUtil.getDatabasePath(),
             DB_FULL_URL = "jdbc:sqlite:" + DATABASE_PATH,
             DB_CLASS_NAME = "org.sqlite.JDBC";
-    private static final int OFFSET_BEGIN = 2,
-            OFFSET_END = 1;
-
-    private static String getConstraintString(String message) {
-        int length = message.length();
-        int index = message.lastIndexOf(MSG_SEPARATOR, length) + OFFSET_BEGIN;
-        return message.substring(index, length - OFFSET_END);
-    }
 
     public record SignUpFetch(TransactionResult resultValue, User user) {
         public boolean wasSuccessful() {
@@ -71,9 +62,9 @@ public class UserDAO {
             boolean isConstraintError = exc.getMessage().startsWith(CONSTRAINT_ERROR_MSG);
 
             if (isConstraintError) {
-                var constraint = getConstraintString(exc.getMessage());
+                var constraint = DatabaseUtil.getConstraintString(exc.getMessage());
                 return new SignUpFetch(
-                        ConstraintName.valueOf(constraint).getTransactionResult(),
+                        ConstraintName.fromString(constraint).getTransactionResult(),
                         null);
             }
 
@@ -83,7 +74,7 @@ public class UserDAO {
         }
     }
 
-    public static TransactionResult updateUser(String oldUsername, User user, Address address) {
+    public static TransactionResult updateUser(User user) {
         try {
             Class.forName(DB_CLASS_NAME);
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
@@ -91,12 +82,12 @@ public class UserDAO {
                 try (var user_stmt = conn.prepareStatement(
                         "update User set "
                                 + "name = ?, username = ?, password = ?, email = ? "
-                                + "where username = ?;")) {
-                    user_stmt.setString(1, user.getName());
-                    user_stmt.setString(2, user.getUsername());
-                    user_stmt.setString(3, user.getPassword());
-                    user_stmt.setString(4, user.getEmail());
-                    user_stmt.setString(5, oldUsername);
+                                + "where id_user = ?;")) {
+                    user_stmt.setString(1, user.name);
+                    user_stmt.setString(2, user.username);
+                    user_stmt.setString(3, user.password);
+                    user_stmt.setString(4, user.email);
+                    user_stmt.setInt(5, user.userId);
 
                     user_stmt.executeUpdate();
 
@@ -109,8 +100,8 @@ public class UserDAO {
             boolean isConstraintError = exc.getMessage().startsWith(CONSTRAINT_ERROR_MSG);
 
             if (isConstraintError) {
-                var constraint = getConstraintString(exc.getMessage());
-                return ConstraintName.valueOf(constraint).getTransactionResult();
+                var constraint = DatabaseUtil.getConstraintString(exc.getMessage());
+                return ConstraintName.fromString(constraint).getTransactionResult();
             }
 
             var res = TransactionResult.Miscellaneous;
@@ -119,29 +110,23 @@ public class UserDAO {
         }
     }
 
-    public static TransactionResult deleteByLogin(String username, String password) {
+    public static TransactionResult deleteByLogin(int userId) {
         try {
             Class.forName(DB_CLASS_NAME);
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
                 try (PreparedStatement stmt = conn.prepareStatement(
                         "delete from User"
                                 + " where username = ?;")) {
-                    stmt.setString(1, username);
-                    // stmt.setString(2, password);
-                    stmt.executeUpdate();
-                    return TransactionResult.Successful;
+                    stmt.setInt(1, userId);
+                    if (stmt.executeUpdate() > 0) {
+                        return TransactionResult.Successful;
+                    }
+                    return TransactionResult.UserUnknownError;
                 }
             }
         } catch (ClassNotFoundException exc) {
             return TransactionResult.DatabaseConnectionError;
         } catch (SQLException exc) {
-            boolean isConstraintError = exc.getMessage().startsWith(CONSTRAINT_ERROR_MSG);
-
-            if (isConstraintError) {
-                var constraint = getConstraintString(exc.getMessage());
-                return ConstraintName.valueOf(constraint).getTransactionResult();
-            }
-
             var res = TransactionResult.Miscellaneous;
             res.appendToMessage(exc.getMessage());
             return res;
@@ -174,17 +159,8 @@ public class UserDAO {
                 }
             }
         } catch (ClassNotFoundException exc) {
-            return new UserFetch(TransactionResult.DatabaseConnectionError, new User());
+            return new UserFetch(TransactionResult.DatabaseConnectionError, null);
         } catch (SQLException exc) {
-            boolean isConstraintError = exc.getMessage().startsWith(CONSTRAINT_ERROR_MSG);
-
-            if (isConstraintError) {
-                var constraint = getConstraintString(exc.getMessage());
-                return new UserFetch(
-                        ConstraintName.valueOf(constraint).getTransactionResult(),
-                        null);
-            }
-
             var res = TransactionResult.Miscellaneous;
             res.appendToMessage(exc.getMessage());
             return new UserFetch(res, null);

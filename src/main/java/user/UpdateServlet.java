@@ -18,16 +18,21 @@ public class UpdateServlet extends HttpServlet {
             throws ServletException, IOException {
         String name = request.getParameter(Parameter.Name.get());
         String email = request.getParameter(Parameter.Email.get());
-        String new_username = request.getParameter(Parameter.Username.get());
+        String username = request.getParameter(Parameter.Username.get());
         String password = request.getParameter(Parameter.Password.get());
 
         HttpSession session = request.getSession(true);
         User oldUser = (User) session.getAttribute(Parameter.User.get());
-        String oldUsername = oldUser.getUsername();
 
-        User user = new User(-1, name, new_username, password, email, false);
+        if (oldUser == null) {
+            request.setAttribute("message", "Not signed in.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+            dispatcher.forward(request, response);
+        }
 
-        TransactionResult updateResult = UserDAO.updateUser(oldUsername, user, null);
+        User user = new User(oldUser.userId, name, username, password, email, false);
+
+        TransactionResult updateResult = UserDAO.updateUser(user);
 
         if (updateResult.wasSuccessful()) {
             session.setAttribute(Parameter.User.get(), user);
