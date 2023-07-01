@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/ecommerce-demo"/>
+<Context path="/ecommerce-demo">
+    <!-- this isn't working! -->
+    <Manager className="org.apache.catalina.session.PersistentManager"
+             saveOnRestart="true"
+             maxIdleBackup="30">
+        <Store className="org.apache.catalina.session.JDBCStore"
+               connectionURL="F:/Code/ecommerce-project/database/ieeecommerce-db.db"
+               driverName="org.sqlite.JDBC"
+               sessionAppCol="app_name"
+               sessionDataCol="session_data"
+               sessionIdCol="id_session"
+               sessionLastAccessedCol="last_access_time"
+               sessionMaxInactiveCol="max_inactive_interval"
+               sessionTable="Session"
+               sessionValidCol="valid_session"/>
+    </Manager>
+
+</Context>

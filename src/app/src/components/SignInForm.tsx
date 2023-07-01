@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useRef } from "react"
 import FormWrapper from "./FormWrapper"
-import { ServerRoute } from "../utils/utils"
+import fetchAndDecode, { ServerRoute } from "../utils/utils"
 import { User } from "../utils/types"
 
 type Parameters = {
@@ -10,11 +10,12 @@ type Parameters = {
 }
 
 interface SignInFormProps {
-   setIsSignedIn: (value: boolean) => void
+   setUser: (value: User) => void
    goToSignUp: () => void
+   closeSignIn: () => void
 }
 
-export default function SignInForm({goToSignUp, setIsSignedIn}: SignInFormProps) {
+export default function SignInForm({goToSignUp, setUser, closeSignIn}: SignInFormProps) {
     const username = useRef<HTMLInputElement>(null)
     const password = useRef<HTMLInputElement>(null)
 
@@ -36,21 +37,15 @@ export default function SignInForm({goToSignUp, setIsSignedIn}: SignInFormProps)
                 body: new URLSearchParams(parameters).toString()
             }
 
-            fetch(ServerRoute.SignIn, requestOptions).then(response => response.arrayBuffer())
-            .then(buffer => {
-                const decoder = new TextDecoder('iso-8859-1')
-                const text = decoder.decode(buffer)
-                return JSON.parse(text) as {user: User}
-            })
-            .then(data => {
-                if (data.user) {
-                    // setIsSignedIn(true)
-                    console.log(data.user)
-                    return
-                }
-                // handle invalid login
-            })
-            .catch(console.log)
+            fetchAndDecode<{user: User}>(
+                ServerRoute.SignIn, 
+                ({user}) => {
+                    if (user) {
+                        setUser(user)
+                        closeSignIn()
+                    }
+                },
+                requestOptions)
         }
     }
 

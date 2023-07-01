@@ -61,7 +61,7 @@ create table if not exists Country (
 create table if not exists Sale (
     id_sale integer primary key,
     id_user integer not null,
-    timestamp datetime not null,
+    timestamp datetime not nulldefault (strftime('%Y-%m-%d %H:%M:%S', 'now')), -- new
     foreign key (id_user) references User (id_user) on delete cascade
 );
 
@@ -123,3 +123,13 @@ create table if not exists Picture (
     name varchar(255) not null unique,
     data blob not null
 );
+
+create table if not exists Session (
+    id_session varchar(255),
+    app_name varchar(255),
+    session_data blob,
+    last_access_time timestamp,
+    max_inactive_interval integer,
+    valid_session boolean,
+    primary key (id_session, app_name)
+)

@@ -76,22 +76,22 @@ export default function AddressForm({address, updateFields}: AddressFormProps) {
         <FormWrapper title="Address information" description="You can fill out your address information later at your first checkout.">
             <label>Street</label>
             <input autoFocus type="text" title="Street"
-            value={address.street}
+            value={address.street ?? ""}
             onChange={e => updateFields({street: e.target.value})}/>
 
             <label>Number</label>
             <input autoFocus type="text" title="number"
-            value={address.number}
+            value={address.number ?? ""}
             onChange={e => updateFields({number: e.target.value})}/>
 
             <label>District</label>
             <input autoFocus type="text" title="District"
-            value={address.district}
+            value={address.district ?? ""}
             onChange={e => updateFields({district: e.target.value})}/>
 
             <label>Zipcode</label>
             <input autoFocus type="text" title="Zipcode"
-            value={address.zipcode}
+            value={address.zipcode ?? ""}
             onChange={e => updateFields({zipcode: e.target.value})}/>
 
             <InputSelection title="Country"
@@ -114,7 +114,7 @@ export default function AddressForm({address, updateFields}: AddressFormProps) {
             <label>Label</label>
             <input autoFocus type="text" title="Label"
             placeholder='(Optional) Set a label for this address, e.g. "Home"'
-            value={address.label}
+            value={address.label ?? ""}
             onChange={e => updateFields({label: e.target.value})}/>
         </FormWrapper>
     )

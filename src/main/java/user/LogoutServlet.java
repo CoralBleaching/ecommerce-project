@@ -16,6 +16,8 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+
         HttpSession session = request.getSession();
         session.invalidate();
 

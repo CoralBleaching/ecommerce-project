@@ -25,12 +25,22 @@ export interface Product {
     date?: Date
 }
 
+export type CartItem = {
+  quantity: number
+  product: Product
+}
+
 export interface Evaluation {
     idProduct: number
     idSale: number
     timestamp: Date 
     review: string 
     score: number
+}
+
+export interface Sale {
+    saleId: number
+    productIds: number[]
 }
 
 export interface User {

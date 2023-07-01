@@ -53,7 +53,29 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter(Parameter.Password.get());
 		Boolean isFromStoreFront = getBooleanParameter(request.getParameter(Parameter.IsFromStoreFront.get()));
 
+		HttpSession session = request.getSession(true);
+
 		var fetchUser = UserDAO.getUserByLogin(username, password);
+
+		RequestDispatcher dispatcher;
+
+		if (fetchUser.resultValue().wasSuccessful()) {
+
+			session.setAttribute(Parameter.User.get(), fetchUser.user());
+			dispatcher = request.getRequestDispatcher(("main.jsp"));
+
+			// String userJson = gson.toJson(fetchUser);
+			// System.out.println("[service] " + fetchUser);
+			// System.out.println("[service] " + userJson);
+			// setCookie(fetchUser.user().toString(),
+			// USER_COOKIE_NAME,
+			// request,
+			// response);
+
+		} else {
+			dispatcher = request.getRequestDispatcher("index.jsp");
+			request.setAttribute("message", fetchUser.resultValue().getMessage());
+		}
 
 		if (isFromStoreFront != null && isFromStoreFront) {
 			PrintWriter out = response.getWriter();
@@ -66,34 +88,7 @@ public class LoginServlet extends HttpServlet {
 			return;
 		}
 
-		if (fetchUser.resultValue().wasSuccessful()) {
-			HttpSession session = request.getSession(true);
-
-			session.setAttribute(Parameter.User.get(), fetchUser.user());
-
-			// String userJson = gson.toJson(fetchUser);
-			// System.out.println("[service] " + fetchUser);
-			// System.out.println("[service] " + userJson);
-			// setCookie(fetchUser.user().toString(),
-			// USER_COOKIE_NAME,
-			// request,
-			// response);
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-			dispatcher.forward(request, response);
-			return;
-		}
-
-		request.setAttribute("message", fetchUser.resultValue().getMessage());
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 	}
 
-	// private <T> String buildJsonString(TransactionResult result, JsonLabel label,
-	// T obj) {
-	// JsonObject jsonObject = new JsonObject();
-	// jsonObject.addProperty(result.name(), result.getMessage());
-	// jsonObject.addProperty(label.name(), gson.toJson(obj));
-	// return jsonObject.toString();
-	// }
 }

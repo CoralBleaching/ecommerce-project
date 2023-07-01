@@ -25,6 +25,7 @@ TEXT_EVALUATION_FREQUENCY = 0.6
 
 # paths and defaults
 CONFIG_FILE_PATH = 'src/main/resources/config.properties'
+CONTEXT_XML_PATH = 'src/main/webapp/META-INF/context.xml'
 DATA_PATH = 'database/mock_data/'
 DB_PATH = 'database/ieeecommerce-db.db'
 RNG_SEED = 2023
@@ -486,10 +487,25 @@ def main(dbpath: str,
 
             cur.close()
 
-            with open(config_file_path, 'w', encoding='utf-8') as config_file:
-                full_db_path = f'database.path={os.getcwd()}/{dbpath}'\
+            full_db_path = f'{os.getcwd()}/{dbpath}'\
                     .replace('\\', '/')
-                config_file.write(replace_special_characters_with_codes(full_db_path))
+            
+            with open(config_file_path, 'w', encoding='utf-8') as config_file:
+                config_file.write(replace_special_characters_with_codes(f'database.path={full_db_path}'))
+
+            xml_data: list[str] = []
+            with open(CONTEXT_XML_PATH, 'r') as context_xml_file:
+                xml_data = context_xml_file.readlines()
+
+                for i, line in enumerate(xml_data):
+                    if 'connectionURL' in line:
+                        col = line.index('=')
+                        xml_data[i] = f'{line[:col+1]}"{full_db_path}"\n'
+                        break
+
+            with open(CONTEXT_XML_PATH, 'w') as context_xml_file:
+                context_xml_file.writelines(xml_data)
+
     except sqlite3.Error as exc:
         print(exc)
     except IOError as exc:

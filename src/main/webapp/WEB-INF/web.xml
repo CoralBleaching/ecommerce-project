@@ -134,6 +134,15 @@
 
   <!-- User -->
   <servlet>
+    <servlet-name>PingSessionServlet</servlet-name>
+    <servlet-class>user.PingSessionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PingSessionServlet</servlet-name>
+    <url-pattern>/PingSession</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>SignUpServlet</servlet-name>
     <servlet-class>user.SignUpServlet</servlet-class>
   </servlet>

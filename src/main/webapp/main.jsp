@@ -11,7 +11,9 @@
     </head>
     <body>
     <%@include file="header.jsp" %> 
-    <h1>Welcome, <%= user.name %></h1>
+    <% if (user != null) { %>
+        <h1>Welcome, <%= user.name %></h1>
+    <% } %>
     <% if (request.getAttribute("message") != null) { %>
         <div class="warning-box">
             <strong>

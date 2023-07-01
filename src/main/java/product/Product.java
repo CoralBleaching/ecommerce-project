@@ -1,8 +1,10 @@
 package product;
 
+// TODO: turn these fields into final
 public class Product {
     private int idProduct,
             idPicture,
+            idPrice,
             stock,
             hotness;
     private float price;
@@ -82,6 +84,14 @@ public class Product {
         return description;
     }
 
+    public void setIdPrice(int idPrice) {
+        this.idPrice = idPrice;
+    }
+
+    public int getIdPrice() {
+        return idPrice;
+    }
+
     public void setIdProduct(int idProduct) {
         this.idProduct = idProduct;
     }
@@ -121,12 +131,4 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @Override
-    public String toString() {
-        return "Product [idProduct=" + idProduct + ", idPicture=" + idPicture + ", stock=" + stock + ", hotness="
-                + hotness + ", price=" + price + ", category=" + category + ", subcategory=" + subcategory + ", name="
-                + name + ", description=" + description + ", timestamp=" + timestamp + "]";
-    }
-
 }
