@@ -12,6 +12,8 @@ This project is supposed to demonstrate several skills, namely among them:
 - Ability to work both rigorously as a systems architect and creatively as an interface designer
 - Expertise in general web development
 
+> Note: this project is a work in progress. 
+
 TODO:
 - Allow for evaluations to be deleted
 - Add ability for admin to edit products in batch (e.g. category/subcategory or hotness)
