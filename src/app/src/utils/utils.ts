@@ -1,15 +1,18 @@
-export default function fetchAndDecode<T>(url: string, 
+export default function fetchAndDecode<T>(
+  url: string,
   callback: (data: T) => void,
   options: RequestInit = {},
-  errorCallback: (reason: any) => void = console.log) {
-    fetch(url, options)
-    .then(response =>  response.arrayBuffer())
-    .then(buffer => {
-      const decoder = new TextDecoder('iso-8859-1')
+  errorCallback: (reason: any) => void = console.log
+) {
+  fetch(url, options)
+    .then((response) => response.arrayBuffer())
+    .then((buffer) => {
+      const decoder = new TextDecoder("iso-8859-1")
       const text = decoder.decode(buffer)
-      return text.length > 0 ? JSON.parse(text) as T : {} as T
+      return text.length > 0 ? (JSON.parse(text) as T) : ({} as T)
     })
-    .then(callback).catch(errorCallback)
+    .then(callback)
+    .catch(errorCallback)
 }
 
 const SERVER_URL = "http://localhost:8080/ecommerce-demo"

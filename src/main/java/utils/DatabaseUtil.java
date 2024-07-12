@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class DatabaseUtil {
     private static final String PROPERTIES_FILE = "config.properties";
-    private static final String DB_PATH_PROPERTY = "database.path";
+    private static final String DB_URL_PROPERTY = "database.url";
     private static final int OFFSET_BEGIN = 2,
             OFFSET_END = 1;
 
@@ -15,7 +15,10 @@ public class DatabaseUtil {
             MSG_SEPARATOR = ":";
 
     public enum WhitelistedDomains {
-        ViteReactTsApp("http://localhost:5173");
+        ViteReactTsAppDesktop("http://localhost:5173"),
+        // ViteReactTsAppDocker("http://localhost");
+        ViteReactTsAppDocker("http://localhost:3000");
+        // ViteReactTsAppDocker("http://ecommerce-frontend:3000");
 
         private final String url;
 
@@ -28,12 +31,12 @@ public class DatabaseUtil {
         }
     }
 
-    public String getDatabasePath() {
+    public String getDatabaseUrl() {
         Properties properties = new Properties();
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE);
                 InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
             properties.load(inputStream);
-            return properties.getProperty(DB_PATH_PROPERTY);
+            return properties.getProperty(DB_URL_PROPERTY);
         } catch (Exception e) { // TODO: improve
             System.out.println(e);
         }

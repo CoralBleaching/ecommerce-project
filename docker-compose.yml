@@ -1,0 +1,47 @@
+services:
+  ecommerce-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: ecommerce-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  ecommerce-webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ecommerce-db
+    environment:
+      - DB_URL=jdbc:postgresql://ecommerce-db:5432/ecommerce-db
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+      - DB_NAME=ecommerce-db
+      - DB_PORT=5432
+      - DB_HOST=ecommerce-db
+    volumes:
+      - ./database/scripts:/docker-entrypoint-initdb.d
+    command: >
+      sh -c "
+        sleep 2;
+        python3 /docker-entrypoint-initdb.d/fill_db_with_mock_data.py;
+        catalina.sh run;
+      "
+
+  ecommerce-frontend:
+    build:
+      context: ./src/app
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres-data:

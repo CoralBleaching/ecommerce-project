@@ -11,7 +11,6 @@ import { CartItem, Product, User } from "./utils/types"
 import SidePanel from "./components/SidePanel"
 import Cart from "./components/Cart"
 
-
 export default function App() {
   const [activeIndex, setActiveIndex] = useState<number>(1)
   const [idCategory, setIdCategory] = useState<number>()
@@ -47,26 +46,32 @@ export default function App() {
   }
 
   function onSignOutClick() {
-    const queryString = new URLSearchParams({"isFromStoreFront": String(true)}).toString()
+    const queryString = new URLSearchParams({
+      isFromStoreFront: String(true),
+    }).toString()
     fetchAndDecode(`${ServerRoute.SignOut}?${queryString}`, () => {})
     setUser(undefined)
   }
 
-  function onCartClick() {
+  // function onCartClick() {
 
-  }
+  // }
 
   function onAddToCart(product: Product, quantity: number) {
-    let i = cart.findIndex(item => item.product.idProduct === product.idProduct)
+    let i = cart.findIndex(
+      (item) => item.product.idProduct === product.idProduct
+    )
     if (i == -1) {
-      setCart([...cart, {quantity, product}])
+      setCart([...cart, { quantity, product }])
     } else {
-      setCart(cart.map(item => {
-        if (item.product.idProduct === product.idProduct) {
-          item.quantity++
-        }
-        return item
-      }))
+      setCart(
+        cart.map((item) => {
+          if (item.product.idProduct === product.idProduct) {
+            item.quantity++
+          }
+          return item
+        })
+      )
     }
   }
 
@@ -82,26 +87,32 @@ export default function App() {
         i--
       }
     }
-    setCart(newCart)    
+    setCart(newCart)
   }
 
   return (
     <>
       <Modal open={signInModalOpen} onClose={() => setSignInModalOpen(false)}>
-        <SignInForm setUser={setUser} 
-                    goToSignUp={onGoToSignUp} 
-                    closeSignIn={() => setSignInModalOpen(false)}/>
+        <SignInForm
+          setUser={setUser}
+          goToSignUp={onGoToSignUp}
+          closeSignIn={() => setSignInModalOpen(false)}
+        />
       </Modal>
 
       <Modal open={signUpModalOpen} onClose={() => setSignUpModalOpen(false)}>
         <SignUpForm goToSignIn={onGoToSignIn} />
       </Modal>
 
-      <Header isSignedIn={isSignedIn}
-              handleClickOnSignIn={() => setSignInModalOpen(true)} 
-              handleClickOnSignUp={() => setSignUpModalOpen(true)}
-              handleClickOnSignOut={onSignOutClick}
-              handleClickOnCart={() => {setCartIsOpen(true)}}/>
+      <Header
+        isSignedIn={isSignedIn}
+        handleClickOnSignIn={() => setSignInModalOpen(true)}
+        handleClickOnSignUp={() => setSignUpModalOpen(true)}
+        handleClickOnSignOut={onSignOutClick}
+        handleClickOnCart={() => {
+          setCartIsOpen(true)
+        }}
+      />
 
       <section className="content">
         <DepartmentsMenu
@@ -118,11 +129,17 @@ export default function App() {
         />
       </section>
 
-      <SidePanel open={cartIsOpen} 
-                 onClose={() => {setCartIsOpen(false)}}>
-        <Cart cartItems={cart}
-              onAddToCart={onAddToCart}
-              onRemoveFromCart={onRemoveFromCart}/>
+      <SidePanel
+        open={cartIsOpen}
+        onClose={() => {
+          setCartIsOpen(false)
+        }}
+      >
+        <Cart
+          cartItems={cart}
+          onAddToCart={onAddToCart}
+          onRemoveFromCart={onRemoveFromCart}
+        />
       </SidePanel>
     </>
   )

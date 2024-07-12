@@ -13,9 +13,8 @@ import java.sql.Statement;
 
 public class UserDAO {
     private static final DatabaseUtil databaseUtil = new DatabaseUtil();
-    private static final String DATABASE_PATH = databaseUtil.getDatabasePath(),
-            DB_FULL_URL = "jdbc:sqlite:" + DATABASE_PATH,
-            DB_CLASS_NAME = "org.sqlite.JDBC";
+    private static final String DB_FULL_URL = databaseUtil.getDatabaseUrl(),
+            DB_CLASS_NAME = "org.postgresql.Driver";
 
     public record SignUpFetch(TransactionResult resultValue, User user) {
         public boolean wasSuccessful() {
@@ -30,7 +29,7 @@ public class UserDAO {
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
 
                 var user_stmt = conn.prepareStatement(
-                        "insert into User ("
+                        "insert into \"User\" ("
                                 + "name, username, password, email"
                                 + ") values (?, ?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
@@ -80,7 +79,7 @@ public class UserDAO {
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
 
                 try (var user_stmt = conn.prepareStatement(
-                        "update User set "
+                        "update \"User\" set "
                                 + "name = ?, username = ?, password = ?, email = ? "
                                 + "where id_user = ?;")) {
                     user_stmt.setString(1, user.name);
@@ -115,7 +114,7 @@ public class UserDAO {
             Class.forName(DB_CLASS_NAME);
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
                 try (PreparedStatement stmt = conn.prepareStatement(
-                        "delete from User"
+                        "delete from \"User\""
                                 + " where username = ?;")) {
                     stmt.setInt(1, userId);
                     if (stmt.executeUpdate() > 0) {
@@ -139,7 +138,7 @@ public class UserDAO {
             Class.forName(DB_CLASS_NAME);
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL)) {
                 try (var stmt = conn.prepareStatement(
-                        "select id_user, name, username, email, is_admin from User"
+                        "select id_user, name, username, email, is_admin from \"User\""
                                 + " where username = ? and password = ?")) {
                     stmt.setString(1, username);
                     stmt.setString(2, password);
@@ -151,7 +150,7 @@ public class UserDAO {
                                     stmt_res.getString("username"),
                                     null,
                                     stmt_res.getString("email"),
-                                    Boolean.parseBoolean(stmt_res.getString("is_admin")));
+                                    stmt_res.getBoolean("is_admin"));
                             return new UserFetch(TransactionResult.Successful, user);
                         }
                         return new UserFetch(TransactionResult.UserNotFound, null);

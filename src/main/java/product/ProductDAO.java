@@ -15,8 +15,8 @@ import utils.DatabaseUtil;
 
 public class ProductDAO {
     private static final DatabaseUtil databaseUtil = new DatabaseUtil();
-    private static final String DATABASE_PATH = databaseUtil.getDatabasePath(),
-            DB_FULL_URL = "jdbc:sqlite:" + DATABASE_PATH, DB_CLASS_NAME = "org.sqlite.JDBC";
+    private static final String DB_FULL_URL = databaseUtil.getDatabaseUrl(),
+            DB_CLASS_NAME = "org.postgresql.Driver";
 
     public record ProductFetch(TransactionResult resultValue, Product product) {
         public boolean wasSuccessful() {
@@ -135,10 +135,10 @@ public class ProductDAO {
             query += "    and (\n";
             String[] searchTerms = searchText.split(" ");
             for (String term : searchTerms) {
-                query += "        p.name like '%" + term + "%' or \n";
-                query += "        p.description like '%" + term + "%' or \n";
-                query += "        category like '%" + term + "%' or \n";
-                query += "        subcategory like '%" + term + "%' or \n";
+                query += "        p.name ilike '%" + term + "%' or \n";
+                query += "        p.description ilike '%" + term + "%' or \n";
+                query += "        c.name ilike '%" + term + "%' or \n";
+                query += "        s.name ilike '%" + term + "%' or \n";
             }
             query = query.substring(0, query.lastIndexOf("or")) + "\n";
             query += "    )\n";
@@ -147,8 +147,13 @@ public class ProductDAO {
         query += "order by " + orderToken;
         if (resultsPerPage != null && pageNumber != null) {
             Integer offset = (pageNumber - 1) * resultsPerPage;
-            query += " limit " + Integer.toString(offset) + ", " + Integer.toString(resultsPerPage);
+            query += " limit " + Integer.toString(offset + resultsPerPage) + " offset " + Integer.toString(offset);
         }
+        // if (resultsPerPage != null && pageNumber != null) {
+        // Integer offset = (pageNumber - 1) * resultsPerPage;
+        // query += " limit " + Integer.toString(offset) + ", " +
+        // Integer.toString(resultsPerPage);
+        // }
         query += ";";
         if (verbose != null && verbose == true)
             System.out.println(query);
@@ -423,15 +428,15 @@ public class ProductDAO {
         }
     }
 
-    public static String getPictureById(Integer id) {
+    public static byte[] getPictureById(Integer id) {
         try {
-            Class.forName(DB_CLASS_NAME);
+            Class.forName(DB_CLASS_NAME); // TODO: fix this query building
             String query = "select data from Picture where id_picture = " + Integer.toString(id) + ";";
             try (Connection conn = DriverManager.getConnection(DB_FULL_URL);
                     var stmt = conn.prepareStatement(query);
                     var res = stmt.executeQuery()) {
                 if (res.next()) {
-                    return res.getString("data");
+                    return res.getBytes("data");
                 } else {
                     return null;
                 }

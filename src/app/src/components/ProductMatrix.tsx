@@ -27,7 +27,7 @@ export default function ProductMatrix({
   idCategory,
   idSubcategory,
   onAddToCart,
-  onRemoveFromCart
+  onRemoveFromCart,
 }: ProductMatrixProps) {
   const RESULTS_PER_PAGE = 9
   const MAX_VISIBLE_INDICES = 4
@@ -81,10 +81,10 @@ export default function ProductMatrix({
       fetchedProducts.forEach((product) => {
         product.date = new Date(product.timestamp)
       })
+      console.log(fetchedProducts)
       setProducts(fetchedProducts)
     })
   }, [idCategory, idSubcategory, orderBy, searchText, activeIndex])
-
 
   function onSetOrder(newOrder: string) {
     setOrderBy(newOrder)
@@ -115,11 +115,13 @@ export default function ProductMatrix({
       <Subheader setOrder={onSetOrder} setSearchText={onSetSearchText} />
       <div className="products-grid">
         {products.map((product) => (
-          <ProductCard key={product.name} 
-                       product={product}
-                       type={CardType.ProductMatrix}
-                       onAddToCart={onAddToCart}
-                       onRemoveFromCart={onRemoveFromCart} />
+          <ProductCard
+            key={product.name}
+            product={product}
+            type={CardType.ProductMatrix}
+            onAddToCart={onAddToCart}
+            onRemoveFromCart={onRemoveFromCart}
+          />
         ))}
       </div>
       {totalIndices !== undefined && (

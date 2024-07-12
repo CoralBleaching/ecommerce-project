@@ -9,7 +9,7 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "proxy": "http://localhost:8080/ecommerce-demo",
+  "proxy": "http://ecommerce-webserver:8080/ecommerce-demo",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

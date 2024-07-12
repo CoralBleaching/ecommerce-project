@@ -2,6 +2,7 @@ package product;
 
 import category.CategoryDAO;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -51,7 +52,8 @@ public class UpdateProductServlet extends HttpServlet {
 
         Integer idProduct = Integer.valueOf(idProducString);
         ProductFetch fetchProduct = ProductDAO.getProduct(idProduct);
-        String imgData = ProductDAO.getPictureById(fetchProduct.product().getIdPicture());
+        byte[] binaryData = ProductDAO.getPictureById(fetchProduct.product().getIdPicture());
+        String imgData = Base64.getEncoder().encodeToString(binaryData);
 
         if (fetchProduct.wasSuccessful() && fetchCategories.wasSuccessful()) {
             session.setAttribute(SessionVariable.Product.get(), fetchProduct.product());

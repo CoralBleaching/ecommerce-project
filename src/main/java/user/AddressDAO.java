@@ -13,9 +13,8 @@ import static utils.DatabaseUtil.CONSTRAINT_ERROR_MSG;
 
 public class AddressDAO {
     private static final DatabaseUtil databaseUtil = new DatabaseUtil();
-    private static final String DATABASE_PATH = databaseUtil.getDatabasePath(),
-            DB_FULL_URL = "jdbc:sqlite:" + DATABASE_PATH,
-            DB_CLASS_NAME = "org.sqlite.JDBC";
+    private static final String DB_FULL_URL = databaseUtil.getDatabaseUrl(),
+            DB_CLASS_NAME = "org.postgresql.Driver";
 
     public record AddressFetch(TransactionResult resultValue, Address address) {
         public boolean wasSuccessful() {

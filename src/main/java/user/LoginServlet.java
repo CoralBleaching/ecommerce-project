@@ -1,6 +1,8 @@
 package user;
 
 import com.google.gson.Gson;
+
+import utils.DatabaseUtil;
 import utils.Parameter;
 
 import java.io.IOException;
@@ -47,7 +49,8 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.addHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+		response.addHeader("Access-Control-Allow-Origin",
+				DatabaseUtil.WhitelistedDomains.ViteReactTsAppDocker.get());
 
 		String username = request.getParameter(Parameter.Username.get());
 		String password = request.getParameter(Parameter.Password.get());

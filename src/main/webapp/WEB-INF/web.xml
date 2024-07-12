@@ -4,6 +4,31 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+  <!-- Tomcat CORS filer -->
+  <filter>
+      <filter-name>CORS</filter-name>
+      <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+      <init-param>
+          <param-name>cors.allowed.origins</param-name>
+          <param-value>*</param-value>
+      </init-param>
+      <init-param>
+          <param-name>cors.allowed.methods</param-name>
+          <param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
+      </init-param>
+      <init-param>
+          <param-name>cors.allowed.headers</param-name>
+          <param-value>
+            Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers
+          </param-value>      
+      </init-param>
+  </filter>
+  <filter-mapping>
+      <filter-name>CORS</filter-name>
+      <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <!-- Product -->
   <servlet>
     <servlet-name>ListEvaluationsServlet</servlet-name>

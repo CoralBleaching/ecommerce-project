@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/ecommerce-demo">
-    <!-- this isn't working! -->
     <Manager className="org.apache.catalina.session.PersistentManager"
              saveOnRestart="true"
              maxIdleBackup="30">
         <Store className="org.apache.catalina.session.JDBCStore"
-               connectionURL="F:/Code/ecommerce-project/database/ieeecommerce-db.db"
+               connectionURL="postgresql://admin:admin@ecommerce-db:5432/ecommerce-db"
                driverName="org.sqlite.JDBC"
                sessionAppCol="app_name"
                sessionDataCol="session_data"

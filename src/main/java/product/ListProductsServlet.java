@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import product.ProductDAO.ProductsFetch;
-import utils.DatabaseUtil;
 import utils.Parameter;
 
 public class ListProductsServlet extends HttpServlet {
@@ -20,8 +19,6 @@ public class ListProductsServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.addHeader("Access-Control-Allow-Origin",
-                DatabaseUtil.WhitelistedDomains.ViteReactTsApp.get());
 
         String idCategoryString = request.getParameter(Parameter.Category.get());
         String idSubcategoryString = request.getParameter(Parameter.Subcategory.get());

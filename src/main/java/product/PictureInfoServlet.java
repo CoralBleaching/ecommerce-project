@@ -1,6 +1,7 @@
 package product;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -33,11 +34,14 @@ public class PictureInfoServlet extends HttpServlet {
             dispatcher.forward(request, response);
         }
 
-        String data = null;
+        String base64EncodedData = null;
+        byte[] binaryData = null;
         if (pictureId != null) {
-            data = ProductDAO.getPictureById(pictureId);
+            binaryData = ProductDAO.getPictureById(pictureId);
+            base64EncodedData = Base64.getEncoder().encodeToString(binaryData);
+
         }
-        session.setAttribute(SessionVariable.PictureData.get(), data);
+        session.setAttribute(SessionVariable.PictureData.get(), base64EncodedData);
         session.setAttribute(SessionVariable.PictureId.get(), pictureId);
 
         if (isUpdateRequest == null) {

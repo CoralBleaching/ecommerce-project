@@ -1,135 +1,135 @@
-create table if not exists User (
-    id_user integer primary key,
-    name varchar(255) not null,
-    username varchar(50) not null unique constraint username check (
-        username not glob '*[^a-zA-Z0-9 ]*'
+CREATE TABLE IF NOT EXISTS "User" (
+    id_user SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE CHECK (
+        username !~ '[^a-zA-Z0-9 ]'
     ), -- Alphanumeric or space, localized
-    password varchar(50) not null constraint password check (
-        length(password) >= 8 
-        and password glob '*[a-zA-Z]*' -- At least 1 letter
-        and password glob '*[0-9]*' -- At least 1 number
+    password VARCHAR(50) NOT NULL CHECK (
+        LENGTH(password) >= 8 
+        AND password ~ '[a-zA-Z]' -- At least 1 letter
+        AND password ~ '[0-9]' -- At least 1 number
     ),
-    email varchar(50) not null constraint email check (
-        email like '%@%.%'
+    email VARCHAR(50) NOT NULL CHECK (
+        email LIKE '%@%.%'
     ),
-    is_admin boolean not null default 'false'
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-create table if not exists CreditCard (
-    id_user integer not null,
-    number varchar(16) not null,
-    name_on_card varchar(50) not null,
-    ccv varchar(3) not null,
-    expiry_date varchar(4) not null,
-    foreign key (id_user) references User (id_user) on delete cascade
+CREATE TABLE IF NOT EXISTS CreditCard (
+    id_user INTEGER NOT NULL,
+    number VARCHAR(16) NOT NULL,
+    name_on_card VARCHAR(50) NOT NULL,
+    ccv VARCHAR(3) NOT NULL,
+    expiry_date VARCHAR(4) NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES "User" (id_user) ON DELETE CASCADE
 );
 
-create table if not exists Address (
-    id_address integer primary key, -- new
-    id_user integer not null,
-    id_city integer not null,
-    street varchar(50) not null,
-    number varchar(50),
-    zipcode varchar(50) not null,
-    district varchar(50),
-    label varchar(50), -- new
-    foreign key (id_user) references User (id_user) on delete cascade,
-    foreign key (id_city) references City (id_city)
+CREATE TABLE IF NOT EXISTS Country (
+    id_country SERIAL PRIMARY KEY,
+    name VARCHAR(50) UNIQUE NOT NULL
 );
 
-create table if not exists City (
-    id_city integer primary key,
-    id_state integer not null,
-    name varchar(50) not null,
-    unique (id_state, name), -- new
-    foreign key (id_state) references State (id_state)
+CREATE TABLE IF NOT EXISTS State (
+    id_state SERIAL PRIMARY KEY,
+    id_country INTEGER NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    UNIQUE (id_country, name),
+    FOREIGN KEY (id_country) REFERENCES Country (id_country)
 );
 
-create table if not exists State (
-    id_state integer primary key,
-    id_country integer not null,
-    name varchar(50) not null,
-    unique (id_country, name), -- new
-    foreign key (id_country) references Country (id_country)
+CREATE TABLE IF NOT EXISTS City (
+    id_city SERIAL PRIMARY KEY,
+    id_state INTEGER NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    UNIQUE (id_state, name),
+    FOREIGN KEY (id_state) REFERENCES State (id_state)
 );
 
-create table if not exists Country (
-    id_country integer primary key,
-    name varchar(50) unique not null
+CREATE TABLE IF NOT EXISTS Address (
+    id_address SERIAL PRIMARY KEY,
+    id_user INTEGER NOT NULL,
+    id_city INTEGER NOT NULL,
+    street VARCHAR(50) NOT NULL,
+    number VARCHAR(50),
+    zipcode VARCHAR(50) NOT NULL,
+    district VARCHAR(50),
+    label VARCHAR(50),
+    FOREIGN KEY (id_user) REFERENCES "User" (id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_city) REFERENCES City (id_city)
 );
 
-create table if not exists Sale (
-    id_sale integer primary key,
-    id_user integer not null,
-    timestamp datetime not nulldefault (strftime('%Y-%m-%d %H:%M:%S', 'now')), -- new
-    foreign key (id_user) references User (id_user) on delete cascade
+CREATE TABLE IF NOT EXISTS Sale (
+    id_sale SERIAL PRIMARY KEY,
+    id_user INTEGER NOT NULL,
+    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES "User" (id_user) ON DELETE CASCADE
 );
 
-create table if not exists Sold (
-    id_sale integer not null,
-    id_price integer not null,
-    quantity integer not null,
-    foreign key (id_sale) references Sale (id_sale) on delete cascade,
-    foreign key (id_price) references Price (id_price)
+CREATE TABLE IF NOT EXISTS Category (
+    id_category SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    description VARCHAR(255)
 );
 
-create table if not exists Product (
-    id_product integer primary key,
-    id_subcategory integer not null,
-    id_picture integer not null,
-    name varchar(255) not null,
-    description text not null,
-    stock integer not null,
-    hotness integer not null constraint hotness check (hotness >= 1 and hotness <= 5), -- new
-    timestamp datetime not null default (strftime('%Y-%m-%d %H:%M:%S', 'now')), -- new
-    foreign key (id_subcategory) references Subcategory (id_subcategory)
+CREATE TABLE IF NOT EXISTS Subcategory (
+    id_subcategory SERIAL PRIMARY KEY,
+    id_category INTEGER NOT NULL,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    description VARCHAR(255),
+    FOREIGN KEY (id_category) REFERENCES Category (id_category) ON DELETE CASCADE
 );
 
-create table if not exists Evaluation ( -- new
-    id_product integer not null,
-    id_sale integer not null,
-    timestamp datetime not null,
-    review text,
-    score float not null constraint score check (score >= 1 and score <= 5),
-    foreign key (id_product) references Product (id_product) on delete cascade,
-    foreign key (id_sale) references sale (id_sale) on delete cascade
+CREATE TABLE IF NOT EXISTS Product (
+    id_product SERIAL PRIMARY KEY,
+    id_subcategory INTEGER NOT NULL,
+    id_picture INTEGER NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    stock INTEGER NOT NULL,
+    hotness INTEGER NOT NULL CHECK (hotness >= 1 AND hotness <= 5),
+    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_subcategory) REFERENCES Subcategory (id_subcategory)
 );
 
-create table if not exists Subcategory (
-    id_subcategory integer primary key,
-    id_category integer not null,
-    name varchar(50) not null unique, --unique
-    description varchar(255),
-    foreign key (id_category) references Category (id_category) on delete cascade
+CREATE TABLE IF NOT EXISTS Price (
+    id_price SERIAL PRIMARY KEY,
+    id_product INTEGER NOT NULL,
+    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    value FLOAT NOT NULL,
+    FOREIGN KEY (id_product) REFERENCES Product (id_product) ON DELETE CASCADE,
+    CONSTRAINT unique_product_timestamp UNIQUE (id_product, timestamp)
 );
 
-create table if not exists Category (
-    id_category integer primary key,
-    name varchar(50) not null unique, --unique
-    description varchar(255)
+CREATE TABLE IF NOT EXISTS Sold (
+    id_sale INTEGER NOT NULL,
+    id_price INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (id_sale) REFERENCES Sale (id_sale) ON DELETE CASCADE,
+    FOREIGN KEY (id_price) REFERENCES Price (id_price)
 );
 
-create table if not exists Price (
-    id_price integer primary key,
-    id_product integer not null,
-    timestamp datetime not null default current_timestamp,
-    value float not null,
-    foreign key (id_product) references Product (id_product) on delete cascade,
-    constraint unique_product_timestamp unique (id_product, timestamp) -- new
+CREATE TABLE IF NOT EXISTS Evaluation (
+    id_product INTEGER NOT NULL,
+    id_sale INTEGER NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    review TEXT,
+    score FLOAT NOT NULL CHECK (score >= 1 AND score <= 5),
+    FOREIGN KEY (id_product) REFERENCES Product (id_product) ON DELETE CASCADE,
+    FOREIGN KEY (id_sale) REFERENCES Sale (id_sale) ON DELETE CASCADE
 );
 
-create table if not exists Picture (
-    id_picture integer primary key,
-    name varchar(255) not null unique,
-    data blob not null
+CREATE TABLE IF NOT EXISTS Picture (
+    id_picture SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    data BYTEA NOT NULL
 );
 
-create table if not exists Session (
-    id_session varchar(255),
-    app_name varchar(255),
-    session_data blob,
-    last_access_time timestamp,
-    max_inactive_interval integer,
-    valid_session boolean,
-    primary key (id_session, app_name)
-)
+CREATE TABLE IF NOT EXISTS Session (
+    id_session VARCHAR(255),
+    app_name VARCHAR(255),
+    session_data BYTEA,
+    last_access_time TIMESTAMP,
+    max_inactive_interval INTEGER,
+    valid_session BOOLEAN,
+    PRIMARY KEY (id_session, app_name)
+);

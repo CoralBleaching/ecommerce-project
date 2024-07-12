@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 
-import utils.DatabaseUtil;
 import utils.Parameter;
 
 public class ProductCountServlet extends HttpServlet {
@@ -18,8 +17,8 @@ public class ProductCountServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.addHeader("Access-Control-Allow-Origin",
-                DatabaseUtil.WhitelistedDomains.ViteReactTsApp.get());
+        // response.addHeader("Access-Control-Allow-Origin",
+        // DatabaseUtil.WhitelistedDomains.ViteReactTsAppDocker.get());
 
         String idCategoryString = request.getParameter(Parameter.Category.get());
         String idSubcategoryString = request.getParameter(Parameter.Subcategory.get());

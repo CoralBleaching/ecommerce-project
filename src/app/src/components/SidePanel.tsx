@@ -9,29 +9,32 @@ interface SidePanelProps {
 export default function SidePanel({ open, onClose, children }: SidePanelProps) {
   const [folded, setFolded] = useState(true)
 
-  useEffect(function handleEscPress() {
-    function handleEscapeKeyPress (event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        onClose()
+  useEffect(
+    function handleEscPress() {
+      function handleEscapeKeyPress(event: KeyboardEvent) {
+        if (event.key === "Escape") {
+          onClose()
+        }
       }
-    }
 
-    if (open) {
-      document.addEventListener("keydown", handleEscapeKeyPress)
-    }
+      if (open) {
+        document.addEventListener("keydown", handleEscapeKeyPress)
+      }
 
-    return () => {
-      document.removeEventListener("keydown", handleEscapeKeyPress)
-    }
-  }, [open, onClose])
+      return () => {
+        document.removeEventListener("keydown", handleEscapeKeyPress)
+      }
+    },
+    [open, onClose]
+  )
 
-  function handleOverlayClick (event: React.MouseEvent<HTMLDivElement>) {
-    if (event.target !== event.currentTarget) {
-      onClose()
-    }
-  }
+  // function handleOverlayClick (event: React.MouseEvent<HTMLDivElement>) {
+  //   if (event.target !== event.currentTarget) {
+  //     onClose()
+  //   }
+  // }
 
-  function handleToggleFold () {
+  function handleToggleFold() {
     setFolded(!folded)
   }
 

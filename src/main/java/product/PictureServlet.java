@@ -2,6 +2,7 @@ package product;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 
-import utils.DatabaseUtil;
 import utils.Parameter;
 
 public class PictureServlet extends HttpServlet {
@@ -18,8 +18,6 @@ public class PictureServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.addHeader("Access-Control-Allow-Origin",
-                DatabaseUtil.WhitelistedDomains.ViteReactTsApp.get());
 
         String idPictureString = request.getParameter(Parameter.PictureId.get());
         Integer idPicture = null;
@@ -34,7 +32,8 @@ public class PictureServlet extends HttpServlet {
         JsonObject json = new JsonObject();
 
         if (idPicture != null) {
-            String picture = ProductDAO.getPictureById(idPicture);
+            byte[] binary = ProductDAO.getPictureById(idPicture);
+            String picture = Base64.getEncoder().encodeToString(binary);
 
             json.addProperty("picture", picture);
 
