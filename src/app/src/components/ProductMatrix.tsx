@@ -2,8 +2,10 @@ import { useEffect, useState } from "react"
 import ProductCard, { CardType } from "./ProductCard"
 import Subheader from "./Subheader"
 import { Product } from "../utils/types"
-import fetchAndDecode, { Order, ServerRoute } from "../utils/utils"
+import { Order } from "../utils/utils"
 import PaginationBar from "./PaginationBar"
+import useProductCount from "../customHooks/useProductCount"
+import useAllProducts from "../customHooks/useAllProducts"
 
 export interface ProductMatrixProps {
   parentActiveIndex: number
@@ -11,15 +13,6 @@ export interface ProductMatrixProps {
   idSubcategory?: number
   onAddToCart: (product: Product, quantity: number) => void
   onRemoveFromCart: (productId: number) => void
-}
-
-type Parameters = {
-  orderBy?: string
-  searchText?: string
-  category?: string
-  subcategory?: string
-  pageNumber?: string
-  resultsPerPage?: string
 }
 
 export default function ProductMatrix({
@@ -32,59 +25,23 @@ export default function ProductMatrix({
   const RESULTS_PER_PAGE = 9
   const MAX_VISIBLE_INDICES = 4
 
-  const [products, setProducts] = useState<Product[]>([])
   const [orderBy, setOrderBy] = useState<string>(Order.Hotness)
   const [searchText, setSearchText] = useState<string>()
   const [activeIndex, setActiveIndex] = useState(parentActiveIndex)
-  const [totalIndices, setTotalIndices] = useState<number>()
+
+  const products = useAllProducts(
+    idCategory,
+    idSubcategory,
+    searchText,
+    orderBy,
+    activeIndex,
+    RESULTS_PER_PAGE
+  )
+  const totalIndices = useProductCount(idCategory, idSubcategory, searchText)
 
   useEffect(() => {
     setActiveIndex(parentActiveIndex)
   }, [parentActiveIndex])
-
-  useEffect(() => {
-    let params: Parameters = {}
-    if (searchText) params = { ...params, searchText: searchText }
-    if (idCategory) params = { ...params, category: idCategory.toString() }
-    if (idSubcategory)
-      params = { ...params, subcategory: idSubcategory.toString() }
-
-    const queryString = new URLSearchParams(params).toString()
-    const requestUrl = `${ServerRoute.ProductCount}?${queryString}`
-    console.log(queryString)
-
-    fetchAndDecode<{ count: number }>(requestUrl, (data) => {
-      let count = data.count
-      setTotalIndices(() => Math.ceil(count / RESULTS_PER_PAGE))
-    })
-    console.log("totalIndices = ", totalIndices)
-  }, [idCategory, idSubcategory, searchText, totalIndices])
-
-  useEffect(() => {
-    // TODO: import parameter names?
-    let params: Parameters = {
-      orderBy: orderBy,
-      pageNumber: activeIndex.toString(),
-      resultsPerPage: RESULTS_PER_PAGE.toString(),
-    }
-    if (searchText) params = { ...params, searchText: searchText }
-    if (idCategory) params = { ...params, category: idCategory.toString() }
-    if (idSubcategory)
-      params = { ...params, subcategory: idSubcategory.toString() }
-
-    const queryString = new URLSearchParams(params).toString()
-    const requestUrl = `${ServerRoute.AllProducts}?${queryString}`
-    console.log(queryString)
-
-    fetchAndDecode<{ products: Product[] }>(requestUrl, (data) => {
-      const fetchedProducts = data.products
-      fetchedProducts.forEach((product) => {
-        product.date = new Date(product.timestamp)
-      })
-      console.log(fetchedProducts)
-      setProducts(fetchedProducts)
-    })
-  }, [idCategory, idSubcategory, orderBy, searchText, activeIndex])
 
   function onSetOrder(newOrder: string) {
     setOrderBy(newOrder)

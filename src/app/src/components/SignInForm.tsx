@@ -1,13 +1,7 @@
 import { FormEvent, useRef } from "react"
 import FormWrapper from "./FormWrapper"
-import fetchAndDecode, { ServerRoute } from "../utils/utils"
 import { User } from "../utils/types"
-
-type Parameters = {
-  username: string
-  password: string
-  isFromStoreFront: string
-}
+import usersData from "../../../../database/json/User.json"
 
 interface SignInFormProps {
   setUser: (value: User) => void
@@ -27,30 +21,30 @@ export default function SignInForm({
     event.preventDefault()
 
     if (username.current && password.current) {
-      const parameters: Parameters = {
-        username: username.current.value,
-        password: password.current.value,
-        isFromStoreFront: String(true),
+      const user = fetchUser(username.current.value, password.current.value)
+      if (user) {
+        setUser(user)
+        closeSignIn()
       }
 
-      const requestOptions: RequestInit = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams(parameters).toString(),
-      }
-
-      fetchAndDecode<{ user: User }>(
-        ServerRoute.SignIn,
-        ({ user }) => {
-          if (user) {
-            setUser(user)
-            closeSignIn()
+      function fetchUser(username: string, password: string): User | null {
+        if (!username || !password) {
+          return null
+        }
+        const user = usersData.find(
+          (u) => u.username === username && u.password === password
+        )
+        if (user) {
+          return {
+            idUser: user.id_user,
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            password: user.password,
           }
-        },
-        requestOptions
-      )
+        }
+        return null
+      }
     }
   }
 

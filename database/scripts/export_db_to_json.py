@@ -38,6 +38,7 @@ def main():
 
     # Queries to fetch data
     queries = {
+        'User': 'SELECT * FROM "User"',
         'Product': 'SELECT * FROM Product',
         'Category': 'SELECT * FROM Category',
         'Subcategory': 'SELECT * FROM Subcategory',

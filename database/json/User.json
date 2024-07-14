@@ -1,0 +1,402 @@
+[
+    {
+        "id_user": 1,
+        "name": "Sonny Mcneil",
+        "username": "maldulls0j",
+        "password": "a159DI7bRFh3X",
+        "email": "maldulls0j@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 2,
+        "name": "Marina Marshall",
+        "username": "OppogsLaugswk",
+        "password": "a1aQt79CVKqE",
+        "email": "OppogsLaugswk@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 3,
+        "name": "Haaris Michael",
+        "username": "ephumayo3j",
+        "password": "a12HBrNXdRTK",
+        "email": "ephumayo3j@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 4,
+        "name": "Katerina Reyes",
+        "username": "BeeftfluddYtu",
+        "password": "a1khQCwdUnCgw0m",
+        "email": "BeeftfluddYtu@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 5,
+        "name": "Andrea Richards",
+        "username": "toostebeadyym",
+        "password": "a19httr5undDrMQ",
+        "email": "toostebeadyym@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 6,
+        "name": "Margaret Haas",
+        "username": "hoofdstel6m",
+        "password": "a1s8vcMwH6nEFtr",
+        "email": "hoofdstel6m@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 7,
+        "name": "Jacques Osborn",
+        "username": "najamnikua7",
+        "password": "a1FBCx9OqQqZQ",
+        "email": "najamnikua7@gmail.com",
+        "is_admin": true
+    },
+    {
+        "id_user": 8,
+        "name": "Edna Glenn",
+        "username": "Kiboceacttartap",
+        "password": "a1fLYgRyps1",
+        "email": "Kiboceacttartap@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 9,
+        "name": "Rafael Beard",
+        "username": "jodysleungyh",
+        "password": "a1XwP5jU0WJRY",
+        "email": "jodysleungyh@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 10,
+        "name": "Dominik Barlow",
+        "username": "Tatai31",
+        "password": "a1BJOXS1QUU8EihV",
+        "email": "Tatai31@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 11,
+        "name": "Myla Donovan",
+        "username": "Eigersundeq",
+        "password": "a1Dv5E3uWMY9",
+        "email": "Eigersundeq@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 12,
+        "name": "Laiba Wagner",
+        "username": "Tomczynvt",
+        "password": "a16ttjsswCOM",
+        "email": "Tomczynvt@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 13,
+        "name": "Saarah Best",
+        "username": "umevamn9",
+        "password": "a1f8MpxrhIkEigz",
+        "email": "umevamn9@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 14,
+        "name": "Jago Ellis",
+        "username": "orientetzsv",
+        "password": "a10LARztGHgKM",
+        "email": "orientetzsv@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 15,
+        "name": "Connor Sosa",
+        "username": "implantez57",
+        "password": "a1PWVcUrj4toVg",
+        "email": "implantez57@gmail.com",
+        "is_admin": true
+    },
+    {
+        "id_user": 16,
+        "name": "Lucinda Reese",
+        "username": "Regattino4",
+        "password": "a15uDTBdpjf06prH",
+        "email": "Regattino4@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 17,
+        "name": "Jose Lynch",
+        "username": "luvchandlerms",
+        "password": "a1YuT7QmS10IkW",
+        "email": "luvchandlerms@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 18,
+        "name": "Ada White",
+        "username": "isplativoad",
+        "password": "a1VwgLQFVuF",
+        "email": "isplativoad@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 19,
+        "name": "Kurtis Cantrell",
+        "username": "jonesboro29",
+        "password": "a1H79UsE21S0p",
+        "email": "jonesboro29@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 20,
+        "name": "Yash Petersen",
+        "username": "posteandonr",
+        "password": "a1nnsuHDEX0shM",
+        "email": "posteandonr@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 21,
+        "name": "Faith Hicks",
+        "username": "enfardava1j",
+        "password": "a1FdPTu0Szlk",
+        "email": "enfardava1j@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 22,
+        "name": "Hamzah Bean",
+        "username": "sandmanreturnjg",
+        "password": "a1Uue1SO4GgjP",
+        "email": "sandmanreturnjg@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 23,
+        "name": "Maison Gallegos",
+        "username": "MemDalseLaljk",
+        "password": "a1seLlaJ0YcXkw",
+        "email": "MemDalseLaljk@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 24,
+        "name": "Jemma Rocha",
+        "username": "avaet5h",
+        "password": "a1Pstj0unKk",
+        "email": "avaet5h@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 25,
+        "name": "Ffion Walls",
+        "username": "deelwaresg",
+        "password": "a17EIJKvpFb",
+        "email": "deelwaresg@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 26,
+        "name": "Willie Bradshaw",
+        "username": "Kematen41",
+        "password": "a17vLk3UyipMVCfT",
+        "email": "Kematen41@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 27,
+        "name": "Woody Benjamin",
+        "username": "Stechau8u",
+        "password": "a1SjhobhMY3mj",
+        "email": "Stechau8u@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 28,
+        "name": "Bartosz Byrne",
+        "username": "bokumajw",
+        "password": "a1Lptw2iGsB3",
+        "email": "bokumajw@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 29,
+        "name": "Neve Potts",
+        "username": "kruipyq",
+        "password": "a1aEPulOy9n6a",
+        "email": "kruipyq@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 30,
+        "name": "Hamza Merrill",
+        "username": "VerToizebeizehr",
+        "password": "a1iFAHcgZ6H6",
+        "email": "VerToizebeizehr@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 31,
+        "name": "Ronnie Ryan",
+        "username": "sma5lagp",
+        "password": "a1Dv3PDvrQo7",
+        "email": "sma5lagp@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 32,
+        "name": "Malachy Silva",
+        "username": "ajdov5u",
+        "password": "a1bBf38XuCvbM",
+        "email": "ajdov5u@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 33,
+        "name": "Callie Joyce",
+        "username": "emboliakj",
+        "password": "a1qSOzfiz20g9C4c",
+        "email": "emboliakj@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 34,
+        "name": "Lance Mills",
+        "username": "emyandlisa63",
+        "password": "a19nqrKjaJl",
+        "email": "emyandlisa63@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 35,
+        "name": "Bill Shepard",
+        "username": "Rydzynan8",
+        "password": "a1fgAm4V0JoHMfoe",
+        "email": "Rydzynan8@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 36,
+        "name": "Abu Oliver",
+        "username": "Hochwaldxj",
+        "password": "a1uPcR6bwOI1O",
+        "email": "Hochwaldxj@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 37,
+        "name": "Tristan Peters",
+        "username": "angiveritt",
+        "password": "a1MXqx03m3bV1",
+        "email": "angiveritt@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 38,
+        "name": "Hasnain Luna",
+        "username": "Simionial",
+        "password": "a1oBKqD2cOOEf",
+        "email": "Simionial@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 39,
+        "name": "Jamil Elliott",
+        "username": "rymery4y",
+        "password": "a1jLN3TKUUPO4",
+        "email": "rymery4y@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 40,
+        "name": "Dillon Waters",
+        "username": "domianedr",
+        "password": "a1ZLFDhWPqC0Cvc",
+        "email": "domianedr@gmail.com",
+        "is_admin": true
+    },
+    {
+        "id_user": 41,
+        "name": "Abel Jackson",
+        "username": "cupettatt",
+        "password": "a1sRwdcjHjhBlxx",
+        "email": "cupettatt@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 42,
+        "name": "Zaina Bailey",
+        "username": "Rozek4r",
+        "password": "a1YUYiFeqGa1Wig",
+        "email": "Rozek4r@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 43,
+        "name": "Elouise O'Reilly",
+        "username": "rebelsvi",
+        "password": "a17BkYiZGV5Wr",
+        "email": "rebelsvi@gmail.com",
+        "is_admin": true
+    },
+    {
+        "id_user": 44,
+        "name": "Bryn Green",
+        "username": "cvjetnuic",
+        "password": "a1yEW6mDqCthvheC",
+        "email": "cvjetnuic@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 45,
+        "name": "Olivier Monroe",
+        "username": "Ziegeleii2",
+        "password": "a1PTeOi4dzX",
+        "email": "Ziegeleii2@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 46,
+        "name": "Roberta Woodward",
+        "username": "jen0038c",
+        "password": "a18ByIAthKP",
+        "email": "jen0038c@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 47,
+        "name": "Lucie Davis",
+        "username": "blodtrykkgk",
+        "password": "a1s8dGKTpB5U",
+        "email": "blodtrykkgk@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 48,
+        "name": "Tegan Gillespie",
+        "username": "soberanee9s",
+        "password": "a1Vdv97MBmohDCC",
+        "email": "soberanee9s@gmail.com",
+        "is_admin": false
+    },
+    {
+        "id_user": 49,
+        "name": "Rufus Paul",
+        "username": "andresmiguens0j",
+        "password": "a1aAcRgGhTipUx",
+        "email": "andresmiguens0j@gmail.com",
+        "is_admin": true
+    },
+    {
+        "id_user": 50,
+        "name": "Aurora Slater",
+        "username": "niks2p",
+        "password": "a1iFf69IWpoFL",
+        "email": "niks2p@gmail.com",
+        "is_admin": false
+    }
+]

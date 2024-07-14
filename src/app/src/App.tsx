@@ -6,7 +6,6 @@ import { useState } from "react"
 import Modal from "./components/Modal"
 import SignUpForm from "./components/SignUpForm"
 import SignInForm from "./components/SignInForm"
-import fetchAndDecode, { ServerRoute } from "./utils/utils"
 import { CartItem, Product, User } from "./utils/types"
 import SidePanel from "./components/SidePanel"
 import Cart from "./components/Cart"
@@ -46,10 +45,6 @@ export default function App() {
   }
 
   function onSignOutClick() {
-    const queryString = new URLSearchParams({
-      isFromStoreFront: String(true),
-    }).toString()
-    fetchAndDecode(`${ServerRoute.SignOut}?${queryString}`, () => {})
     setUser(undefined)
   }
 
