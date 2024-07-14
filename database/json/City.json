@@ -1,0 +1,1217 @@
+[
+    {
+        "id_city": 1,
+        "id_state": 1,
+        "name": "Rio Branco"
+    },
+    {
+        "id_city": 2,
+        "id_state": 1,
+        "name": "Cruzeiro do Sul"
+    },
+    {
+        "id_city": 3,
+        "id_state": 1,
+        "name": "Sena Madureira"
+    },
+    {
+        "id_city": 4,
+        "id_state": 2,
+        "name": "Macei\u00f3"
+    },
+    {
+        "id_city": 5,
+        "id_state": 2,
+        "name": "Arapiraca"
+    },
+    {
+        "id_city": 6,
+        "id_state": 2,
+        "name": "Rio Largo"
+    },
+    {
+        "id_city": 7,
+        "id_state": 3,
+        "name": "Macap\u00e1"
+    },
+    {
+        "id_city": 8,
+        "id_state": 3,
+        "name": "Santana"
+    },
+    {
+        "id_city": 9,
+        "id_state": 3,
+        "name": "Laranjal do Jari"
+    },
+    {
+        "id_city": 10,
+        "id_state": 4,
+        "name": "Manaus"
+    },
+    {
+        "id_city": 11,
+        "id_state": 4,
+        "name": "Parintins"
+    },
+    {
+        "id_city": 12,
+        "id_state": 4,
+        "name": "Itacoatiara"
+    },
+    {
+        "id_city": 13,
+        "id_state": 5,
+        "name": "Salvador"
+    },
+    {
+        "id_city": 14,
+        "id_state": 5,
+        "name": "Feira de Santana"
+    },
+    {
+        "id_city": 15,
+        "id_state": 5,
+        "name": "Vit\u00f3ria da Conquista"
+    },
+    {
+        "id_city": 16,
+        "id_state": 6,
+        "name": "Fortaleza"
+    },
+    {
+        "id_city": 17,
+        "id_state": 6,
+        "name": "Caucaia"
+    },
+    {
+        "id_city": 18,
+        "id_state": 6,
+        "name": "Juazeiro do Norte"
+    },
+    {
+        "id_city": 19,
+        "id_state": 7,
+        "name": "Bras\u00edlia"
+    },
+    {
+        "id_city": 20,
+        "id_state": 7,
+        "name": "Ceil\u00e2ndia"
+    },
+    {
+        "id_city": 21,
+        "id_state": 7,
+        "name": "Taguatinga"
+    },
+    {
+        "id_city": 22,
+        "id_state": 8,
+        "name": "Vit\u00f3ria"
+    },
+    {
+        "id_city": 23,
+        "id_state": 8,
+        "name": "Vila Velha"
+    },
+    {
+        "id_city": 24,
+        "id_state": 8,
+        "name": "Serra"
+    },
+    {
+        "id_city": 25,
+        "id_state": 9,
+        "name": "Goi\u00e2nia"
+    },
+    {
+        "id_city": 26,
+        "id_state": 9,
+        "name": "Aparecida de Goi\u00e2nia"
+    },
+    {
+        "id_city": 27,
+        "id_state": 9,
+        "name": "An\u00e1polis"
+    },
+    {
+        "id_city": 28,
+        "id_state": 10,
+        "name": "S\u00e3o Lu\u00eds"
+    },
+    {
+        "id_city": 29,
+        "id_state": 10,
+        "name": "Imperatriz"
+    },
+    {
+        "id_city": 30,
+        "id_state": 10,
+        "name": "Timon"
+    },
+    {
+        "id_city": 31,
+        "id_state": 11,
+        "name": "Cuiab\u00e1"
+    },
+    {
+        "id_city": 32,
+        "id_state": 11,
+        "name": "V\u00e1rzea Grande"
+    },
+    {
+        "id_city": 33,
+        "id_state": 11,
+        "name": "Rondon\u00f3polis"
+    },
+    {
+        "id_city": 34,
+        "id_state": 12,
+        "name": "Campo Grande"
+    },
+    {
+        "id_city": 35,
+        "id_state": 12,
+        "name": "Dourados"
+    },
+    {
+        "id_city": 36,
+        "id_state": 12,
+        "name": "Tr\u00eas Lagoas"
+    },
+    {
+        "id_city": 37,
+        "id_state": 13,
+        "name": "Belo Horizonte"
+    },
+    {
+        "id_city": 38,
+        "id_state": 13,
+        "name": "Uberl\u00e2ndia"
+    },
+    {
+        "id_city": 39,
+        "id_state": 13,
+        "name": "Contagem"
+    },
+    {
+        "id_city": 40,
+        "id_state": 14,
+        "name": "Bel\u00e9m"
+    },
+    {
+        "id_city": 41,
+        "id_state": 14,
+        "name": "Ananindeua"
+    },
+    {
+        "id_city": 42,
+        "id_state": 14,
+        "name": "Santar\u00e9m"
+    },
+    {
+        "id_city": 43,
+        "id_state": 15,
+        "name": "Jo\u00e3o Pessoa"
+    },
+    {
+        "id_city": 44,
+        "id_state": 15,
+        "name": "Campina Grande"
+    },
+    {
+        "id_city": 45,
+        "id_state": 15,
+        "name": "Santa Rita"
+    },
+    {
+        "id_city": 46,
+        "id_state": 16,
+        "name": "Curitiba"
+    },
+    {
+        "id_city": 47,
+        "id_state": 16,
+        "name": "Londrina"
+    },
+    {
+        "id_city": 48,
+        "id_state": 16,
+        "name": "Maring\u00e1"
+    },
+    {
+        "id_city": 49,
+        "id_state": 17,
+        "name": "Recife"
+    },
+    {
+        "id_city": 50,
+        "id_state": 17,
+        "name": "Jaboat\u00e3o dos Guararapes"
+    },
+    {
+        "id_city": 51,
+        "id_state": 17,
+        "name": "Olinda"
+    },
+    {
+        "id_city": 52,
+        "id_state": 18,
+        "name": "Teresina"
+    },
+    {
+        "id_city": 53,
+        "id_state": 18,
+        "name": "Parna\u00edba"
+    },
+    {
+        "id_city": 54,
+        "id_state": 18,
+        "name": "Picos"
+    },
+    {
+        "id_city": 55,
+        "id_state": 19,
+        "name": "Rio de Janeiro"
+    },
+    {
+        "id_city": 56,
+        "id_state": 19,
+        "name": "S\u00e3o Gon\u00e7alo"
+    },
+    {
+        "id_city": 57,
+        "id_state": 19,
+        "name": "Duque de Caxias"
+    },
+    {
+        "id_city": 58,
+        "id_state": 20,
+        "name": "Natal"
+    },
+    {
+        "id_city": 59,
+        "id_state": 20,
+        "name": "Mossor\u00f3"
+    },
+    {
+        "id_city": 60,
+        "id_state": 20,
+        "name": "Parnamirim"
+    },
+    {
+        "id_city": 61,
+        "id_state": 21,
+        "name": "Porto Alegre"
+    },
+    {
+        "id_city": 62,
+        "id_state": 21,
+        "name": "Caxias do Sul"
+    },
+    {
+        "id_city": 63,
+        "id_state": 21,
+        "name": "Pelotas"
+    },
+    {
+        "id_city": 64,
+        "id_state": 22,
+        "name": "Porto Velho"
+    },
+    {
+        "id_city": 65,
+        "id_state": 22,
+        "name": "Ji-Paran\u00e1"
+    },
+    {
+        "id_city": 66,
+        "id_state": 22,
+        "name": "Ariquemes"
+    },
+    {
+        "id_city": 67,
+        "id_state": 23,
+        "name": "Boa Vista"
+    },
+    {
+        "id_city": 68,
+        "id_state": 23,
+        "name": "Caracara\u00ed"
+    },
+    {
+        "id_city": 69,
+        "id_state": 23,
+        "name": "Pacaraima"
+    },
+    {
+        "id_city": 70,
+        "id_state": 24,
+        "name": "Florian\u00f3polis"
+    },
+    {
+        "id_city": 71,
+        "id_state": 24,
+        "name": "Joinville"
+    },
+    {
+        "id_city": 72,
+        "id_state": 24,
+        "name": "Blumenau"
+    },
+    {
+        "id_city": 73,
+        "id_state": 25,
+        "name": "S\u00e3o Paulo"
+    },
+    {
+        "id_city": 74,
+        "id_state": 25,
+        "name": "Guarulhos"
+    },
+    {
+        "id_city": 75,
+        "id_state": 25,
+        "name": "Campinas"
+    },
+    {
+        "id_city": 76,
+        "id_state": 26,
+        "name": "Aracaju"
+    },
+    {
+        "id_city": 77,
+        "id_state": 26,
+        "name": "Nossa Senhora do Socorro"
+    },
+    {
+        "id_city": 78,
+        "id_state": 26,
+        "name": "S\u00e3o Crist\u00f3v\u00e3o"
+    },
+    {
+        "id_city": 79,
+        "id_state": 27,
+        "name": "Palmas"
+    },
+    {
+        "id_city": 80,
+        "id_state": 27,
+        "name": "Aragua\u00edna"
+    },
+    {
+        "id_city": 81,
+        "id_state": 27,
+        "name": "Gurupi"
+    },
+    {
+        "id_city": 82,
+        "id_state": 28,
+        "name": "La Plata"
+    },
+    {
+        "id_city": 83,
+        "id_state": 28,
+        "name": "Mar del Plata"
+    },
+    {
+        "id_city": 84,
+        "id_state": 28,
+        "name": "Bah\u00eda Blanca"
+    },
+    {
+        "id_city": 85,
+        "id_state": 29,
+        "name": "San Fernando del Valle de Catamarca"
+    },
+    {
+        "id_city": 86,
+        "id_state": 29,
+        "name": "Andalgal\u00e1"
+    },
+    {
+        "id_city": 87,
+        "id_state": 29,
+        "name": "Tinogasta"
+    },
+    {
+        "id_city": 88,
+        "id_state": 30,
+        "name": "Resistencia"
+    },
+    {
+        "id_city": 89,
+        "id_state": 30,
+        "name": "Barranqueras"
+    },
+    {
+        "id_city": 90,
+        "id_state": 30,
+        "name": "Presidencia Roque S\u00e1enz Pe\u00f1a"
+    },
+    {
+        "id_city": 91,
+        "id_state": 31,
+        "name": "Rawson"
+    },
+    {
+        "id_city": 92,
+        "id_state": 31,
+        "name": "Comodoro Rivadavia"
+    },
+    {
+        "id_city": 93,
+        "id_state": 31,
+        "name": "Puerto Madryn"
+    },
+    {
+        "id_city": 94,
+        "id_state": 32,
+        "name": "C\u00f3rdoba"
+    },
+    {
+        "id_city": 95,
+        "id_state": 32,
+        "name": "Villa Carlos Paz"
+    },
+    {
+        "id_city": 96,
+        "id_state": 32,
+        "name": "R\u00edo Cuarto"
+    },
+    {
+        "id_city": 97,
+        "id_state": 33,
+        "name": "Corrientes"
+    },
+    {
+        "id_city": 98,
+        "id_state": 33,
+        "name": "Goya"
+    },
+    {
+        "id_city": 99,
+        "id_state": 33,
+        "name": "Mercedes"
+    },
+    {
+        "id_city": 100,
+        "id_state": 34,
+        "name": "Paran\u00e1"
+    },
+    {
+        "id_city": 101,
+        "id_state": 34,
+        "name": "Concordia"
+    },
+    {
+        "id_city": 102,
+        "id_state": 34,
+        "name": "Gualeguaych\u00fa"
+    },
+    {
+        "id_city": 103,
+        "id_state": 35,
+        "name": "Formosa"
+    },
+    {
+        "id_city": 104,
+        "id_state": 35,
+        "name": "Clorinda"
+    },
+    {
+        "id_city": 105,
+        "id_state": 35,
+        "name": "Piran\u00e9"
+    },
+    {
+        "id_city": 106,
+        "id_state": 36,
+        "name": "San Salvador de Jujuy"
+    },
+    {
+        "id_city": 107,
+        "id_state": 36,
+        "name": "Palpal\u00e1"
+    },
+    {
+        "id_city": 108,
+        "id_state": 36,
+        "name": "San Pedro"
+    },
+    {
+        "id_city": 109,
+        "id_state": 37,
+        "name": "Santa Rosa"
+    },
+    {
+        "id_city": 110,
+        "id_state": 37,
+        "name": "General Pico"
+    },
+    {
+        "id_city": 111,
+        "id_state": 37,
+        "name": "Toay"
+    },
+    {
+        "id_city": 112,
+        "id_state": 38,
+        "name": "La Rioja"
+    },
+    {
+        "id_city": 113,
+        "id_state": 38,
+        "name": "Chilecito"
+    },
+    {
+        "id_city": 114,
+        "id_state": 38,
+        "name": "Aimogasta"
+    },
+    {
+        "id_city": 115,
+        "id_state": 39,
+        "name": "Mendoza"
+    },
+    {
+        "id_city": 116,
+        "id_state": 39,
+        "name": "San Rafael"
+    },
+    {
+        "id_city": 117,
+        "id_state": 39,
+        "name": "Godoy Cruz"
+    },
+    {
+        "id_city": 118,
+        "id_state": 40,
+        "name": "Posadas"
+    },
+    {
+        "id_city": 119,
+        "id_state": 40,
+        "name": "Eldorado"
+    },
+    {
+        "id_city": 120,
+        "id_state": 40,
+        "name": "Puerto Iguaz\u00fa"
+    },
+    {
+        "id_city": 121,
+        "id_state": 41,
+        "name": "Neuqu\u00e9n"
+    },
+    {
+        "id_city": 122,
+        "id_state": 41,
+        "name": "Cutral C\u00f3"
+    },
+    {
+        "id_city": 123,
+        "id_state": 41,
+        "name": "Plottier"
+    },
+    {
+        "id_city": 124,
+        "id_state": 42,
+        "name": "Viedma"
+    },
+    {
+        "id_city": 125,
+        "id_state": 42,
+        "name": "Bariloche"
+    },
+    {
+        "id_city": 126,
+        "id_state": 42,
+        "name": "General Roca"
+    },
+    {
+        "id_city": 127,
+        "id_state": 43,
+        "name": "Salta"
+    },
+    {
+        "id_city": 128,
+        "id_state": 43,
+        "name": "San Ram\u00f3n de la Nueva Or\u00e1n"
+    },
+    {
+        "id_city": 129,
+        "id_state": 43,
+        "name": "Tartagal"
+    },
+    {
+        "id_city": 130,
+        "id_state": 44,
+        "name": "San Juan"
+    },
+    {
+        "id_city": 131,
+        "id_state": 44,
+        "name": "Rawson"
+    },
+    {
+        "id_city": 132,
+        "id_state": 44,
+        "name": "Chimbas"
+    },
+    {
+        "id_city": 133,
+        "id_state": 45,
+        "name": "San Luis"
+    },
+    {
+        "id_city": 134,
+        "id_state": 45,
+        "name": "Villa Mercedes"
+    },
+    {
+        "id_city": 135,
+        "id_state": 45,
+        "name": "Justo Daract"
+    },
+    {
+        "id_city": 136,
+        "id_state": 46,
+        "name": "R\u00edo Gallegos"
+    },
+    {
+        "id_city": 137,
+        "id_state": 46,
+        "name": "El Calafate"
+    },
+    {
+        "id_city": 138,
+        "id_state": 46,
+        "name": "Caleta Olivia"
+    },
+    {
+        "id_city": 139,
+        "id_state": 47,
+        "name": "Santa Fe"
+    },
+    {
+        "id_city": 140,
+        "id_state": 47,
+        "name": "Rosario"
+    },
+    {
+        "id_city": 141,
+        "id_state": 47,
+        "name": "Venado Tuerto"
+    },
+    {
+        "id_city": 142,
+        "id_state": 48,
+        "name": "Santiago del Estero"
+    },
+    {
+        "id_city": 143,
+        "id_state": 48,
+        "name": "La Banda"
+    },
+    {
+        "id_city": 144,
+        "id_state": 48,
+        "name": "Termas de R\u00edo Hondo"
+    },
+    {
+        "id_city": 145,
+        "id_state": 49,
+        "name": "Ushuaia"
+    },
+    {
+        "id_city": 146,
+        "id_state": 49,
+        "name": "R\u00edo Grande"
+    },
+    {
+        "id_city": 147,
+        "id_state": 49,
+        "name": "Tolhuin"
+    },
+    {
+        "id_city": 148,
+        "id_state": 50,
+        "name": "San Miguel de Tucum\u00e1n"
+    },
+    {
+        "id_city": 149,
+        "id_state": 50,
+        "name": "Yerba Buena"
+    },
+    {
+        "id_city": 150,
+        "id_state": 50,
+        "name": "Taf\u00ed Viejo"
+    },
+    {
+        "id_city": 151,
+        "id_state": 51,
+        "name": "Aguascalientes"
+    },
+    {
+        "id_city": 152,
+        "id_state": 51,
+        "name": "Jes\u00fas Mar\u00eda"
+    },
+    {
+        "id_city": 153,
+        "id_state": 51,
+        "name": "Pabell\u00f3n de Arteaga"
+    },
+    {
+        "id_city": 154,
+        "id_state": 52,
+        "name": "Mexicali"
+    },
+    {
+        "id_city": 155,
+        "id_state": 52,
+        "name": "Tijuana"
+    },
+    {
+        "id_city": 156,
+        "id_state": 52,
+        "name": "Ensenada"
+    },
+    {
+        "id_city": 157,
+        "id_state": 53,
+        "name": "La Paz"
+    },
+    {
+        "id_city": 158,
+        "id_state": 53,
+        "name": "San Jos\u00e9 del Cabo"
+    },
+    {
+        "id_city": 159,
+        "id_state": 53,
+        "name": "Cabo San Lucas"
+    },
+    {
+        "id_city": 160,
+        "id_state": 54,
+        "name": "San Francisco de Campeche"
+    },
+    {
+        "id_city": 161,
+        "id_state": 54,
+        "name": "Ciudad del Carmen"
+    },
+    {
+        "id_city": 162,
+        "id_state": 54,
+        "name": "Champot\u00f3n"
+    },
+    {
+        "id_city": 163,
+        "id_state": 55,
+        "name": "Tuxtla Guti\u00e9rrez"
+    },
+    {
+        "id_city": 164,
+        "id_state": 55,
+        "name": "Tapachula"
+    },
+    {
+        "id_city": 165,
+        "id_state": 55,
+        "name": "San Crist\u00f3bal de las Casas"
+    },
+    {
+        "id_city": 166,
+        "id_state": 56,
+        "name": "Chihuahua"
+    },
+    {
+        "id_city": 167,
+        "id_state": 56,
+        "name": "Ju\u00e1rez"
+    },
+    {
+        "id_city": 168,
+        "id_state": 56,
+        "name": "Delicias"
+    },
+    {
+        "id_city": 169,
+        "id_state": 57,
+        "name": "Saltillo"
+    },
+    {
+        "id_city": 170,
+        "id_state": 57,
+        "name": "Torre\u00f3n"
+    },
+    {
+        "id_city": 171,
+        "id_state": 57,
+        "name": "Monclova"
+    },
+    {
+        "id_city": 172,
+        "id_state": 58,
+        "name": "Colima"
+    },
+    {
+        "id_city": 173,
+        "id_state": 58,
+        "name": "Manzanillo"
+    },
+    {
+        "id_city": 174,
+        "id_state": 58,
+        "name": "Tecom\u00e1n"
+    },
+    {
+        "id_city": 175,
+        "id_state": 59,
+        "name": "Durango"
+    },
+    {
+        "id_city": 176,
+        "id_state": 59,
+        "name": "G\u00f3mez Palacio"
+    },
+    {
+        "id_city": 177,
+        "id_state": 59,
+        "name": "Lerdo"
+    },
+    {
+        "id_city": 178,
+        "id_state": 60,
+        "name": "Toluca"
+    },
+    {
+        "id_city": 179,
+        "id_state": 60,
+        "name": "Ecatepec de Morelos"
+    },
+    {
+        "id_city": 180,
+        "id_state": 60,
+        "name": "Naucalpan de Ju\u00e1rez"
+    },
+    {
+        "id_city": 181,
+        "id_state": 61,
+        "name": "Guanajuato"
+    },
+    {
+        "id_city": 182,
+        "id_state": 61,
+        "name": "Le\u00f3n"
+    },
+    {
+        "id_city": 183,
+        "id_state": 61,
+        "name": "Irapuato"
+    },
+    {
+        "id_city": 184,
+        "id_state": 62,
+        "name": "Chilpancingo"
+    },
+    {
+        "id_city": 185,
+        "id_state": 62,
+        "name": "Acapulco"
+    },
+    {
+        "id_city": 186,
+        "id_state": 62,
+        "name": "Iguala"
+    },
+    {
+        "id_city": 187,
+        "id_state": 63,
+        "name": "Pachuca"
+    },
+    {
+        "id_city": 188,
+        "id_state": 63,
+        "name": "Tulancingo"
+    },
+    {
+        "id_city": 189,
+        "id_state": 63,
+        "name": "Tizayuca"
+    },
+    {
+        "id_city": 190,
+        "id_state": 64,
+        "name": "Guadalajara"
+    },
+    {
+        "id_city": 191,
+        "id_state": 64,
+        "name": "Zapopan"
+    },
+    {
+        "id_city": 192,
+        "id_state": 64,
+        "name": "Tlaquepaque"
+    },
+    {
+        "id_city": 193,
+        "id_state": 65,
+        "name": "Morelia"
+    },
+    {
+        "id_city": 194,
+        "id_state": 65,
+        "name": "Uruapan"
+    },
+    {
+        "id_city": 195,
+        "id_state": 65,
+        "name": "Zamora"
+    },
+    {
+        "id_city": 196,
+        "id_state": 66,
+        "name": "Cuernavaca"
+    },
+    {
+        "id_city": 197,
+        "id_state": 66,
+        "name": "Jiutepec"
+    },
+    {
+        "id_city": 198,
+        "id_state": 66,
+        "name": "Cuautla"
+    },
+    {
+        "id_city": 199,
+        "id_state": 67,
+        "name": "Tepic"
+    },
+    {
+        "id_city": 200,
+        "id_state": 67,
+        "name": "Bah\u00eda de Banderas"
+    },
+    {
+        "id_city": 201,
+        "id_state": 67,
+        "name": "Santiago Ixcuintla"
+    },
+    {
+        "id_city": 202,
+        "id_state": 68,
+        "name": "Monterrey"
+    },
+    {
+        "id_city": 203,
+        "id_state": 68,
+        "name": "San Nicol\u00e1s de los Garza"
+    },
+    {
+        "id_city": 204,
+        "id_state": 68,
+        "name": "Guadalupe"
+    },
+    {
+        "id_city": 205,
+        "id_state": 69,
+        "name": "Oaxaca de Ju\u00e1rez"
+    },
+    {
+        "id_city": 206,
+        "id_state": 69,
+        "name": "Salina Cruz"
+    },
+    {
+        "id_city": 207,
+        "id_state": 69,
+        "name": "San Juan Bautista Tuxtepec"
+    },
+    {
+        "id_city": 208,
+        "id_state": 70,
+        "name": "Puebla de Zaragoza"
+    },
+    {
+        "id_city": 209,
+        "id_state": 70,
+        "name": "Tehuac\u00e1n"
+    },
+    {
+        "id_city": 210,
+        "id_state": 70,
+        "name": "San Mart\u00edn Texmelucan"
+    },
+    {
+        "id_city": 211,
+        "id_state": 71,
+        "name": "Santiago de Quer\u00e9taro"
+    },
+    {
+        "id_city": 212,
+        "id_state": 71,
+        "name": "San Juan del R\u00edo"
+    },
+    {
+        "id_city": 213,
+        "id_state": 71,
+        "name": "Corregidora"
+    },
+    {
+        "id_city": 214,
+        "id_state": 72,
+        "name": "Chetumal"
+    },
+    {
+        "id_city": 215,
+        "id_state": 72,
+        "name": "Canc\u00fan"
+    },
+    {
+        "id_city": 216,
+        "id_state": 72,
+        "name": "Playa del Carmen"
+    },
+    {
+        "id_city": 217,
+        "id_state": 73,
+        "name": "San Luis Potos\u00ed"
+    },
+    {
+        "id_city": 218,
+        "id_state": 73,
+        "name": "Soledad de Graciano S\u00e1nchez"
+    },
+    {
+        "id_city": 219,
+        "id_state": 73,
+        "name": "Matehuala"
+    },
+    {
+        "id_city": 220,
+        "id_state": 74,
+        "name": "Culiac\u00e1n"
+    },
+    {
+        "id_city": 221,
+        "id_state": 74,
+        "name": "Mazatl\u00e1n"
+    },
+    {
+        "id_city": 222,
+        "id_state": 74,
+        "name": "Los Mochis"
+    },
+    {
+        "id_city": 223,
+        "id_state": 75,
+        "name": "Hermosillo"
+    },
+    {
+        "id_city": 224,
+        "id_state": 75,
+        "name": "Ciudad Obreg\u00f3n"
+    },
+    {
+        "id_city": 225,
+        "id_state": 75,
+        "name": "Nogales"
+    },
+    {
+        "id_city": 226,
+        "id_state": 76,
+        "name": "Villahermosa"
+    },
+    {
+        "id_city": 227,
+        "id_state": 76,
+        "name": "C\u00e1rdenas"
+    },
+    {
+        "id_city": 228,
+        "id_state": 76,
+        "name": "Comalcalco"
+    },
+    {
+        "id_city": 229,
+        "id_state": 77,
+        "name": "Ciudad Victoria"
+    },
+    {
+        "id_city": 230,
+        "id_state": 77,
+        "name": "Reynosa"
+    },
+    {
+        "id_city": 231,
+        "id_state": 77,
+        "name": "Matamoros"
+    },
+    {
+        "id_city": 232,
+        "id_state": 78,
+        "name": "Tlaxcala de Xicoht\u00e9ncatl"
+    },
+    {
+        "id_city": 233,
+        "id_state": 78,
+        "name": "Apizaco"
+    },
+    {
+        "id_city": 234,
+        "id_state": 78,
+        "name": "Huamantla"
+    },
+    {
+        "id_city": 235,
+        "id_state": 79,
+        "name": "Xalapa"
+    },
+    {
+        "id_city": 236,
+        "id_state": 79,
+        "name": "Veracruz"
+    },
+    {
+        "id_city": 237,
+        "id_state": 79,
+        "name": "Coatzacoalcos"
+    },
+    {
+        "id_city": 238,
+        "id_state": 80,
+        "name": "M\u00e9rida"
+    },
+    {
+        "id_city": 239,
+        "id_state": 80,
+        "name": "Tizim\u00edn"
+    },
+    {
+        "id_city": 240,
+        "id_state": 80,
+        "name": "Valladolid"
+    },
+    {
+        "id_city": 241,
+        "id_state": 81,
+        "name": "Zacatecas"
+    },
+    {
+        "id_city": 242,
+        "id_state": 81,
+        "name": "Guadalupe"
+    },
+    {
+        "id_city": 243,
+        "id_state": 81,
+        "name": "Fresnillo"
+    }
+]

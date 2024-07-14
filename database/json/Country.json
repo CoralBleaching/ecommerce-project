@@ -1,0 +1,14 @@
+[
+    {
+        "id_country": 1,
+        "name": "Brazil"
+    },
+    {
+        "id_country": 2,
+        "name": "Argentina"
+    },
+    {
+        "id_country": 3,
+        "name": "Mexico"
+    }
+]

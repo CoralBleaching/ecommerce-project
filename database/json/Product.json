@@ -1,0 +1,602 @@
+[
+    {
+        "id_product": 1,
+        "id_subcategory": 1,
+        "id_picture": 33,
+        "name": "Bomb",
+        "description": "Increase the number of deployable bombs.",
+        "stock": 0,
+        "hotness": 4,
+        "timestamp": "2024-07-05T00:48:41"
+    },
+    {
+        "id_product": 2,
+        "id_subcategory": 1,
+        "id_picture": 39,
+        "name": "Mine Bomb",
+        "description": "A bomb that activates when a monster or player steps on it. When deployed, it will fade into the ground. Typically, only the first bomb placed by a player will be a Mine Bomb.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-05-07T09:38:49"
+    },
+    {
+        "id_product": 3,
+        "id_subcategory": 1,
+        "id_picture": 54,
+        "name": "Rubber Bomb",
+        "description": "These bombs have the looks and properties of a rubbery substance and will bounce when kicked or thrown/punched.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-04-10T08:02:48"
+    },
+    {
+        "id_product": 4,
+        "id_subcategory": 1,
+        "id_picture": 1,
+        "name": "Ice Bomb",
+        "description": "A bomb that freezes enemies on explosion.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-07-02T19:42:18"
+    },
+    {
+        "id_product": 5,
+        "id_subcategory": 1,
+        "id_picture": 51,
+        "name": "Dangerous Bomb",
+        "description": "A bomb that explodes in a specific radius.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-03-15T07:18:10"
+    },
+    {
+        "id_product": 6,
+        "id_subcategory": 1,
+        "id_picture": 12,
+        "name": "Power Bomb",
+        "description": "A bomb with an extremely large explosion radius.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-04-21T19:22:44"
+    },
+    {
+        "id_product": 7,
+        "id_subcategory": 1,
+        "id_picture": 34,
+        "name": "Pierce Bomb",
+        "description": "A bomb with a fire explosion that pierces through obstacles.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-03-20T23:56:17"
+    },
+    {
+        "id_product": 8,
+        "id_subcategory": 1,
+        "id_picture": 15,
+        "name": "RC Bomb",
+        "description": "A remote-controlled bomb that can be detonated at will.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-03-20T23:53:13"
+    },
+    {
+        "id_product": 9,
+        "id_subcategory": 2,
+        "id_picture": 47,
+        "name": "Fire",
+        "description": "Makes the explosion travel one step further.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-03-30T00:56:02"
+    },
+    {
+        "id_product": 10,
+        "id_subcategory": 2,
+        "id_picture": 57,
+        "name": "Ice Fire",
+        "description": "A fire explosion that freezes enemies.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-05-05T16:27:07"
+    },
+    {
+        "id_product": 11,
+        "id_subcategory": 2,
+        "id_picture": 2,
+        "name": "Bouncing Fire",
+        "description": "A fireball that bounces off walls.",
+        "stock": 0,
+        "hotness": 4,
+        "timestamp": "2024-04-12T16:55:24"
+    },
+    {
+        "id_product": 12,
+        "id_subcategory": 2,
+        "id_picture": 11,
+        "name": "Mega Fire",
+        "description": "An extremely powerful and destructive fire explosion.",
+        "stock": 0,
+        "hotness": 5,
+        "timestamp": "2024-07-08T21:53:16"
+    },
+    {
+        "id_product": 13,
+        "id_subcategory": 3,
+        "id_picture": 9,
+        "name": "Bomb Kick",
+        "description": "Allows the bomber to kick bombs in a specific direction.",
+        "stock": 0,
+        "hotness": 5,
+        "timestamp": "2024-04-07T16:24:59"
+    },
+    {
+        "id_product": 14,
+        "id_subcategory": 3,
+        "id_picture": 10,
+        "name": "Power Glove",
+        "description": "Enables the bomber to throw bombs at a distance.",
+        "stock": 28,
+        "hotness": 3,
+        "timestamp": "2024-02-16T10:27:36"
+    },
+    {
+        "id_product": 15,
+        "id_subcategory": 3,
+        "id_picture": 59,
+        "name": "Punching Glove",
+        "description": "Allows the bomber to punch bombs away.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-03-09T05:57:47"
+    },
+    {
+        "id_product": 16,
+        "id_subcategory": 3,
+        "id_picture": 36,
+        "name": "Bomb Pass",
+        "description": "Walk through bombs freely.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-05-22T11:45:56"
+    },
+    {
+        "id_product": 17,
+        "id_subcategory": 3,
+        "id_picture": 4,
+        "name": "Vest",
+        "description": "Make the player invincible for a short time.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-05-09T23:14:24"
+    },
+    {
+        "id_product": 18,
+        "id_subcategory": 4,
+        "id_picture": 46,
+        "name": "Super Mushroom",
+        "description": "Makes Mario grow larger in size and gain an extra hit point.",
+        "stock": 0,
+        "hotness": 5,
+        "timestamp": "2024-03-05T22:28:45"
+    },
+    {
+        "id_product": 19,
+        "id_subcategory": 4,
+        "id_picture": 28,
+        "name": "1-Up Mushroom",
+        "description": "Grants Mario an additional life when collected.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-06-15T23:31:17"
+    },
+    {
+        "id_product": 20,
+        "id_subcategory": 4,
+        "id_picture": 20,
+        "name": "Mega Mushroom",
+        "description": "Temporarily transforms Mario into a giant, allowing him to crush enemies and obstacles.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-05-07T09:40:02"
+    },
+    {
+        "id_product": 21,
+        "id_subcategory": 4,
+        "id_picture": 3,
+        "name": "Poison Mushroom",
+        "description": "Has a detrimental effect on Mario, causing him to shrink or lose a life.",
+        "stock": 0,
+        "hotness": 5,
+        "timestamp": "2024-02-28T18:47:00"
+    },
+    {
+        "id_product": 22,
+        "id_subcategory": 4,
+        "id_picture": 58,
+        "name": "Mini Mushroom",
+        "description": "Shrinks Mario in size, allowing him to access hidden areas and platforms.",
+        "stock": 3,
+        "hotness": 2,
+        "timestamp": "2024-02-29T10:38:10"
+    },
+    {
+        "id_product": 23,
+        "id_subcategory": 4,
+        "id_picture": 25,
+        "name": "Propeller Mushroom",
+        "description": "Gives Mario the ability to perform a high vertical jump and hover in the air.",
+        "stock": 0,
+        "hotness": 4,
+        "timestamp": "2024-03-01T08:46:13"
+    },
+    {
+        "id_product": 24,
+        "id_subcategory": 5,
+        "id_picture": 29,
+        "name": "Super Leaf",
+        "description": "Transforms Mario into Raccoon Mario, granting him the ability to fly and swipe enemies with his tail.",
+        "stock": 0,
+        "hotness": 4,
+        "timestamp": "2024-04-28T15:51:50"
+    },
+    {
+        "id_product": 25,
+        "id_subcategory": 5,
+        "id_picture": 22,
+        "name": "Fire Flower",
+        "description": "Enables Mario to shoot fireballs and defeat enemies from a distance.",
+        "stock": 6,
+        "hotness": 1,
+        "timestamp": "2024-02-28T01:05:46"
+    },
+    {
+        "id_product": 26,
+        "id_subcategory": 5,
+        "id_picture": 27,
+        "name": "Ice Flower",
+        "description": "Allows Mario to throw iceballs that freeze enemies and create platforms.",
+        "stock": 26,
+        "hotness": 5,
+        "timestamp": "2024-02-18T13:32:08"
+    },
+    {
+        "id_product": 27,
+        "id_subcategory": 5,
+        "id_picture": 60,
+        "name": "Boomerang Flower",
+        "description": "Grants Mario the ability to throw boomerangs that can defeat enemies and collect items.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-07-05T18:53:44"
+    },
+    {
+        "id_product": 28,
+        "id_subcategory": 5,
+        "id_picture": 19,
+        "name": "Gold Flower",
+        "description": "Turns Mario into Gold Mario, allowing him to turn blocks and enemies into coins.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-07-02T22:54:48"
+    },
+    {
+        "id_product": 29,
+        "id_subcategory": 5,
+        "id_picture": 14,
+        "name": "Cape Feather",
+        "description": "Transforms Mario into Cape Mario, granting him the ability to fly and perform spin attacks.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-03-20T02:15:53"
+    },
+    {
+        "id_product": 30,
+        "id_subcategory": 5,
+        "id_picture": 31,
+        "name": "Star",
+        "description": "Temporarily makes Mario invincible and increases his running speed.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-07-02T21:45:15"
+    },
+    {
+        "id_product": 31,
+        "id_subcategory": 6,
+        "id_picture": 5,
+        "name": "Hammer",
+        "description": "Allows Mario to break certain blocks and defeat enemies by throwing hammers.",
+        "stock": 0,
+        "hotness": 5,
+        "timestamp": "2024-04-20T05:38:16"
+    },
+    {
+        "id_product": 32,
+        "id_subcategory": 6,
+        "id_picture": 48,
+        "name": "P-Wing",
+        "description": "Grants Mario unlimited flight and invincibility for the duration of a level.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-04-13T02:04:50"
+    },
+    {
+        "id_product": 33,
+        "id_subcategory": 6,
+        "id_picture": 8,
+        "name": "Tanuki Suit",
+        "description": "Transforms Mario into Tanooki Mario, granting him the ability to glide and turn into a statue to avoid enemies.",
+        "stock": 0,
+        "hotness": 4,
+        "timestamp": "2024-04-01T20:58:10"
+    },
+    {
+        "id_product": 34,
+        "id_subcategory": 6,
+        "id_picture": 30,
+        "name": "Blue Shell",
+        "description": "Provides Mario with a protective shell that allows him to slide and defeat enemies.",
+        "stock": 5,
+        "hotness": 1,
+        "timestamp": "2024-04-25T11:06:41"
+    },
+    {
+        "id_product": 35,
+        "id_subcategory": 6,
+        "id_picture": 16,
+        "name": "Cannon Box",
+        "description": "Turns Mario into Cannon Mario, allowing him to shoot cannonballs to reach distant areas.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-05-14T13:11:33"
+    },
+    {
+        "id_product": 36,
+        "id_subcategory": 6,
+        "id_picture": 37,
+        "name": "Penguin Suit",
+        "description": "Transforms Mario into Penguin Mario, giving him the ability to slide on ice and swim more effectively.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-02-22T03:03:16"
+    },
+    {
+        "id_product": 37,
+        "id_subcategory": 6,
+        "id_picture": 23,
+        "name": "Propeller Box",
+        "description": "Gives Mario a propeller on his head, enabling him to perform high jumps and reach higher platforms.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-05-15T11:12:46"
+    },
+    {
+        "id_product": 38,
+        "id_subcategory": 7,
+        "id_picture": 44,
+        "name": "Protein",
+        "description": "Increases the Attack stat of a Pok\u00e9mon.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-06-30T20:39:09"
+    },
+    {
+        "id_product": 39,
+        "id_subcategory": 7,
+        "id_picture": 17,
+        "name": "Calcium",
+        "description": "Increases the Special Attack stat of a Pok\u00e9mon.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-07-03T03:49:38"
+    },
+    {
+        "id_product": 40,
+        "id_subcategory": 7,
+        "id_picture": 41,
+        "name": "Iron",
+        "description": "Increases the Defense stat of a Pok\u00e9mon.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-03-04T09:28:49"
+    },
+    {
+        "id_product": 41,
+        "id_subcategory": 7,
+        "id_picture": 50,
+        "name": "Zinc",
+        "description": "Increases the Special Defense stat of a Pok\u00e9mon.",
+        "stock": 0,
+        "hotness": 5,
+        "timestamp": "2024-03-13T19:54:50"
+    },
+    {
+        "id_product": 42,
+        "id_subcategory": 7,
+        "id_picture": 35,
+        "name": "Carbos",
+        "description": "Increases the Speed stat of a Pok\u00e9mon.",
+        "stock": 0,
+        "hotness": 4,
+        "timestamp": "2024-07-10T17:54:02"
+    },
+    {
+        "id_product": 43,
+        "id_subcategory": 7,
+        "id_picture": 6,
+        "name": "HP Up",
+        "description": "Increases the HP stat of a Pok\u00e9mon.",
+        "stock": 0,
+        "hotness": 5,
+        "timestamp": "2024-04-09T04:43:24"
+    },
+    {
+        "id_product": 44,
+        "id_subcategory": 7,
+        "id_picture": 45,
+        "name": "PP Up",
+        "description": "Increases the PP (Power Points) of a Pok\u00e9mon's moves.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-03-09T17:39:12"
+    },
+    {
+        "id_product": 45,
+        "id_subcategory": 7,
+        "id_picture": 55,
+        "name": "PP Max",
+        "description": "Increases the maximum PP of any move to 160% of the original PP. Can be used once per move. Raises the Pok\u00e9mon's Happiness.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-05-16T02:18:08"
+    },
+    {
+        "id_product": 46,
+        "id_subcategory": 8,
+        "id_picture": 38,
+        "name": "Pok\u00e9dex",
+        "description": "A device that records information about Pok\u00e9mon.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-03-30T21:54:43"
+    },
+    {
+        "id_product": 47,
+        "id_subcategory": 8,
+        "id_picture": 52,
+        "name": "Pok\u00e9Nav",
+        "description": "A multifunctional device that provides navigation and communication features.",
+        "stock": 7,
+        "hotness": 4,
+        "timestamp": "2024-03-29T05:18:03"
+    },
+    {
+        "id_product": 48,
+        "id_subcategory": 8,
+        "id_picture": 56,
+        "name": "VS Seeker",
+        "description": "A device that allows the player to rematch trainers for additional battles.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-07-09T09:10:39"
+    },
+    {
+        "id_product": 49,
+        "id_subcategory": 8,
+        "id_picture": 32,
+        "name": "Radio Card",
+        "description": "A card that grants access to various radio channels for news and music.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-06-21T01:09:51"
+    },
+    {
+        "id_product": 50,
+        "id_subcategory": 8,
+        "id_picture": 26,
+        "name": "Xtransceiver",
+        "description": "A communication device that enables video calls with other trainers.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-02-18T11:21:12"
+    },
+    {
+        "id_product": 51,
+        "id_subcategory": 8,
+        "id_picture": 13,
+        "name": "Battle Recorder",
+        "description": "A device that records and replays Pok\u00e9mon battles for analysis.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-04-22T12:57:58"
+    },
+    {
+        "id_product": 52,
+        "id_subcategory": 9,
+        "id_picture": 40,
+        "name": "Pok\u00e9 Ball",
+        "description": "A standard Pok\u00e9 Ball used to capture wild Pok\u00e9mon.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-02-17T14:13:55"
+    },
+    {
+        "id_product": 53,
+        "id_subcategory": 9,
+        "id_picture": 21,
+        "name": "Great Ball",
+        "description": "A Pok\u00e9 Ball with a higher capture rate than a standard Pok\u00e9 Ball.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-02-23T00:11:10"
+    },
+    {
+        "id_product": 54,
+        "id_subcategory": 9,
+        "id_picture": 7,
+        "name": "Ultra Ball",
+        "description": "A Pok\u00e9 Ball with a higher capture rate than a Great Ball.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-04-08T00:16:06"
+    },
+    {
+        "id_product": 55,
+        "id_subcategory": 9,
+        "id_picture": 49,
+        "name": "Master Ball",
+        "description": "A Pok\u00e9 Ball with a 100% capture rate. It can catch any wild Pok\u00e9mon.",
+        "stock": 0,
+        "hotness": 5,
+        "timestamp": "2024-04-29T20:55:59"
+    },
+    {
+        "id_product": 56,
+        "id_subcategory": 9,
+        "id_picture": 53,
+        "name": "Premier Ball",
+        "description": "A rare Pok\u00e9 Ball given as a bonus for purchasing multiples of standard Pok\u00e9 Balls.",
+        "stock": 0,
+        "hotness": 2,
+        "timestamp": "2024-04-26T11:58:05"
+    },
+    {
+        "id_product": 57,
+        "id_subcategory": 9,
+        "id_picture": 24,
+        "name": "Dusk Ball",
+        "description": "A Pok\u00e9 Ball with a higher capture rate when used in dark areas or at night.",
+        "stock": 0,
+        "hotness": 4,
+        "timestamp": "2024-05-01T22:34:22"
+    },
+    {
+        "id_product": 58,
+        "id_subcategory": 9,
+        "id_picture": 18,
+        "name": "Quick Ball",
+        "description": "A Pok\u00e9 Ball with a higher capture rate when used at the start of a battle.",
+        "stock": 0,
+        "hotness": 1,
+        "timestamp": "2024-03-21T18:09:36"
+    },
+    {
+        "id_product": 59,
+        "id_subcategory": 9,
+        "id_picture": 42,
+        "name": "Repeat Ball",
+        "description": "A Pok\u00e9 Ball with a higher capture rate when used on a Pok\u00e9mon that has been previously caught.",
+        "stock": 0,
+        "hotness": 3,
+        "timestamp": "2024-07-11T01:06:26"
+    },
+    {
+        "id_product": 60,
+        "id_subcategory": 9,
+        "id_picture": 43,
+        "name": "Nest Ball",
+        "description": "A Pok\u00e9 Ball with a higher capture rate on Pok\u00e9mon with lower levels.",
+        "stock": 3,
+        "hotness": 1,
+        "timestamp": "2024-05-16T12:26:22"
+    }
+]

@@ -1,0 +1,252 @@
+[
+    {
+        "id_sale": 1,
+        "id_user": 1,
+        "timestamp": "2024-06-02T16:17:00"
+    },
+    {
+        "id_sale": 2,
+        "id_user": 2,
+        "timestamp": "2024-07-06T12:56:10"
+    },
+    {
+        "id_sale": 3,
+        "id_user": 3,
+        "timestamp": "2024-06-16T07:14:48"
+    },
+    {
+        "id_sale": 4,
+        "id_user": 4,
+        "timestamp": "2024-04-29T16:17:51"
+    },
+    {
+        "id_sale": 5,
+        "id_user": 5,
+        "timestamp": "2024-06-25T16:27:44"
+    },
+    {
+        "id_sale": 6,
+        "id_user": 6,
+        "timestamp": "2024-03-07T15:42:12"
+    },
+    {
+        "id_sale": 7,
+        "id_user": 7,
+        "timestamp": "2024-06-11T10:34:17"
+    },
+    {
+        "id_sale": 8,
+        "id_user": 8,
+        "timestamp": "2024-03-05T17:14:50"
+    },
+    {
+        "id_sale": 9,
+        "id_user": 9,
+        "timestamp": "2024-03-20T15:24:11"
+    },
+    {
+        "id_sale": 10,
+        "id_user": 10,
+        "timestamp": "2024-05-06T15:43:45"
+    },
+    {
+        "id_sale": 11,
+        "id_user": 11,
+        "timestamp": "2024-07-07T14:41:20"
+    },
+    {
+        "id_sale": 12,
+        "id_user": 12,
+        "timestamp": "2024-04-07T05:57:19"
+    },
+    {
+        "id_sale": 13,
+        "id_user": 13,
+        "timestamp": "2024-04-23T20:04:06"
+    },
+    {
+        "id_sale": 14,
+        "id_user": 14,
+        "timestamp": "2024-04-30T12:52:36"
+    },
+    {
+        "id_sale": 15,
+        "id_user": 15,
+        "timestamp": "2024-02-17T07:11:49"
+    },
+    {
+        "id_sale": 16,
+        "id_user": 16,
+        "timestamp": "2024-05-19T06:20:45"
+    },
+    {
+        "id_sale": 17,
+        "id_user": 17,
+        "timestamp": "2024-06-02T00:37:50"
+    },
+    {
+        "id_sale": 18,
+        "id_user": 18,
+        "timestamp": "2024-07-08T09:56:34"
+    },
+    {
+        "id_sale": 19,
+        "id_user": 19,
+        "timestamp": "2024-04-09T13:50:18"
+    },
+    {
+        "id_sale": 20,
+        "id_user": 20,
+        "timestamp": "2024-02-22T19:46:32"
+    },
+    {
+        "id_sale": 21,
+        "id_user": 21,
+        "timestamp": "2024-04-20T06:07:36"
+    },
+    {
+        "id_sale": 22,
+        "id_user": 22,
+        "timestamp": "2024-07-11T12:40:22"
+    },
+    {
+        "id_sale": 23,
+        "id_user": 23,
+        "timestamp": "2024-03-29T14:25:53"
+    },
+    {
+        "id_sale": 24,
+        "id_user": 24,
+        "timestamp": "2024-06-11T13:37:54"
+    },
+    {
+        "id_sale": 25,
+        "id_user": 25,
+        "timestamp": "2024-02-19T08:16:04"
+    },
+    {
+        "id_sale": 26,
+        "id_user": 26,
+        "timestamp": "2024-06-10T00:08:26"
+    },
+    {
+        "id_sale": 27,
+        "id_user": 27,
+        "timestamp": "2024-03-22T17:49:01"
+    },
+    {
+        "id_sale": 28,
+        "id_user": 28,
+        "timestamp": "2024-05-09T17:52:40"
+    },
+    {
+        "id_sale": 29,
+        "id_user": 29,
+        "timestamp": "2024-04-11T19:03:47"
+    },
+    {
+        "id_sale": 30,
+        "id_user": 30,
+        "timestamp": "2024-05-28T02:04:26"
+    },
+    {
+        "id_sale": 31,
+        "id_user": 31,
+        "timestamp": "2024-06-02T04:18:48"
+    },
+    {
+        "id_sale": 32,
+        "id_user": 32,
+        "timestamp": "2024-02-27T00:15:21"
+    },
+    {
+        "id_sale": 33,
+        "id_user": 33,
+        "timestamp": "2024-02-25T17:53:42"
+    },
+    {
+        "id_sale": 34,
+        "id_user": 34,
+        "timestamp": "2024-06-20T04:23:11"
+    },
+    {
+        "id_sale": 35,
+        "id_user": 35,
+        "timestamp": "2024-04-09T01:35:12"
+    },
+    {
+        "id_sale": 36,
+        "id_user": 36,
+        "timestamp": "2024-04-18T14:27:49"
+    },
+    {
+        "id_sale": 37,
+        "id_user": 37,
+        "timestamp": "2024-05-08T17:16:09"
+    },
+    {
+        "id_sale": 38,
+        "id_user": 38,
+        "timestamp": "2024-05-27T23:34:00"
+    },
+    {
+        "id_sale": 39,
+        "id_user": 39,
+        "timestamp": "2024-04-23T09:18:30"
+    },
+    {
+        "id_sale": 40,
+        "id_user": 40,
+        "timestamp": "2024-02-24T22:08:06"
+    },
+    {
+        "id_sale": 41,
+        "id_user": 41,
+        "timestamp": "2024-03-28T06:14:37"
+    },
+    {
+        "id_sale": 42,
+        "id_user": 42,
+        "timestamp": "2024-03-26T22:45:14"
+    },
+    {
+        "id_sale": 43,
+        "id_user": 43,
+        "timestamp": "2024-06-12T08:05:11"
+    },
+    {
+        "id_sale": 44,
+        "id_user": 44,
+        "timestamp": "2024-04-27T13:08:00"
+    },
+    {
+        "id_sale": 45,
+        "id_user": 45,
+        "timestamp": "2024-04-07T19:42:08"
+    },
+    {
+        "id_sale": 46,
+        "id_user": 46,
+        "timestamp": "2024-06-24T16:16:24"
+    },
+    {
+        "id_sale": 47,
+        "id_user": 47,
+        "timestamp": "2024-04-13T15:35:17"
+    },
+    {
+        "id_sale": 48,
+        "id_user": 48,
+        "timestamp": "2024-06-19T11:04:29"
+    },
+    {
+        "id_sale": 49,
+        "id_user": 49,
+        "timestamp": "2024-03-03T17:22:28"
+    },
+    {
+        "id_sale": 50,
+        "id_user": 50,
+        "timestamp": "2024-04-22T20:46:01"
+    }
+]

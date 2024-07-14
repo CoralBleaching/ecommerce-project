@@ -1,0 +1,422 @@
+[
+    {
+        "id_price": 1,
+        "id_product": 37,
+        "timestamp": "2024-06-29T01:31:36",
+        "value": 1248.11
+    },
+    {
+        "id_price": 2,
+        "id_product": 25,
+        "timestamp": "2024-07-01T19:14:53",
+        "value": 721.63
+    },
+    {
+        "id_price": 3,
+        "id_product": 9,
+        "timestamp": "2024-05-28T15:48:52",
+        "value": 314.99
+    },
+    {
+        "id_price": 4,
+        "id_product": 60,
+        "timestamp": "2024-05-02T22:02:20",
+        "value": 565.15
+    },
+    {
+        "id_price": 5,
+        "id_product": 46,
+        "timestamp": "2024-06-18T13:59:27",
+        "value": 305.25
+    },
+    {
+        "id_price": 6,
+        "id_product": 45,
+        "timestamp": "2024-05-16T01:40:48",
+        "value": 1759.2
+    },
+    {
+        "id_price": 7,
+        "id_product": 11,
+        "timestamp": "2024-03-05T23:28:43",
+        "value": 1376.0
+    },
+    {
+        "id_price": 8,
+        "id_product": 33,
+        "timestamp": "2024-07-09T07:02:47",
+        "value": 1374.48
+    },
+    {
+        "id_price": 9,
+        "id_product": 2,
+        "timestamp": "2024-04-03T02:55:36",
+        "value": 721.26
+    },
+    {
+        "id_price": 10,
+        "id_product": 47,
+        "timestamp": "2024-06-27T10:31:12",
+        "value": 557.28
+    },
+    {
+        "id_price": 11,
+        "id_product": 10,
+        "timestamp": "2024-03-01T15:23:37",
+        "value": 163.86
+    },
+    {
+        "id_price": 12,
+        "id_product": 5,
+        "timestamp": "2024-06-27T19:42:58",
+        "value": 117.54
+    },
+    {
+        "id_price": 13,
+        "id_product": 13,
+        "timestamp": "2024-04-20T04:30:52",
+        "value": 514.05
+    },
+    {
+        "id_price": 14,
+        "id_product": 44,
+        "timestamp": "2024-07-12T22:39:14",
+        "value": 307.04
+    },
+    {
+        "id_price": 15,
+        "id_product": 21,
+        "timestamp": "2024-03-13T07:04:00",
+        "value": 657.25
+    },
+    {
+        "id_price": 16,
+        "id_product": 30,
+        "timestamp": "2024-02-20T16:10:12",
+        "value": 394.23
+    },
+    {
+        "id_price": 17,
+        "id_product": 20,
+        "timestamp": "2024-05-31T12:40:29",
+        "value": 839.32
+    },
+    {
+        "id_price": 18,
+        "id_product": 19,
+        "timestamp": "2024-04-25T10:20:38",
+        "value": 186.85
+    },
+    {
+        "id_price": 19,
+        "id_product": 35,
+        "timestamp": "2024-06-14T09:29:46",
+        "value": 999.11
+    },
+    {
+        "id_price": 20,
+        "id_product": 56,
+        "timestamp": "2024-03-21T15:47:35",
+        "value": 110.56
+    },
+    {
+        "id_price": 21,
+        "id_product": 50,
+        "timestamp": "2024-06-02T07:42:34",
+        "value": 233.07
+    },
+    {
+        "id_price": 22,
+        "id_product": 57,
+        "timestamp": "2024-06-05T19:03:47",
+        "value": 178.21
+    },
+    {
+        "id_price": 23,
+        "id_product": 15,
+        "timestamp": "2024-03-27T19:53:09",
+        "value": 302.65
+    },
+    {
+        "id_price": 24,
+        "id_product": 42,
+        "timestamp": "2024-03-20T02:44:34",
+        "value": 163.0
+    },
+    {
+        "id_price": 25,
+        "id_product": 34,
+        "timestamp": "2024-05-16T08:27:20",
+        "value": 174.7
+    },
+    {
+        "id_price": 26,
+        "id_product": 6,
+        "timestamp": "2024-07-08T04:09:24",
+        "value": 52.89
+    },
+    {
+        "id_price": 27,
+        "id_product": 24,
+        "timestamp": "2024-03-17T09:41:53",
+        "value": 168.72
+    },
+    {
+        "id_price": 28,
+        "id_product": 23,
+        "timestamp": "2024-03-12T23:53:14",
+        "value": 181.74
+    },
+    {
+        "id_price": 29,
+        "id_product": 32,
+        "timestamp": "2024-04-27T11:51:56",
+        "value": 2584.77
+    },
+    {
+        "id_price": 30,
+        "id_product": 51,
+        "timestamp": "2024-03-19T19:06:15",
+        "value": 208.32
+    },
+    {
+        "id_price": 31,
+        "id_product": 26,
+        "timestamp": "2024-05-06T22:42:53",
+        "value": 94.87
+    },
+    {
+        "id_price": 32,
+        "id_product": 8,
+        "timestamp": "2024-05-29T09:32:34",
+        "value": 808.88
+    },
+    {
+        "id_price": 33,
+        "id_product": 12,
+        "timestamp": "2024-02-14T14:55:24",
+        "value": 592.32
+    },
+    {
+        "id_price": 34,
+        "id_product": 55,
+        "timestamp": "2024-03-13T04:40:56",
+        "value": 713.62
+    },
+    {
+        "id_price": 35,
+        "id_product": 49,
+        "timestamp": "2024-03-25T22:39:17",
+        "value": 149.83
+    },
+    {
+        "id_price": 36,
+        "id_product": 36,
+        "timestamp": "2024-05-16T10:13:43",
+        "value": 110.77
+    },
+    {
+        "id_price": 37,
+        "id_product": 4,
+        "timestamp": "2024-04-25T20:07:39",
+        "value": 1961.74
+    },
+    {
+        "id_price": 38,
+        "id_product": 18,
+        "timestamp": "2024-06-08T17:15:23",
+        "value": 1257.56
+    },
+    {
+        "id_price": 39,
+        "id_product": 58,
+        "timestamp": "2024-05-14T04:26:17",
+        "value": 1720.62
+    },
+    {
+        "id_price": 40,
+        "id_product": 54,
+        "timestamp": "2024-04-03T17:20:08",
+        "value": 472.05
+    },
+    {
+        "id_price": 41,
+        "id_product": 17,
+        "timestamp": "2024-05-08T12:38:06",
+        "value": 339.53
+    },
+    {
+        "id_price": 42,
+        "id_product": 1,
+        "timestamp": "2024-05-16T13:09:49",
+        "value": 254.33
+    },
+    {
+        "id_price": 43,
+        "id_product": 31,
+        "timestamp": "2024-07-02T03:05:03",
+        "value": 218.87
+    },
+    {
+        "id_price": 44,
+        "id_product": 27,
+        "timestamp": "2024-06-23T15:16:33",
+        "value": 481.7
+    },
+    {
+        "id_price": 45,
+        "id_product": 28,
+        "timestamp": "2024-05-29T01:57:08",
+        "value": 599.19
+    },
+    {
+        "id_price": 46,
+        "id_product": 29,
+        "timestamp": "2024-06-03T15:26:50",
+        "value": 97.54
+    },
+    {
+        "id_price": 47,
+        "id_product": 3,
+        "timestamp": "2024-03-27T10:24:12",
+        "value": 348.26
+    },
+    {
+        "id_price": 48,
+        "id_product": 22,
+        "timestamp": "2024-07-08T02:50:40",
+        "value": 321.63
+    },
+    {
+        "id_price": 49,
+        "id_product": 7,
+        "timestamp": "2024-05-10T03:19:58",
+        "value": 1835.43
+    },
+    {
+        "id_price": 50,
+        "id_product": 39,
+        "timestamp": "2024-03-01T12:00:38",
+        "value": 527.8
+    },
+    {
+        "id_price": 51,
+        "id_product": 48,
+        "timestamp": "2024-05-17T08:12:19",
+        "value": 228.29
+    },
+    {
+        "id_price": 52,
+        "id_product": 38,
+        "timestamp": "2024-04-05T05:23:32",
+        "value": 480.1
+    },
+    {
+        "id_price": 53,
+        "id_product": 14,
+        "timestamp": "2024-05-08T02:53:22",
+        "value": 163.0
+    },
+    {
+        "id_price": 54,
+        "id_product": 53,
+        "timestamp": "2024-05-17T00:28:15",
+        "value": 480.38
+    },
+    {
+        "id_price": 55,
+        "id_product": 40,
+        "timestamp": "2024-03-27T12:40:37",
+        "value": 242.9
+    },
+    {
+        "id_price": 56,
+        "id_product": 59,
+        "timestamp": "2024-06-24T19:42:39",
+        "value": 1058.64
+    },
+    {
+        "id_price": 57,
+        "id_product": 52,
+        "timestamp": "2024-05-13T01:32:38",
+        "value": 91.58
+    },
+    {
+        "id_price": 58,
+        "id_product": 41,
+        "timestamp": "2024-03-24T02:59:39",
+        "value": 1690.79
+    },
+    {
+        "id_price": 59,
+        "id_product": 16,
+        "timestamp": "2024-05-11T10:43:14",
+        "value": 1072.56
+    },
+    {
+        "id_price": 60,
+        "id_product": 43,
+        "timestamp": "2024-06-12T02:32:25",
+        "value": 660.61
+    },
+    {
+        "id_price": 61,
+        "id_product": 37,
+        "timestamp": "2024-05-21T12:34:14",
+        "value": 121.2
+    },
+    {
+        "id_price": 62,
+        "id_product": 25,
+        "timestamp": "2024-02-26T21:39:23",
+        "value": 654.31
+    },
+    {
+        "id_price": 63,
+        "id_product": 9,
+        "timestamp": "2024-06-06T10:01:02",
+        "value": 588.23
+    },
+    {
+        "id_price": 64,
+        "id_product": 60,
+        "timestamp": "2024-05-29T22:28:42",
+        "value": 478.45
+    },
+    {
+        "id_price": 65,
+        "id_product": 46,
+        "timestamp": "2024-05-06T22:38:10",
+        "value": 434.14
+    },
+    {
+        "id_price": 66,
+        "id_product": 45,
+        "timestamp": "2024-06-07T10:19:54",
+        "value": 310.87
+    },
+    {
+        "id_price": 67,
+        "id_product": 11,
+        "timestamp": "2024-05-03T04:38:25",
+        "value": 1141.65
+    },
+    {
+        "id_price": 68,
+        "id_product": 33,
+        "timestamp": "2024-04-20T17:20:26",
+        "value": 801.67
+    },
+    {
+        "id_price": 69,
+        "id_product": 2,
+        "timestamp": "2024-07-12T10:19:50",
+        "value": 2386.73
+    },
+    {
+        "id_price": 70,
+        "id_product": 47,
+        "timestamp": "2024-06-02T21:42:54",
+        "value": 164.89
+    }
+]

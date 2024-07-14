@@ -1,0 +1,56 @@
+[
+    {
+        "id_subcategory": 1,
+        "id_category": 1,
+        "name": "Bombs",
+        "description": "Will change the bomber's ability to put down bombs."
+    },
+    {
+        "id_subcategory": 2,
+        "id_category": 1,
+        "name": "Fires",
+        "description": "Will change the nature of the bomber's bomb explosion."
+    },
+    {
+        "id_subcategory": 3,
+        "id_category": 1,
+        "name": "Bomb manipulation",
+        "description": "Will allow the bomber to kick/throw bombs, etc."
+    },
+    {
+        "id_subcategory": 4,
+        "id_category": 2,
+        "name": "Mushrooms",
+        "description": "Will change the physicality of Mario."
+    },
+    {
+        "id_subcategory": 5,
+        "id_category": 2,
+        "name": "Flowers",
+        "description": "Will allow Mario to shoot magical projectiles."
+    },
+    {
+        "id_subcategory": 6,
+        "id_category": 2,
+        "name": "Tools",
+        "description": "Helps Mario to do various tasks in Mushroom Kingdom."
+    },
+    {
+        "id_subcategory": 7,
+        "id_category": 3,
+        "name": "Vitamins",
+        "description": "Increase a specific stat of a pok\u00e9mon."
+    },
+    {
+        "id_subcategory": 8,
+        "id_category": 3,
+        "name": "Electronics",
+        "description": "Gives the trainer access to information and/or communication."
+    },
+    {
+        "id_subcategory": 9,
+        "id_category": 3,
+        "name": "Poke balls",
+        "description": "Allows the player to capture wild pok\u00e9mon."
+    }
+]

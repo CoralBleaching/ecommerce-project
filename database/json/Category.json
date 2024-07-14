@@ -1,0 +1,17 @@
+[
+    {
+        "id_category": 1,
+        "name": "Bomberman",
+        "description": "An item that will give a power up effect in Bomberman."
+    },
+    {
+        "id_category": 2,
+        "name": "Mario Bros",
+        "description": "An item that will give a power up effect or tools that can be useful in Mario Bros."
+    },
+    {
+        "id_category": 3,
+        "name": "Pok\u00e9mon",
+        "description": "An item that will affect a pok\u00e9mon or be useful for a trainer."
+    }
+]
